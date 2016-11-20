@@ -35,6 +35,7 @@ router.post('/', function(req, res, next) {
   var todo = new Todo();
   todo.set('content', content);
   todo.save().then(function(todo) {
+    console.log(todo, '---------------')
     res.redirect('/todos');
   }).catch(next);
 });

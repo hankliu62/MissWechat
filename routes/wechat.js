@@ -1,6 +1,10 @@
 var router = require('express').Router();
 var crypto = require('crypto');
+var request = require('request');
+var AV = require('leanengine');
 var wechatConfig = require('../config/wechat');
+
+var WechatToken = AV.Object.extend('WechatToken');
 
 router.get('/checksignature', function (req, res, next) {
   var signature = req.query.signature;
@@ -22,8 +26,28 @@ router.get('/checksignature', function (req, res, next) {
   if (code === signature) {
     res.send(echostr)
   } else {
-      res.send("error");
+    res.render('error', {
+      message: error.message,
+      error: error
+    });
   }
+})
+router.use('/', function (req, res, next) {
+  var url = wechatConfig.api_domain + '/cgi-bin/token?grant_type=client_credential&appid=' +
+    wechatConfig.appid + '&secret=' + wechatConfig.appsecret;
+  request(url, function (error, response, body) {
+    if (error) {
+      res.render('error', {
+        message: error.message,
+        error: error
+      });
+    }
+
+    if (!error && response.statusCode == 200) {
+      res.render('wechat', { token: body });
+      console.log({ token: body })
+    }
+  })
 })
 
 module.exports = router;

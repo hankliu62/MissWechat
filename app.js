@@ -4,8 +4,10 @@ var timeout = require('connect-timeout');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var request = require('request');
 var todos = require('./routes/todos');
 var wechat = require('./routes/wechat');
+var config = require('./config/config');
 var AV = require('leanengine');
 
 var app = express();
@@ -14,6 +16,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
+app.use(express.static('module'));
 
 // 设置默认超时时间
 app.use(timeout('15s'));
@@ -28,7 +31,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.get('/', function(req, res) {
-  res.render('index', { currentTime: new Date() });
+  var url = config.service_domain + '/wechat/get_jssdk_signature?url=' + 'http://misswechat.leanapp.cn'
+  request(url, function (error, response, body) {
+    body = JSON.parse(body)
+    res.render('index', { currentTime: new Date(), signature: JSON.stringify(body.data.signature) });
+  })
 });
 
 // 可以将一类的路由单独保存在一个文件中
