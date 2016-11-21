@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.get('/', function(req, res) {
-  var url = config.service_domain + '/wechat/get_jssdk_signature?url=' + 'http://misswechat.leanapp.cn'
+  var url = config.service_domain + '/wechat/get_jssdk_signature?url=' + 'http://misswechat.leanapp.cn/'
   request(url, function (error, response, body) {
     body = JSON.parse(body)
     res.render('index', { currentTime: new Date(), signature: JSON.stringify(body.data.signature) });
