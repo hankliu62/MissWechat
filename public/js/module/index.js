@@ -37,7 +37,9 @@
         'onMenuShareTimeline',//分享朋友圈
         'onMenuShareAppMessage',//分享给好友
         'onMenuShareQQ',//分享到QQ
-        'onMenuShareWeibo'//分享腾讯微博] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        'onMenuShareWeibo',//分享腾讯微博] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        'hideAllNonBaseMenuItem',
+        'chooseImage'
       ]
     });
 
