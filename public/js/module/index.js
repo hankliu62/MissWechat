@@ -3,9 +3,14 @@
 
   function init (signature) {
     var url = config.service_domain + '/wechat/get_jssdk_signature?url=' + window.location.href
-    rest.get(url, function (data) {
-      signature = JSON.parse(data);
 
+    var result = fetchJsonp(url, {
+      jsonpCallback: 'jsoncallback',
+      timeout: 3000
+    }).then(function (response) {
+      return response.json()
+    }).then(function (json) {
+      signature = JSON.parse(json);
       wx.config({
         debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
         appId: 'wx3ea0bef99c473ab5', // 必填，公众号的唯一标识
@@ -23,7 +28,10 @@
       wx.ready(function () {
         console.log(123);
       });
+    }).catch(function(ex) {
+      console.log('parsing failed', ex)
     });
+
   }
 
   init(signature)
