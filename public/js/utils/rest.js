@@ -149,9 +149,7 @@
     var jsonp = new Jsonp();
   }
 
-  rest = {
-    get: get
-  };
+  rest = getAjaxRest();
 
   w.rest = rest;
 })(window)
