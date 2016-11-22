@@ -2,7 +2,7 @@
   var signature;
 
   function init (signature) {
-    var url = config.service_domain + '/wechat/get_jssdk_signature?url=' + window.location.url
+    var url = config.service_domain + '/wechat/get_jssdk_signature?url=' + window.location.href
     rest.get(url, function (data) {
       signature = JSON.parse(data);
 
