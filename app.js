@@ -9,12 +9,34 @@ var todos = require('./routes/todos');
 var wechat = require('./routes/wechat');
 var config = require('./config/config');
 var AV = require('leanengine');
+var webpack = require('webpack');
+
+var config = require('./static/build/webpack/webpack.dev.config');
 
 var app = express();
 
+var compiler = webpack(config);
+
+// handle fallback for HTML5 history API
+app.use(require('connect-history-api-fallback')());
+
+// serve webpack bundle output
+app.use(require('webpack-dev-middleware')(compiler, {
+  noInfo: true,
+  publicPath: config.output.publicPath,
+  stats: {
+    colors: true,
+    chunks: false
+  }
+}));
+
+// enable hot-reload and state-preserving
+// compilation error display
+app.use(require('webpack-hot-middleware')(compiler));
+
 // 设置模板引擎
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.static('module'));
 
@@ -30,9 +52,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.get('/', function(req, res) {
-  res.render('index', { currentTime: new Date() });
-});
+// app.get('/', function(req, res) {
+//   res.render('index', { currentTime: new Date() });
+// });
 
 // 可以将一类的路由单独保存在一个文件中
 app.use('/todos', todos);
