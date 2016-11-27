@@ -5,6 +5,7 @@ var webpack = require('webpack');
 
 config.output.filename = '[name].chunk.js'; // 输出文件名
 config.output.chunkFilename = '[id].[hash].js'; // 输出chunk文件名
+config.output.publicPath = '/';
 
 config.devtool = 'eval';
 config.vue = config.vue || {};

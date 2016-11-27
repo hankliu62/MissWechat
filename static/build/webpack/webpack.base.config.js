@@ -4,12 +4,13 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var staticPath = path.resolve(__dirname, '../../');
 var nodeModulesPath = path.resolve(staticPath, '../node_modules')
 
-var commnPath = {
+var commonPath = {
   distDir: path.resolve(staticPath, '../dist'),
   templateHtml: path.join(staticPath, 'template.html')
 };
 
 module.exports = {
+  commonPath,
   entry: {
     app: path.join(staticPath, 'index.js'),
     vender: [
@@ -19,8 +20,8 @@ module.exports = {
     ]
   },
   output: {
-    path: path.resolve(commnPath.distDir, 'static'), // 打包输出目录
-    publicPath: '/' // webpack-dev-server访问的路径
+    path: path.resolve(commonPath.distDir, 'static'), // 打包输出目录
+    publicPath: '/static/' // webpack-dev-server访问的路径
   },
   resolve: {
     extensions: ['', '.js', '.vue']
@@ -65,7 +66,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Miss 小店',
       filename: 'index.html',
-      template: commnPath.templateHtml
+      template: commonPath.templateHtml
     }),
     new webpack.NoErrorsPlugin()
   ]
