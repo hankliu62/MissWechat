@@ -1,0 +1,43 @@
+@import '../../styles/variable.less';
+
+@toast-bg-color: fade(@black, 50%);
+@toast-text-color: @white;
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+
+.fade-enter, .fade-leave-active {
+  opacity: 0
+}
+
+.toast {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  max-width: 380px;
+  border-radius: 5px;
+  z-index: 9999;
+  border-radius: 3px;
+  background-color: @toast-bg-color;
+
+  .toast-content {
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: table;
+    min-height: 62px;
+
+    .content-wrapper {
+      display: table-cell;
+      vertical-align: middle;
+
+      .content {
+        display: inline-block;
+        font-size: 16px;
+        color: @toast-text-color;
+      }
+    }
+  }
+}

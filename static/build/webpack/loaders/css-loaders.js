@@ -23,11 +23,11 @@ module.exports = function (options) {
   }
 
   return [
-    { key: 'css', value: generateExtractLoaders(['css']) },
-    { key: 'less', value: generateExtractLoaders(['css', 'less']) },
-    { key: 'sass', value: generateExtractLoaders(['css', 'sass?indentedSyntax']) },
-    { key: 'scss', value: generateExtractLoaders(['css', 'sass']) },
-    { key: 'stylus', value: generateExtractLoaders(['css', 'stylus']) },
-    { key: 'styl', value: generateExtractLoaders(['css', 'stylus']) },
+    { key: 'css', value: generateExtractLoaders(['css', `autoprefixer?{ browsers: ['last 100 versions'] }`]) },
+    { key: 'less', value: generateExtractLoaders(['css', 'less', `autoprefixer?{ browsers: ['last 100 versions'] }`]) },
+    { key: 'sass', value: generateExtractLoaders(['css', 'sass?indentedSyntax', `autoprefixer?{ browsers: ['last 100 versions'] }`]) },
+    { key: 'scss', value: generateExtractLoaders(['css', 'sass', `autoprefixer?{ browsers: ['last 100 versions'] }`]) },
+    { key: 'stylus', value: generateExtractLoaders(['css', 'stylus', `autoprefixer?{ browsers: ['last 100 versions'] }`]) },
+    { key: 'styl', value: generateExtractLoaders(['css', 'stylus', `autoprefixer?{ browsers: ['last 100 versions'] }`]) }
   ];
 }

@@ -11,28 +11,39 @@ var config = require('./config/config');
 var AV = require('leanengine');
 var webpack = require('webpack');
 
-var config = require('./static/build/webpack/webpack.dev.config');
-
 var app = express();
 
-var compiler = webpack(config);
+if (app.get('env') === 'development') {
+  var devConfig = require('./static/build/webpack/webpack.dev.config');
+  var compiler = webpack(devConfig);
 
-// handle fallback for HTML5 history API
-app.use(require('connect-history-api-fallback')());
+  // handle fallback for HTML5 history API
+  app.use(require('connect-history-api-fallback')());
 
-// serve webpack bundle output
-app.use(require('webpack-dev-middleware')(compiler, {
-  noInfo: true,
-  publicPath: config.output.publicPath,
-  stats: {
-    colors: true,
-    chunks: false
-  }
-}));
+  // serve webpack bundle output
+  app.use(require('webpack-dev-middleware')(compiler, {
+    noInfo: true,
+    publicPath: devConfig.output.publicPath,
+    stats: {
+      colors: true,
+      chunks: false
+    }
+  }));
 
-// enable hot-reload and state-preserving
-// compilation error display
-app.use(require('webpack-hot-middleware')(compiler));
+  // enable hot-reload and state-preserving
+  // compilation error display
+  app.use(require('webpack-hot-middleware')(compiler));
+} else {
+  var prodConfig = require('./static/build/webpack/webpack.prod.config');
+
+  webpack(prodConfig, function (error, state) {
+    if (error) {
+      if (console.error) {
+        console.error(error);
+      }
+    }
+  })
+}
 
 // 设置模板引擎
 // app.set('views', path.join(__dirname, 'views'));

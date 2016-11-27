@@ -1,8 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-
 var staticPath = path.resolve(__dirname, '../../');
 var nodeModulesPath = path.resolve(staticPath, '../node_modules')
 
@@ -21,9 +19,8 @@ module.exports = {
     ]
   },
   output: {
-    path: path.resolve(commnPath.distDir, 'static'),
-    publicPath: '',
-    filename: '[name].[hash].js'
+    path: path.resolve(commnPath.distDir, 'static'), // 打包输出目录
+    publicPath: '/' // webpack-dev-server访问的路径
   },
   resolve: {
     extensions: ['', '.js', '.vue']
@@ -38,8 +35,6 @@ module.exports = {
     loaders: [
       { test: /\.vue$/, loader: 'vue', exclude: /node_modules/ },
       { test: /\.js$/, loader: 'babel!eslint', exclude: /node_modules/ },
-      { test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css?module!postcss'), exclude: /node_modules/ },
-      { test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css?module!postcss!less'), exclude: /node_modules/ },
       { test: /.(png|jpe?g|gif|svg)/, loader: 'url', exclude: /node_modules/ }
     ]
   },
@@ -48,7 +43,12 @@ module.exports = {
       js: 'babel!eslint',
       less: 'vue-style!css!less',
       sass: 'vue-style!css!sass'
-    }
+    },
+    postcss: [
+      require('autoprefixer')({
+        browsers: ['last 100 versions']
+      })
+    ]
   },
   eslint: {
     formatter: require('eslint-friendly-formatter'),
@@ -61,7 +61,6 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       names: ['vendor', 'app']
     }),
-    new ExtractTextPlugin('app.min.css'),
     new webpack.optimize.OccurenceOrderPlugin(),
     new HtmlWebpackPlugin({
       title: 'Miss 小店',
@@ -69,8 +68,5 @@ module.exports = {
       template: commnPath.templateHtml
     }),
     new webpack.NoErrorsPlugin()
-  ],
-  postcss: [
-    require('autoprefixer')
   ]
 };

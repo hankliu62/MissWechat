@@ -1,15 +1,17 @@
 <template>
-  <div class="todoapp">
+  <div class="home-container">
     <input v-model="name" :id="id" type="text" />
     </div>
   </div>
 </template>
+
 <script>
 export default {
   data () {
     return {
       name: 'main.html',
-      id: 'name'
+      id: 'name',
+      content: '<h1>Hi Bady</h1>'
     }
   },
   methods: {
@@ -18,7 +20,7 @@ export default {
     }
   },
   created () {
-    console.log(123);
+    console.log(123)
   }
 }
 </script>
