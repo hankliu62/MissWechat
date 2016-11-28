@@ -10,11 +10,10 @@ var wechat = require('./routes/wechat');
 var config = require('./config/config');
 var AV = require('leanengine');
 var webpack = require('webpack');
-var fs = require('fs');
 
 var app = express();
 
-if (app.get('env') === 'development' || true) {
+if (app.get('env') === 'development') {
   var devConfig = require('./static/build/webpack/webpack.dev.config');
   var compiler = webpack(devConfig);
 
@@ -35,26 +34,16 @@ if (app.get('env') === 'development' || true) {
   // compilation error display
   app.use(require('webpack-hot-middleware')(compiler));
 } else {
-  var prodConfig = require('./static/build/webpack/webpack.prod.config');
+  var ejs = require('ejs');
+  app.set('views', path.join(__dirname, 'dist/static'));
+  app.engine('.html', ejs.__express);
+  app.set('view engine', 'html');
 
-  webpack(prodConfig, function (error, stats) {
-    if (error) {
-      if (console.error) {
-        console.error(error);
-      }
-    }
+  app.use(express.static('dist'));
 
-    // show build info to console
-    console.log( stats.toString({ chunks: false, color: true }) );
-
-    // save build info to file
-    fs.writeFile(
-      path.join(prodConfig.commonPath.distDir, '__build_info__'),
-      stats.toString({ color: false })
-    );
+  app.get('*', function(req, res) {
+    res.render('index');
   });
-
-  console.log(123)
 }
 
 // 设置模板引擎

@@ -2,7 +2,7 @@ var config = require('./webpack.base.config');
 var cssLoaders = require('./loaders/css-loaders');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var webpack = require('webpack');
-const SOURCE_MAP = false;
+var SOURCE_MAP = false;
 
 config.output.filename = '[name].[chunkhash:6].js';
 config.output.chunkFilename = '[id].[chunkhash:6].js';
@@ -20,11 +20,11 @@ cssLoaders({
 });
 
 config.plugins.push(
-  new webpack.DefinePlugin({
-    'process.env': { // 设置成生产环境
-      NODE_ENV: 'production'
-    }
-  }),
+  // new webpack.DefinePlugin({
+  //   'process.env': { // 设置成生产环境
+  //     NODE_ENV: 'production'
+  //   }
+  // }),
   new webpack.optimize.UglifyJsPlugin({ // 压缩代码
     compress: {
       warnings: false

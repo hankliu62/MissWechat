@@ -6,7 +6,7 @@ import CommonMainState from '../modules/Common/vuex'
 
 Vue.use(Vuex)
 
-const isDebug = process.env.NODE_ENV !== 'production'
+const isDebug = !process || !process.env || process.env.NODE_ENV !== 'production'
 
 export default new Vuex.Store({
   modules: {
