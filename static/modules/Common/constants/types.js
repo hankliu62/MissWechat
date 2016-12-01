@@ -1,4 +1,3 @@
 export const COMMON_MAIN_SET = 'COMMON_MAIN_SET'
 export const FETCH_WECHAT_SIGNATURE = 'FETCH_WECHAT_SIGNATURE'
-export const SHOW_TOAST = 'SHOW_TOAST'
-export const HIDE_TOAST = 'HIDE_TOAST'
+

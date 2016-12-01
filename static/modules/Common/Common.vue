@@ -4,6 +4,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import config from '../../config/config'
 
 export default {
   computed: {
@@ -15,7 +16,7 @@ export default {
     ...mapActions(['fetchWechatSignature', 'showToast'])
   },
   created: async function () {
-    const options = { params: { url: window.location.href } }
+    const options = { params: { url: window.location.href, appid: config.wechat_appid } }
     await this.fetchWechatSignature(options)
 
     const signature = this.signature
