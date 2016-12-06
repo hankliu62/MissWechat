@@ -69,8 +69,7 @@ app.use(cookieParser());
 // });
 
 // 可以将一类的路由单独保存在一个文件中
-app.use('/todos', todos);
-app.use('/wechat', wechat);
+// app.use('/todos', todos);
 
 app.use(function(req, res, next) {
   // 如果任何一个路由都没有返回响应，则抛出一个 404 异常给后续的异常处理器
