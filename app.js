@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var request = require('request');
 var todos = require('./routes/todos');
-var wechat = require('./routes/wechat');
 var config = require('./config/config');
 var AV = require('leanengine');
 var webpack = require('webpack');
