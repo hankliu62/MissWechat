@@ -10,3 +10,13 @@
   flex-shrink: @size;
   -webkit-flex-shrink: @size;
 }
+
+.flex (@count: 1) {
+  -moz-box-flex: @count;
+  -webkit-box-flex: @count;
+  -ms-box-flex: @count;
+  -o-box-flex: @count;
+  box-flex: @count;
+  -ms-flex: @count;
+  flex: @count;
+}

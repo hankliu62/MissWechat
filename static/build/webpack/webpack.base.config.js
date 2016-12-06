@@ -36,7 +36,7 @@ module.exports = {
     loaders: [
       { test: /\.vue$/, loader: 'vue', exclude: /node_modules/ },
       { test: /\.js$/, loader: 'babel!eslint', exclude: /node_modules/ },
-      { test: /.(png|jpe?g|gif|svg)/, loader: 'url', exclude: /node_modules/ },
+      { test: /.(png|jpe?g|gif|svg|webp)/, loader: 'url', exclude: /node_modules/ },
       { test: /\.(eot|woff|svg|ttf|woff2|gif|appcache)(\?|$)/, exclude: /^node_modules$/, loader: 'file-loader?name=[name].[ext]'}
     ]
   },
