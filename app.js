@@ -8,11 +8,11 @@ var request = require('request');
 var todos = require('./routes/todos');
 var config = require('./config/config');
 var AV = require('leanengine');
-var webpack = require('webpack');
 
 var app = express();
 
 if (app.get('env') === 'development') {
+  var webpack = require('webpack');
   var devConfig = require('./static/build/webpack/webpack.dev.config');
   var compiler = webpack(devConfig);
 
