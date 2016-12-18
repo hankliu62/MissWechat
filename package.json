@@ -4,9 +4,9 @@
   "description": "A sample Node.js app using Express 4",
   "main": "server.js",
   "scripts": {
-    "start": "set NODE_ENV=development && node server.js",
-    "dev": "set NODE_ENV=development && ./node_modules/.bin/nodemon server.js",
-    "prod": "set NODE_ENV=production && node ./static/build/webpack/prod-server.js"
+    "start": "cross-env NODE_ENV=development && node server.js",
+    "dev": "cross-env NODE_ENV=development && ./node_modules/.bin/nodemon server.js",
+    "prod": "cross-env NODE_ENV=production && node ./static/build/webpack/prod-server.js"
   },
   "keywords": [
     "node",
@@ -28,14 +28,17 @@
     "request": "2.79.0"
   },
   "devDependencies": {
+    "animate.css": "^3.5.2",
     "autoprefixer": "6.5.3",
     "autoprefixer-loader": "3.2.0",
     "babel-core": "6.18.2",
     "babel-loader": "6.2.8",
     "babel-plugin-transform-runtime": "6.15.0",
+    "babel-polyfill": "^6.20.0",
     "babel-preset-es2015": "6.18.0",
     "babel-preset-stage-2": "6.18.0",
     "bootstrap": "3.3.7",
+    "bson-objectid": "^1.1.4",
     "connect-history-api-fallback": "1.3.0",
     "css-loader": "0.26.0",
     "eslint": "3.10.2",
@@ -49,10 +52,12 @@
     "extract-text-webpack-plugin": "1.0.1",
     "file-loader": "0.9.0",
     "font-awesome": "github:fortawesome/Font-Awesome",
+    "headroom.js": "0.9.3",
     "html-webpack-plugin": "2.24.1",
     "less": "2.7.1",
     "less-loader": "2.2.3",
     "lib-flexible": "0.3.2",
+    "mint-ui": "2.0.5",
     "nodemon": "^1.11.0",
     "postcss-loader": "1.1.1",
     "style-loader": "0.13.1",
@@ -61,12 +66,13 @@
     "vue-loader": "10.0.1",
     "vue-resource": "1.0.3",
     "vue-router": "2.0.3",
-    "vue-slider": "^1.1.1",
+    "vue-slider": "1.1.1",
     "vue-template-compiler": "2.1.3",
     "vuex": "2.0.0",
     "webpack": "1.13.3",
     "webpack-dev-middleware": "1.8.4",
-    "webpack-hot-middleware": "2.13.2"
+    "webpack-hot-middleware": "2.13.2",
+    "webpack-md5-hash": "0.0.5"
   },
   "engines": {
     "node": "4.x"

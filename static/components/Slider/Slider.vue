@@ -98,6 +98,6 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style moduled lang="less">
 @import './Slider';
 </style>

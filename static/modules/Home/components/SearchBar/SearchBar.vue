@@ -8,6 +8,6 @@
   </div>
 </template>
 
-<style lang='less'>
+<style scoped lang='less'>
 @import './SearchBar';
 </style>

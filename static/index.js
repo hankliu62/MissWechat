@@ -1,15 +1,19 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
 // import VueResource from 'vue-resource'
 // import DirectivesPlugin from './directives'
 import routeConfig from './routes/routes'
-import store from './vuex/store';
+import store from './vuex/store'
 import App from './modules/App/App'
+import 'babel-polyfill'
 
 // Vue.use(VueResource)
 // 1. 使用模块化机制编程: vue-router
 Vue.use(VueRouter)
 // Vue.use(DirectivesPlugin)
+Vue.use(MintUI)
 
 // 2. 定义（路由）组件和路由: routeConfig
 

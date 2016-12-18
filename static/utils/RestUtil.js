@@ -23,7 +23,8 @@ Vue.http.interceptors.push((request, next) => {
   next(function (response) {
     // Todo: common error handler
     if (response.status === StatusCodes.NOT_FOUND) {
-      // Todo
+      // Todo: support use vue-router to route 404 page
+      window.location.href = '/error/404'
     }
 
     if (response.status === StatusCodes.BAD_REQUEST) {

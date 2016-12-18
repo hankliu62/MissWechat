@@ -1,11 +1,12 @@
 var config = require('./webpack.base.config');
 var cssLoaders = require('./loaders/css-loaders');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var WebpackMd5Hash = require('webpack-md5-hash');
 var webpack = require('webpack');
 var SOURCE_MAP = false;
 
 config.output.filename = '[name].[chunkhash:6].js';
-config.output.chunkFilename = '[id].[chunkhash:6].js';
+config.output.chunkFilename = 'chunks/[id].[chunkhash].js';
 
 config.devtool = SOURCE_MAP ? 'source-map' : false;
 config.vue = config.vue || {};
@@ -20,11 +21,12 @@ cssLoaders({
 });
 
 config.plugins.push(
-  // new webpack.DefinePlugin({
-  //   'process.env': { // 设置成生产环境
-  //     NODE_ENV: 'production'
-  //   }
-  // }),
+  // http://vuejs.github.io/vue-loader/workflow/production.html
+  new webpack.DefinePlugin({
+    'process.env': { // 设置成生产环境
+      NODE_ENV: '"production"'
+    }
+  }),
   new webpack.optimize.UglifyJsPlugin({ // 压缩代码
     compress: {
       warnings: false
@@ -32,7 +34,8 @@ config.plugins.push(
   }),
   new ExtractTextPlugin('[name].[contenthash:6].css', {
     allChunks: true // 若要按需加载 CSS 则请注释掉该行
-  })
+  }),
+  new WebpackMd5Hash()
 );
 
 module.exports = config;

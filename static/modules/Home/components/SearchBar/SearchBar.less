@@ -1,3 +1,5 @@
+@import '../../../../styles/mixins/fontsize';
+
 @search-icon-color: #cacaca;
 @search-text-color: #c9c9c9;
 @search-border-color: #e3e3e3;
@@ -17,14 +19,14 @@
   }
 
   .icon-search {
-    font-size: .53rem;
+    .font-size(20px);
     color: @search-icon-color;
     padding-right: 10px;
   }
 
 
   .content-search {
-    font-size: .4rem;
+    .font-size(15px);
   }
 
   .search-border {
