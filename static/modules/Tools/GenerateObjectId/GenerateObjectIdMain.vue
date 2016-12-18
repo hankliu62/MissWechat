@@ -36,14 +36,12 @@
               class="options-header"
               slot="tab"
               :disabled="true"
-              :selected="optionsTabs.tab === 'options-tab'"
-            >Generate ObjectID Options</tab>
+              :selected="optionsTabs.tab === 'options-tab'">Generate ObjectID Options</tab>
           </tab-list>
           <tab-panel
             :selected="optionsTabs.panel === 'options-panel'"
             id="options-panel"
-            slot="tabpanel"
-          >
+            slot="tabpanel">
             <options-form @submit="onGenerateOIds" :type="states.params.type"></options-form>
           </tab-panel>
         </tabs>
@@ -71,18 +69,55 @@
           <tab-panel
             :selected="codeTabs.panel === 'results-panel'"
             id="results-panel"
-            slot="tabpanel"
-          >
-            <ul class="rows-wrapper"><li class="row-item" v-for="item in objectIds.length" v-text="item"></li></ul>
-            <ul class="ids-wrapper"><li class="id-item" v-for="item in objectIds" v-text="item"></li></ul>
+            slot="tabpanel">
+            <ul class="rows-wrapper" @click.self="onSelectedRow(-1)">
+              <li
+                :class="['row-item', { selected: (item - 1) === selectedIndex }]"
+                v-for="item in objectIds.length" v-text="item"
+                @click.stop.prevent="onSelectedRow(item)"></li>
+            </ul>
+            <ul class="ids-wrapper" @click.self="onSelectedRow(-1)">
+              <li
+                :class="['id-item', { selected: index === selectedIndex }]"
+                v-for="(item, index) in objectIds" v-text="item"
+                @click.stop.prevent="onSelectedRow(index)"></li>
+            </ul>
           </tab-panel>
-          <tab-panel v-if="isShowMetadata" :selected="codeTabs.panel === 'metadata-panel'" id="metadata-panel" slot="tabpanel">
-            <ul class="rows-wrapper"><li class="row-item" v-for="item in objectIds.length" v-text="item"></li></ul>
-            <ul class="ids-wrapper"><li class="id-item" v-for="item in objectIds" v-text="item"></li></ul>
+          <tab-panel
+            v-if="isShowMetadata"
+            :selected="codeTabs.panel === 'metadata-panel'"
+            id="metadata-panel"
+            slot="tabpanel">
+            <ul class="rows-wrapper" @click.self="onSelectedRow(-1)">
+              <li
+                :class="['row-item', { selected: (item - 1) === selectedIndex }]"
+                v-for="item in objectIds.length" v-text="item"
+                @click.stop.prevent="onSelectedRow(item)"></li>
+            </ul>
+            <ul class="ids-wrapper" @click.self="onSelectedRow(-1)">
+              <li
+                :class="['id-item', { selected: index === selectedIndex }]"
+                v-for="(item, index) in objectIds" v-text="item"
+                @click.stop.prevent="onSelectedRow(index)"></li>
+            </ul>
           </tab-panel>
-          <tab-panel v-if="isShowExamples" :selected="codeTabs.panel === 'examples-panel'" id="examples-panel" slot="tabpanel">
-            <ul class="rows-wrapper"><li class="row-item" v-for="item in objectIds.length" v-text="item"></li></ul>
-            <ul class="ids-wrapper"><li class="id-item" v-for="item in objectIds" v-text="item"></li></ul>
+          <tab-panel
+            v-if="isShowExamples"
+            :selected="codeTabs.panel === 'examples-panel'"
+            id="examples-panel"
+            slot="tabpanel">
+            <ul class="rows-wrapper" @click.self="onSelectedRow(-1)">
+              <li
+                :class="['row-item', { selected: (item - 1) === selectedIndex }]"
+                v-for="item in objectIds.length" v-text="item"
+                @click.stop.prevent="onSelectedRow(item)"></li>
+            </ul>
+            <ul class="ids-wrapper" @click.self="onSelectedRow(-1)">
+              <li
+                :class="['id-item', { selected: index === selectedIndex }]"
+                v-for="(item, index) in objectIds" v-text="item"
+                @click.stop.prevent="onSelectedRow(index)"></li>
+            </ul>
           </tab-panel>
         </tabs>
       </div>
@@ -118,15 +153,18 @@ export default {
       navs: GENERATE_OBJECTID_MAIN_NAVS,
       objectIds: [],
       isShowMetadata: false,
-      isShowExamples: false
+      isShowExamples: false,
+      selectedIndex: -1
     }
   },
   methods: {
     onSelectCodeTab (value) {
+      this.selectedIndex = -1;
       if (value && value.tab === 'examples') {
         this.isShowMetadata = false
         this.isShowExamples = false
         this.codeTabs = {...DEFALUT_CODE_TABS}
+        return
       }
       this.codeTabs = value
     },
@@ -137,7 +175,11 @@ export default {
         objectIds.push(generateObjectId(param))
       }
 
+      this.selectedIndex = -1;
       this.objectIds = objectIds
+    },
+    onSelectedRow (index) {
+      this.selectedIndex = index
     }
   },
   mounted () {
