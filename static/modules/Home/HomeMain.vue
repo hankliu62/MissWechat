@@ -1,17 +1,37 @@
 <template>
   <div class="home-container">
-    <search-bar></search-bar>
-    <div class="recommend-container">
-      <slider
-        :items="sliders"
-        :isLoop="true"
-        :speed="500"
-        :delay="3000"
-        :isShowDots="true"
-      ></slider>
+    <div class="home-body">
+      <header class="home-header">
+        <search-bar></search-bar>
+      </header>
+      <div class="recommend-container">
+        <slider
+          :items="sliders"
+          :isLoop="true"
+          :speed="500"
+          :delay="3000"
+          :isShowDots="true"
+        ></slider>
+      </div>
+      <ul class="products-wrapper">
+        <li class="product" v-for="product in products">
+          <div class="picture">
+            <img class="img" :src="product.pictures[0]">
+          </div>
+          <div class="content">
+            <div class="name" v-text="product.name"></div>
+            <div class="brief" v-text="product.brief"></div>
+            <div class="price">
+              <span v-text="product.price + '元'"></span>
+              <span v-if="product.isMultiPrice">起</span>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
-    <input v-model="main" id="main-text" type="text" />
-    <footer-nav-bar :navs="navs"></footer-nav-bar>
+    <footer class="home-footer">
+      <footer-nav-bar :navs="navs"></footer-nav-bar>
+    </footer>
   </div>
 </template>
 
@@ -23,55 +43,38 @@ import navs from '../../constants/footer-navs'
 import sliderImage1 from './images/slide1.webp'
 import sliderImage2 from './images/slide2.webp'
 import sliderImage3 from './images/slide3.webp'
+import { generateObjectId } from '../../utils/ObjectUtil'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   data () {
     return {
       navs,
-      main: 'main.html',
-      // sliders: [
-      //   {
-      //     title: '',
-      //     style: {
-      //       src: `url(${sliderImage1})`
-      //     }
-      //   },
-      //   {
-      //     title: '',
-      //     style: {
-      //       'background-image': `url(${sliderImage2})`
-      //     }
-      //   },
-      //   {
-      //     title: '',
-      //     style: {
-      //       'background-image': `url(${sliderImage2})`
-      //     }
-      //   }
-      // ],
       sliders: [
         { src: sliderImage1 },
         { src: sliderImage2 },
         { src: sliderImage3 }
       ]
-      // sliderOptions: {
-      //   currentPage: 0, // 当前页码
-      //   thresholdDistance: 500, // 滑动判定距离
-      //   thresholdTime: 100, // 滑动判定时间
-      //   autoplay: 1000, // 自动滚动[ms]
-      //   loop: true, // 循环滚动
-      //   direction: 'horizontal' // 方向设置，垂直滚动
-      // }
     }
   },
   methods: {
-    onEnter: function (e) {
+    onEnter (e) {
       console.log(this, e, 'vvvvvvvvvvvvvvvv')
-    }
+    },
+    ...mapActions(['fetchProducts'])
   },
-  created () {
-    console.log(123)
+  created: function () {
+    this.fetchProducts()
+  },
+  computed: {
+    ...mapState({
+      products: state => state.homeMain.products
+    })
   },
   components: { SearchBar, FooterNavBar, Slider }
 }
 </script>
+
+<style scoped lang='less'>
+@import './HomeMain';
+</style>

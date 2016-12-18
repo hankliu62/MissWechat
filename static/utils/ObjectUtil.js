@@ -1,3 +1,5 @@
+import ObjectID from 'bson-objectid'
+
 function find (list, f) {
   return list.filter(f)[0]
 }
@@ -5,6 +7,7 @@ function find (list, f) {
 function isArray (arr) {
   return Object.prototype.toString.call(arr).slice(8, -1) === 'string'
 }
+
 export function cloneDeep (obj, cache = []) {
   if (obj === null || typeof obj !== 'object') {
     return obj
@@ -26,4 +29,12 @@ export function cloneDeep (obj, cache = []) {
   }
 
   return copy
+}
+
+export function generateObjectId (param) {
+  if (param) {
+    return ObjectID(param).toString()
+  }
+
+  return ObjectID().toString()
 }

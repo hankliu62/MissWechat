@@ -1,0 +1,43 @@
+@import '../../styles/variable';
+@import '../../styles/mixins/flexbox';
+
+.tabbable {
+  .flexbox();
+  flex-direction: column;
+
+  [role="tablist"] {
+    background-color: #555;
+    padding-left: 12px;
+    margin-bottom: 0;
+  }
+
+  [role="tab"] {
+    display: inline-block;
+    border: 1px solid transparent;
+    position: relative;
+    list-style: none;
+    padding: 6px 12px;
+    cursor: pointer;
+    color: @white;
+    font-size: 14px;
+
+    &[aria-selected=true] {
+      background-color: #444;
+      border-color: #444;
+    }
+
+    &[aria-disabled=true] {
+      color: #7f7f7f;
+      cursor: default;
+    }
+
+    &:focus {
+      border-color: transparent;
+      outline: none;
+    }
+  }
+
+  [role="tabpanel"] {
+    .flex(1)
+  }
+}

@@ -1,0 +1,68 @@
+@import '../../../../../styles/variable';
+@import '../../../../../styles/mixins/flexbox';
+
+@paramItemBorderColor: #f2f2f2;
+@paramRequiredColor: #ef6363;
+@paramDescColor: #666;
+@paramNameColor: #56585e;
+@paramNameTypeColor: #b4babd;
+
+.options-form {
+  padding: 0 30px;
+
+  .param-item {
+    .flexbox();
+    padding: 10px 0;
+    border-bottom: 1px solid @paramItemBorderColor;
+
+    .param-item-name {
+      min-width: 170px;
+
+      label {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 14px;
+        color: @paramNameColor;
+        font-weight: 600;
+        font-size: 14px;
+      }
+
+      .param-type {
+        color: @paramNameTypeColor;
+        font-size: 12px;
+      }
+    }
+
+    .param-item-info {
+      .flex(1);
+
+      .param-item-required {
+        color: @paramRequiredColor;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-size: 10px;
+        margin-bottom: 4px;
+      }
+
+      .desc-info {
+        color: @paramDescColor;
+        font-size: 12px;
+        font-weight: 400;
+        font-style: normal;
+        line-height: 18px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .btns-group {
+    margin-top: 30px;
+    text-align: center;
+
+    button + button {
+      margin-left: 20px;
+    }
+  }
+}

@@ -1,3 +1,4 @@
+@import '../../styles/mixins/fontsize';
 @import '../../styles/mixins/flexbox';
 
 .error-container {
@@ -23,13 +24,13 @@
     padding: 0 40px;
 
     .content-title {
-      font-size: 200px;
+      .font-size(80px);
       font-weight: bold;
       font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     }
 
     .content-message {
-      font-size: 60px;
+      .font-size(20px)
     }
   }
 
@@ -42,6 +43,10 @@
 
       .icon-header {
         background-repeat: no-repeat;
+
+        &:before {
+          content: '';
+        }
       }
 
       .icon-footer {

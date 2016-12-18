@@ -10,8 +10,10 @@ webpack(prodConfig, function (error, stats) {
     }
   }
 
-  // show build info to console
-  console.log( stats.toString({ chunks: false, color: true }) );
+  if (console.log) {
+    // show build info to console
+    console.log(stats.toString({ chunks: false, color: true }));
+  }
 
   // save build info to file
   fs.writeFile(
