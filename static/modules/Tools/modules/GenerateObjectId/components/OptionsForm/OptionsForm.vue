@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     onSubmit () {
-      this.$emit('submit', { param: this.param, number: this.number })
+      this.$emit('submit', { param: this.param, number: this.number, type: this.type })
     },
     onReset () {
       this.param = ''

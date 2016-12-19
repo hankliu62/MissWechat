@@ -33,7 +33,7 @@ export default [
         path: 'goid/:type',
         name: 'generateObjectId',
         component: function (resolve) {
-          require(['../modules/Tools/GenerateObjectId/GenerateObjectIdMain'], resolve)
+          require(['../modules/Tools/modules/GenerateObjectId/GenerateObjectIdMain'], resolve)
         }
       },
       { path: 'goid', redirect: 'goid/time' }
