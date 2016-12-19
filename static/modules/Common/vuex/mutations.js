@@ -9,8 +9,8 @@ export default {
       }
     }
   },
-  [FETCH_WECHAT_SIGNATURE] (state, payload) {
-    state.signature = payload.signature
+  [FETCH_WECHAT_SIGNATURE] (state, signature) {
+    state.signature = signature
   },
   [SHOW_TOAST] (state, message) {
     state.toast.count = ++state.toast.count

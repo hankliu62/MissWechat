@@ -1,4 +1,4 @@
-import { generateObjectId } from '../../../../utils/ObjectUtil'
+import { generateObjectId } from '../../../../../utils/ObjectUtil'
 
 export const GENERATE_OBJECTID_MAIN_NAVS = [
   {

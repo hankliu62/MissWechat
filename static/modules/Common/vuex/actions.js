@@ -11,7 +11,7 @@ export const setState = function ({ commit }, payload) {
 export const fetchWechatSignature = async function ({ commit }, options) {
   const url = `${config.service_domain}${API_FETCH_WECHAT_SIGNATURE}`
   const response = await RestUtil.get(url, options)
-  const signature = response.body.data
+  const signature = response.body.data.signature
   commit(FETCH_WECHAT_SIGNATURE, signature)
 }
 

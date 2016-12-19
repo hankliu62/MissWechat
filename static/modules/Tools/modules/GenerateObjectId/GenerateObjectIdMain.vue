@@ -50,9 +50,9 @@
         <tabs v-model="codeTabs" @selected="onSelectCodeTab">
           <tab-list slot="tablist">
             <tab id="results" panelId="results-panel" slot="tab" :selected="codeTabs.tab === 'results'">
-              <span class="httpsuccess">
+              <span :class="{httpsuccess: result.statusCode === 200, httperror: result.statusCode !== 200}">
                 <i class="icon icon-circle"></i>
-                <em>&nbsp;200&nbsp;</em>OK
+                <em v-text="' ' + result.statusCode + ' '"></em><span v-text="result.statusMessage"></span>
               </span>
             </tab>
             <tab v-if="isShowMetadata" id="metadata" panelId="metadata-panel" slot="tab" :selected="codeTabs.tab === 'metadata'">
@@ -73,13 +73,13 @@
             <ul class="rows-wrapper" @click.self="onSelectedRow(-1)">
               <li
                 :class="['row-item', { selected: (item - 1) === selectedIndex }]"
-                v-for="item in objectIds.length" v-text="item"
+                v-for="item in result.rows.length" v-text="item"
                 @click.stop.prevent="onSelectedRow(item)"></li>
             </ul>
             <ul class="ids-wrapper" @click.self="onSelectedRow(-1)">
               <li
                 :class="['id-item', { selected: index === selectedIndex }]"
-                v-for="(item, index) in objectIds" v-text="item"
+                v-for="(item, index) in result.rows" v-text="item"
                 @click.stop.prevent="onSelectedRow(index)"></li>
             </ul>
           </tab-panel>
@@ -90,14 +90,16 @@
             slot="tabpanel">
             <ul class="rows-wrapper" @click.self="onSelectedRow(-1)">
               <li
+                v-if="metadatas[states.params.type]"
                 :class="['row-item', { selected: (item - 1) === selectedIndex }]"
-                v-for="item in objectIds.length" v-text="item"
+                v-for="item in metadatas[states.params.type].rows.length" v-text="item"
                 @click.stop.prevent="onSelectedRow(item)"></li>
             </ul>
             <ul class="ids-wrapper" @click.self="onSelectedRow(-1)">
               <li
+                v-if="metadatas[states.params.type]"
                 :class="['id-item', { selected: index === selectedIndex }]"
-                v-for="(item, index) in objectIds" v-text="item"
+                v-for="(item, index) in metadatas[states.params.type].rows" v-html="item"
                 @click.stop.prevent="onSelectedRow(index)"></li>
             </ul>
           </tab-panel>
@@ -109,13 +111,13 @@
             <ul class="rows-wrapper" @click.self="onSelectedRow(-1)">
               <li
                 :class="['row-item', { selected: (item - 1) === selectedIndex }]"
-                v-for="item in objectIds.length" v-text="item"
+                v-for="item in example.rows.length" v-text="item"
                 @click.stop.prevent="onSelectedRow(item)"></li>
             </ul>
             <ul class="ids-wrapper" @click.self="onSelectedRow(-1)">
               <li
                 :class="['id-item', { selected: index === selectedIndex }]"
-                v-for="(item, index) in objectIds" v-text="item"
+                v-for="(item, index) in example.rows" v-text="item"
                 @click.stop.prevent="onSelectedRow(index)"></li>
             </ul>
           </tab-panel>
@@ -127,60 +129,54 @@
 
 <script>
 import Headroom from 'headroom.js'
-import { Tabs, TabList, Tab, TabPanel } from '../../../components/Tabs'
 import OptionsForm from './components/OptionsForm/OptionsForm'
-import { generateObjectId } from '../../../utils/ObjectUtil'
+import { Tabs, TabList, Tab, TabPanel } from '../../../../components/Tabs'
 import { GENERATE_OBJECTID_MAIN_NAVS } from './constants/navs'
-
-const DEFALUT_CODE_TABS = {
-  tab: 'results',
-  panel: 'results-panel'
-}
+import { DEFALUT_CODE_TABS, SUCCESS_RESULT } from './constants/constants'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   data () {
     this.states = {
       params: this.$route.params
     }
-
-    return {
-      optionsTabs: {
-        tab: 'options',
-        panel: 'options-panel'
-      },
-      codeTabs: {...DEFALUT_CODE_TABS},
-      demo: new Array(24).fill('0').join(),
-      navs: GENERATE_OBJECTID_MAIN_NAVS,
-      objectIds: [],
-      isShowMetadata: false,
-      isShowExamples: false,
-      selectedIndex: -1
-    }
+    return {}
   },
   methods: {
+    ...mapActions(['setState', 'createObjectIds']),
     onSelectCodeTab (value) {
-      this.selectedIndex = -1;
+      this.setState({selectedIndex: -1})
       if (value && value.tab === 'examples') {
-        this.isShowMetadata = false
-        this.isShowExamples = false
-        this.codeTabs = {...DEFALUT_CODE_TABS}
+        this.setState({
+          codeTabs: {...DEFALUT_CODE_TABS},
+          isShowMetadata: false,
+          isShowExamples: false,
+          result: { ...SUCCESS_RESULT, rows: [this.demo] }
+        })
         return
       }
-      this.codeTabs = value
+      this.setState({codeTabs: value})
     },
     onGenerateOIds ({ param, number, type }) {
-      let i = 0
-      const objectIds = []
-      while (++i <= parseInt(number, 10)) {
-        objectIds.push(generateObjectId(param))
-      }
-
-      this.selectedIndex = -1;
-      this.objectIds = objectIds
+      this.createObjectIds({ param, number, type })
     },
     onSelectedRow (index) {
-      this.selectedIndex = index
+      this.setState({selectedIndex: index})
     }
+  },
+  computed: {
+    ...mapState({
+      optionsTabs: state => state.generateIdMain.optionsTabs,
+      codeTabs: state => state.generateIdMain.codeTabs,
+      demo: state => state.generateIdMain.demo,
+      navs: state => state.generateIdMain.navs,
+      result: state => state.generateIdMain.result,
+      isShowMetadata: state => state.generateIdMain.isShowMetadata,
+      isShowExamples: state => state.generateIdMain.isShowExamples,
+      selectedIndex: state => state.generateIdMain.selectedIndex,
+      example: state => state.generateIdMain.example,
+      metadatas: state => state.generateIdMain.metadatas
+    })
   },
   mounted () {
     const headroom = new Headroom(this.$refs.navbar, {
@@ -197,8 +193,7 @@ export default {
 
     const currentNav = this.navs.find(nav => nav.link.indexOf(this.states.params.type) > -1)
     if (currentNav) {
-      this.demo = currentNav.demo
-      this.objectIds = [this.demo]
+      this.setState({ demo: currentNav.demo, result: { ...SUCCESS_RESULT, rows: [currentNav.demo] } })
     }
   },
   components: { Tabs, TabList, Tab, TabPanel, OptionsForm },
