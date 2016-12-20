@@ -10,6 +10,7 @@ var config = require('./config/config');
 var AV = require('leanengine');
 
 var app = express();
+app.use('/favicons', express.static('favicons'));
 
 if (app.get('env') === 'development') {
   var webpack = require('webpack');

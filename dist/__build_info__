@@ -1,6 +1,6 @@
 Hash: fffb0b83b1bf4ed2168c
 Version: webpack 1.13.3
-Time: 16897ms
+Time: 18073ms
                              Asset       Size  Chunks             Chunk Names
                      app.47587c.js     445 kB    0, 7  [emitted]  app
   glyphicons-halflings-regular.eot    20.1 kB          [emitted]  
@@ -21,7 +21,7 @@ glyphicons-halflings-regular.woff2      18 kB          [emitted]
                   vender.d41d8c.js   69 bytes    6, 7  [emitted]  vender
                   vendor.d41d8c.js   21 bytes       7  [emitted]  vendor
                     app.45eaf7.css    2.96 MB    0, 7  [emitted]  app
-                        index.html  864 bytes          [emitted]  
+                        index.html    1.16 kB          [emitted]  
 chunk    {0} app.47587c.js, app.45eaf7.css (app) 1.06 MB [rendered]
     [0] ./static/index.js 1.05 kB {0} [built]
     [1] ./~/core-js/modules/_export.js 1.6 kB {0} [built]
@@ -566,33 +566,41 @@ Child html-webpack-plugin for "index.html":
          Asset    Size  Chunks       Chunk Names
     index.html  558 kB       0       
     chunk    {0} index.html 540 kB [rendered]
-        [0] ./~/html-webpack-plugin/lib/loader.js!./static/template.html 1.04 kB {0} [built]
+        [0] ./~/html-webpack-plugin/lib/loader.js!./static/template.html 1.34 kB {0} [built]
         [1] ./~/lodash/lodash.js 539 kB {0} [built]
         [2] (webpack)/buildin/module.js 241 bytes {0} [built]
 Child extract-text-webpack-plugin:
-    chunk    {0} extract-text-webpack-plugin-output-filename 2.61 kB [rendered]
-        [0] ./~/css-loader!./~/vue-loader/lib/style-rewriter.js?id=data-v-0d68c85e&scoped=true!./~/less-loader!./~/autoprefixer-loader?{ browsers: ['last 100 versions'] }!./~/vue-loader/lib/selector.js?type=styles&index=0!./static/components/Toast/Toast.vue 1.15 kB {0} [built]
+    chunk    {0} extract-text-webpack-plugin-output-filename 2.46 kB [rendered]
+        [0] ./~/css-loader!./~/vue-loader/lib/style-rewriter.js?id=data-v-17c8b91b&scoped=true!./~/less-loader!./~/autoprefixer-loader?{ browsers: ['last 100 versions'] }!./~/vue-loader/lib/selector.js?type=styles&index=0!./static/modules/Home/components/SearchBar/SearchBar.vue 1.01 kB {0} [built]
         [1] ./~/css-loader/lib/css-base.js 1.46 kB {0} [built]
 Child extract-text-webpack-plugin:
     chunk    {0} extract-text-webpack-plugin-output-filename 2.92 kB [rendered]
         [0] ./~/css-loader!./~/vue-loader/lib/style-rewriter.js?id=data-v-c361a9be!./~/less-loader!./~/autoprefixer-loader?{ browsers: ['last 100 versions'] }!./~/vue-loader/lib/selector.js?type=styles&index=0!./static/components/Slider/Slider.vue 1.46 kB {0} [built]
         [1] ./~/css-loader/lib/css-base.js 1.46 kB {0} [built]
 Child extract-text-webpack-plugin:
-    chunk    {0} extract-text-webpack-plugin-output-filename 2.73 kB [rendered]
-        [0] ./~/css-loader!./~/vue-loader/lib/style-rewriter.js?id=data-v-46bbf906!./~/less-loader!./~/autoprefixer-loader?{ browsers: ['last 100 versions'] }!./~/vue-loader/lib/selector.js?type=styles&index=0!./static/modules/Tools/modules/GenerateObjectId/components/OptionsForm/OptionsForm.vue 1.27 kB {0} [built]
+    chunk    {0} extract-text-webpack-plugin-output-filename 2.61 kB [rendered]
+        [0] ./~/css-loader!./~/vue-loader/lib/style-rewriter.js?id=data-v-0d68c85e&scoped=true!./~/less-loader!./~/autoprefixer-loader?{ browsers: ['last 100 versions'] }!./~/vue-loader/lib/selector.js?type=styles&index=0!./static/components/Toast/Toast.vue 1.15 kB {0} [built]
         [1] ./~/css-loader/lib/css-base.js 1.46 kB {0} [built]
 Child extract-text-webpack-plugin:
     chunk    {0} extract-text-webpack-plugin-output-filename 4.86 kB [rendered]
         [0] ./~/css-loader!./~/vue-loader/lib/style-rewriter.js?id=data-v-aa97af36&scoped=true!./~/less-loader!./~/autoprefixer-loader?{ browsers: ['last 100 versions'] }!./~/vue-loader/lib/selector.js?type=styles&index=0!./static/modules/Home/HomeMain.vue 3.4 kB {0} [built]
         [1] ./~/css-loader/lib/css-base.js 1.46 kB {0} [built]
 Child extract-text-webpack-plugin:
-    chunk    {0} extract-text-webpack-plugin-output-filename 2.46 kB [rendered]
-        [0] ./~/css-loader!./~/vue-loader/lib/style-rewriter.js?id=data-v-17c8b91b&scoped=true!./~/less-loader!./~/autoprefixer-loader?{ browsers: ['last 100 versions'] }!./~/vue-loader/lib/selector.js?type=styles&index=0!./static/modules/Home/components/SearchBar/SearchBar.vue 1.01 kB {0} [built]
+    chunk    {0} extract-text-webpack-plugin-output-filename 2.73 kB [rendered]
+        [0] ./~/css-loader!./~/vue-loader/lib/style-rewriter.js?id=data-v-46bbf906!./~/less-loader!./~/autoprefixer-loader?{ browsers: ['last 100 versions'] }!./~/vue-loader/lib/selector.js?type=styles&index=0!./static/modules/Tools/modules/GenerateObjectId/components/OptionsForm/OptionsForm.vue 1.27 kB {0} [built]
         [1] ./~/css-loader/lib/css-base.js 1.46 kB {0} [built]
 Child extract-text-webpack-plugin:
     chunk    {0} extract-text-webpack-plugin-output-filename 2.5 kB [rendered]
         [0] ./~/css-loader!./~/vue-loader/lib/style-rewriter.js?id=data-v-9b71047e!./~/less-loader!./~/autoprefixer-loader?{ browsers: ['last 100 versions'] }!./~/vue-loader/lib/selector.js?type=styles&index=0!./static/components/Tabs/Tabs.vue 1.04 kB {0} [built]
         [1] ./~/css-loader/lib/css-base.js 1.46 kB {0} [built]
+Child extract-text-webpack-plugin:
+    chunk    {0} extract-text-webpack-plugin-output-filename 20.2 kB [rendered]
+        [0] ./~/css-loader!./~/vue-loader/lib/style-rewriter.js?id=data-v-141651be&scoped=true!./~/less-loader!./~/autoprefixer-loader?{ browsers: ['last 100 versions'] }!./~/vue-loader/lib/selector.js?type=styles&index=0!./static/modules/Error/Error.vue 2.99 kB {0} [built]
+        [1] ./static/modules/Error/images/bg.jpg 3.81 kB {0} [built]
+        [2] ./~/css-loader/lib/css-base.js 1.46 kB {0} [built]
+        [3] ./static/modules/Error/images/bg_left.jpg 5.31 kB {0} [built]
+        [4] ./static/modules/Error/images/bg_right.jpg 4.51 kB {0} [built]
+        [5] ./static/modules/Error/images/extended_line.jpg 2.17 kB {0} [built]
 Child extract-text-webpack-plugin:
     chunk    {0} extract-text-webpack-plugin-output-filename 40 kB [rendered]
         [0] ./~/css-loader!./~/vue-loader/lib/style-rewriter.js?id=data-v-14afa1e1!./~/less-loader!./~/autoprefixer-loader?{ browsers: ['last 100 versions'] }!./~/vue-loader/lib/selector.js?type=styles&index=0!./static/components/FooterNavBar/FooterNavBar.vue 3.15 kB {0} [built]
@@ -605,14 +613,6 @@ Child extract-text-webpack-plugin:
         [7] ./static/components/FooterNavBar/images/icon_home_default.png 4.02 kB {0} [built]
         [8] ./static/components/FooterNavBar/images/icon_profile_active.png 5.17 kB {0} [built]
         [9] ./static/components/FooterNavBar/images/icon_profile_default.png 4.75 kB {0} [built]
-Child extract-text-webpack-plugin:
-    chunk    {0} extract-text-webpack-plugin-output-filename 20.2 kB [rendered]
-        [0] ./~/css-loader!./~/vue-loader/lib/style-rewriter.js?id=data-v-141651be&scoped=true!./~/less-loader!./~/autoprefixer-loader?{ browsers: ['last 100 versions'] }!./~/vue-loader/lib/selector.js?type=styles&index=0!./static/modules/Error/Error.vue 2.99 kB {0} [built]
-        [1] ./static/modules/Error/images/bg.jpg 3.81 kB {0} [built]
-        [2] ./~/css-loader/lib/css-base.js 1.46 kB {0} [built]
-        [3] ./static/modules/Error/images/bg_left.jpg 5.31 kB {0} [built]
-        [4] ./static/modules/Error/images/bg_right.jpg 4.51 kB {0} [built]
-        [5] ./static/modules/Error/images/extended_line.jpg 2.17 kB {0} [built]
 Child extract-text-webpack-plugin:
     chunk    {0} extract-text-webpack-plugin-output-filename 2.73 MB [rendered]
         [0] ./~/css-loader!./~/vue-loader/lib/style-rewriter.js?id=data-v-6782a26e&scoped=true!./~/less-loader!./~/autoprefixer-loader?{ browsers: ['last 100 versions'] }!./~/vue-loader/lib/selector.js?type=styles&index=0!./static/modules/Tools/modules/GenerateObjectId/GenerateObjectIdMain.vue 7.94 kB {0} [built]
