@@ -10,7 +10,7 @@ Vue.use(Vuex)
 
 const isDebug = !process || !process.env || process.env.NODE_ENV !== 'production'
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   modules: {
     commonMain: CommonMainState,
     homeMain: HomeMainState,
@@ -19,3 +19,15 @@ export default new Vuex.Store({
   strict: isDebug,
   plugins: isDebug ? [createLogger()] : []
 })
+
+// if (module.hot) {
+//   module.hot.accept(['./modules'], () => {
+//     const newMutations = require('./modules').default
+
+//     store.hotUpdate({
+//       mutations: newMutations
+//     })
+//   })
+// }
+
+export default store

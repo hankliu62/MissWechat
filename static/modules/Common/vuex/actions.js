@@ -4,7 +4,7 @@ import { API_FETCH_WECHAT_SIGNATURE } from '../constants/apis'
 import RestUtil from '../../../utils/RestUtil'
 import config from '../../../config/config'
 
-export const setState = function ({ commit }, payload) {
+export const setCommonState = function ({ commit }, payload) {
   commit(COMMON_MAIN_SET, payload)
 }
 

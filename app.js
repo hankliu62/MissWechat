@@ -8,8 +8,10 @@ var request = require('request');
 var todos = require('./routes/todos');
 var config = require('./config/config');
 var AV = require('leanengine');
+var compression = require('compression');
 
 var app = express();
+app.use(compression()); //use compression
 app.use('/favicons', express.static('favicons'));
 
 if (app.get('env') === 'development') {

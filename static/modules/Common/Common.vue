@@ -24,7 +24,7 @@ export default {
   },
   created: async function () {
     if (this.states.matched.some(record => record.meta.requireWechatConfig)) {
-      const options = { params: { url: window.location.href, appid: config.wechat_appid } }
+      const options = { params: { url: window.location.href, appid: 'config.wechat_appid' } }
       await this.fetchWechatSignature(options)
 
       const signature = this.signature

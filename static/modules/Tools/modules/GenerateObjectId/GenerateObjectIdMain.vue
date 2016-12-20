@@ -1,15 +1,8 @@
 <template>
   <div class="goid-container">
-    <nav ref="navbar" class="navbar navbar-fixed clearfix">
-      <div class="navbar-header">ObjectID Generator</div>
-      <ul class="navs">
-        <li :class="['nav', { 'actived': nav.actived }]" v-for="nav in navs">
-          <a class="nav-link" :href="nav.link" v-text="nav.name"></a>
-        </li>
-      </ul>
-    </nav>
+    <headroom-nav :nav="nav"></headroom-nav>
     <header class="header header-fixed">
-      <div class="background-mask"></div>
+      <div class="background-mask">{{JSON.stringify(nav)}}</div>
       <div class="content">
         <h1 class="title">Online ObjectID Generator</h1>
         <p class="info">Your ObjectID:</p>
@@ -128,8 +121,8 @@
 </template>
 
 <script>
-import Headroom from 'headroom.js'
 import OptionsForm from './components/OptionsForm/OptionsForm'
+import HeadroomNav from '../../../../components/HeadroomNav/HeadroomNav'
 import { Tabs, TabList, Tab, TabPanel } from '../../../../components/Tabs'
 import { GENERATE_OBJECTID_MAIN_NAVS } from './constants/navs'
 import { DEFALUT_CODE_TABS, SUCCESS_RESULT } from './constants/constants'
@@ -143,7 +136,8 @@ export default {
     return {}
   },
   methods: {
-    ...mapActions(['setState', 'createObjectIds']),
+    ...mapActions(['createObjectIds']),
+    setState: mapActions(['setGeneratorState'])['setGeneratorState'],
     onSelectCodeTab (value) {
       this.setState({selectedIndex: -1})
       if (value && value.tab === 'examples') {
@@ -176,37 +170,21 @@ export default {
       selectedIndex: state => state.generateIdMain.selectedIndex,
       example: state => state.generateIdMain.example,
       metadatas: state => state.generateIdMain.metadatas
-    })
+    }),
+    nav () {
+      return {
+        items: this.navs,
+        title: 'ObjectID Generator'
+      }
+    }
   },
   mounted () {
-    const headroom = new Headroom(this.$refs.navbar, {
-      tolerance: 5,
-      offset: 105,
-      classes: {
-        initial: 'animated',
-        pinned: 'slideDown',
-        unpinned: 'slideUp'
-      }
-    })
-    headroom.init()
-    this.states.headroom = headroom
-
     const currentNav = this.navs.find(nav => nav.link.indexOf(this.states.params.type) > -1)
     if (currentNav) {
       this.setState({ demo: currentNav.demo, result: { ...SUCCESS_RESULT, rows: [currentNav.demo] } })
     }
   },
-  components: { Tabs, TabList, Tab, TabPanel, OptionsForm },
-  destroyed () {
-    if (this.states.headroom) {
-      if (this.states.headroom.destroy) {
-        this.states.headroom.destroy()
-      } else {
-        this.states.headroom = null
-        delete this.states.headroom
-      }
-    }
-  }
+  components: { Tabs, TabList, Tab, TabPanel, OptionsForm, HeadroomNav }
 }
 </script>
 
