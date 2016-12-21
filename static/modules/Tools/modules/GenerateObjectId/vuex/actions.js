@@ -6,7 +6,7 @@ import {
 import { PARAM_TYPES } from '../constants/constants'
 import { generateObjectId } from '../../../../../utils/ObjectUtil'
 
-export const setState = ({ commit }, payload) => {
+export const setGeneratorState = ({ commit }, payload) => {
   commit(TOOLS_GENERATE_MAIN_SET, payload)
 }
 

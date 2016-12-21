@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import { sync } from 'vuex-router-sync' // 将 vue-router 纳入到 vuex 的管理
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 // import VueResource from 'vue-resource'
@@ -16,7 +17,6 @@ Vue.use(VueRouter)
 Vue.use(MintUI)
 
 // 2. 定义（路由）组件和路由: routeConfig
-
 // 3. 创建 router 实例，然后传 `routes` 配置
 const router = new VueRouter({
   hashbang: true,
@@ -24,6 +24,8 @@ const router = new VueRouter({
   saveScrollPosition: true,
   routes: routeConfig
 })
+
+sync(store, router);
 
 // Define your root component for app here
 // vue-router: 1.x.x

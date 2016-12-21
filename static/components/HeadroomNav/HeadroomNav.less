@@ -1,0 +1,94 @@
+@import '../../styles/variable';
+
+@navbarBgColor: rgba(0, 0, 0, .3);
+@navbarHeaderColor: #ddd;
+@navColor: @white;
+@navHoverColor: @grass;
+@navHoverBgColor: rgba(91, 188, 46, .1);
+@navHoverBorderColor: rgba(91, 188, 46, .25);
+@navShadowColor: rgba(255, 255, 255, .25);
+@navbarHeight: 52px;
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-@navbarHeight)
+  }
+  100% {
+    transform: translateY(0)
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(0)
+  }
+  100% {
+    transform: translateY(-@navbarHeight)
+  }
+}
+
+.navbar {
+  margin: 0;
+  background-color: @navbarBgColor;
+  border-radius: 0;
+  z-index: 100;
+
+  &.navbar-fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .navbar-header {
+    color: @navbarHeaderColor;
+    opacity: .7;
+    padding: 15px 15px;
+    font-size: 18px;
+    line-height: 20px;
+  }
+
+  &.animated {
+    animation-duration: .5s;
+    animation-fill-mode: both;
+
+    &.slideDown {
+      animation-name: slideDown;
+    }
+
+    &.slideUp {
+      animation-name: slideUp;
+    }
+  }
+
+  .navs {
+    float: right;
+
+    .nav {
+      position: relative;
+      display: inline-block;
+      font-size: 15px;
+      line-height: 20px;
+      padding: (@navbarHeight - 20px - 2px) / 2 15px;
+      cursor: pointer;
+      text-shadow: 1px 1px 2px @navShadowColor;
+      border-left: 1px solid transparent;
+      border-right: 1px solid transparent;
+
+      .nav-link {
+        text-decoration: none;
+        color: @navColor;
+        cursor: pointer;
+      }
+
+      &:hover {
+        background-color: @navHoverBgColor;
+        // border-color: @navHoverBorderColor;
+
+        .nav-link {
+          color: @navHoverColor;
+        }
+      }
+    }
+  }
+}
