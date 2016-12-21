@@ -2,7 +2,7 @@
   <div class="goid-container">
     <headroom-nav :nav="nav"></headroom-nav>
     <header class="header header-fixed">
-      <div class="background-mask">{{JSON.stringify(nav)}}</div>
+      <div class="background-mask"></div>
       <div class="content">
         <h1 class="title">Online ObjectID Generator</h1>
         <p class="info">Your ObjectID:</p>

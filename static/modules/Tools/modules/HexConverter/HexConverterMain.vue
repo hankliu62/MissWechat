@@ -1,6 +1,14 @@
 <template>
   <div class="hex-container">
     <headroom-nav :nav="nav"></headroom-nav>
+    <header class="header header-fixed">
+      <div class="background-mask"></div>
+      <div class="content">
+        <h1 class="title">HexaDecimal Converter</h1>
+        <p class="desc">Characteristics of one transform hexadecimal to string and convert string to hexadecimal</p>
+      </div>
+    </header>
+    <div class="hex-body"></div>
   </div>
 </template>
 
