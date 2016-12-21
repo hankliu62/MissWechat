@@ -1,0 +1,42 @@
+@import '../../../../styles/variable';
+@import '../../../../styles/mixins/flexbox';
+
+@headerBgColor: #27AE60;
+@headerTitleColor: @white;
+@headerDescColor: @white;
+@headerTitleShadowColor: rgba(0, 0, 0, .1);
+@headerDescShadowColor: rgba(0, 0, 0, .3);
+
+.hex-container {
+  .header {
+    min-height: 380px;
+    background-color: @headerBgColor;
+    padding-top: @navbarHeight;
+    position: relative;
+    overflow: hidden;
+
+    .title {
+      margin-top: 60px;
+      text-align: center;
+      font-size: 60px;
+      color: @headerTitleColor;
+      text-shadow: 5px 5px 0 @headerTitleShadowColor;
+      font-weight: bold;
+      line-height: 70px;
+    }
+
+    .desc {
+      text-align: center;
+      font-size: 32px;
+      color: @headerDescColor;
+      text-shadow: 2px 2px 0 @headerDescShadowColor;
+      max-width: 800px;
+      margin: 20px auto 0;
+    }
+  }
+
+  .hex-body {
+    .flexbox();
+    height: 620px;
+  }
+}
