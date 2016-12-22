@@ -1,5 +1,6 @@
 @import '../../../../styles/variable';
 @import '../../../../styles/mixins/flexbox';
+@import '../../../../styles/components/result-tabs';
 
 @headerBgColor: #27AE60;
 @headerTitleColor: @white;
@@ -38,5 +39,13 @@
   .hex-body {
     .flexbox();
     height: 620px;
+
+    .input-wrapper {
+      .flex(1);
+    }
+
+    .result-wrapper {
+      .flex(1);
+    }
   }
 }

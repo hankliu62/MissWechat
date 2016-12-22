@@ -1,0 +1,81 @@
+@import '../variable';
+@import '../mixins/flexbox';
+
+@resultTabsBgColor: #363d44;
+@resultTabsBorderColor: #dee5e8;
+@resultCodesColor: #c3c6c4;
+@resultCodesBeforeContentBgColor: #f6f6f6;
+@resultCodeSelectedBgColor: #d5d5d5;
+@resultCodeSelectedBeforeContentBgColor: #222224;
+@resultRowWidth: 42px;
+@resultRowHeight: 20px;
+
+.tabbable.result-tabs {
+  background-color: @resultTabsBgColor;
+  border-left: 1px solid @resultTabsBorderColor;
+
+  .tablist {
+    padding-left: @resultRowWidth;
+  }
+
+  .tabpanel {
+    .flexbox();
+    overflow-y: auto;
+
+    .codes {
+      .flex(1);
+      color: @resultCodesColor;
+      position: relative;
+      overflow: hidden;
+      margin: 0;
+
+      &:before {
+        display: inline-block;
+        width: @resultRowWidth;
+        height: 100%;
+        content: '';
+        background-color: @resultCodesBeforeContentBgColor;
+      }
+
+      .code {
+        .flexbox();
+        position: absolute;
+        left: 0;
+        right: 0;
+        line-height: @resultRowHeight;
+        cursor: pointer;
+
+        &:before {
+          width: @resultRowWidth;
+          height: 100%;
+          content: '';
+          background-color: @resultCodesBeforeContentBgColor;
+          text-align: center;
+        }
+
+        span {
+          .flex(1);
+          padding-left: 5px;
+        }
+
+        &.selected {
+          background-color: @resultCodeSelectedBeforeContentBgColor;
+
+          &:before {
+            background-color: @resultCodeSelectedBgColor;
+          }
+        }
+      }
+
+      .create-codes(@n, @i: 1) when (@i <= @n) {
+        .code-@{i} {
+          &:before {
+            content: '@{i}';
+          }
+        }
+        .create-codes(@n, (@i + 1))
+      }
+      .create-codes(200);
+    }
+  }
+}
