@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueResource from 'vue-resource'
 import StatusCodes from '../constants/status-codes'
+import config from '../config/config'
 import store from '../vuex/store'
 import { SHOW_TOAST, HIDE_TOAST } from '../constants/types'
 
@@ -19,6 +20,9 @@ Vue.http.interceptors.push((request, next) => {
   }
 
   request.params = params
+  request.url = `${config.service_domain}${request.url}`
+
+  console.log(request.headers)
 
   next(function (response) {
     // Todo: common error handler

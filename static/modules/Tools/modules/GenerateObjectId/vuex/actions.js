@@ -7,7 +7,7 @@ import { PARAM_TYPES } from '../constants/constants'
 import { generateObjectId } from '../../../../../utils/ObjectUtil'
 
 export const setGeneratorState = ({ commit }, payload) => {
-  commit(TOOLS_GENERATE_MAIN_SET, payload)
+  commit(TOOLS_GENERATE_MAIN_SET, { payload })
 }
 
 export const createObjectIds = ({ commit }, { param, number = 1, type }) => {
@@ -49,7 +49,7 @@ export const createObjectIds = ({ commit }, { param, number = 1, type }) => {
         objectIds.push(generateObjectId())
       }
     }
-    commit(TOOLS_GENERATE_OBJECTIDS_SUCCESS, objectIds)
+    commit(TOOLS_GENERATE_OBJECTIDS_SUCCESS, { objectIds })
   } catch (error) {
     const payload = {
       error: error.toString()

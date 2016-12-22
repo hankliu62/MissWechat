@@ -1,10 +1,12 @@
+import { PARAM_TYPES } from './constants'
+
 export const HEX_CONVERTER_MAIN_NAVS = [
   {
-    name: 'Time ObjectId',
-    link: '/tools/hex/encode'
+    name: 'Encode Hex',
+    link: `/tools/hex/${PARAM_TYPES.ENCODE}`
   },
   {
-    name: 'Hex ObjectId',
-    link: '/tools/hex/decode'
+    name: 'Decode Hex',
+    link: `/tools/hex/${PARAM_TYPES.DECODE}`
   }
 ]

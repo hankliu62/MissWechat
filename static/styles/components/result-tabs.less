@@ -26,7 +26,7 @@
       .flex(1);
       color: @resultCodesColor;
       position: relative;
-      overflow: hidden;
+      overflow-y: hidden;
       margin: 0;
 
       &:before {
@@ -46,7 +46,7 @@
         cursor: pointer;
 
         &:before {
-          width: @resultRowWidth;
+          min-width: @resultRowWidth;
           height: 100%;
           content: '';
           background-color: @resultCodesBeforeContentBgColor;

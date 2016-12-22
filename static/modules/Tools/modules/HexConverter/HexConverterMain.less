@@ -2,11 +2,17 @@
 @import '../../../../styles/mixins/flexbox';
 @import '../../../../styles/components/result-tabs';
 
-@headerBgColor: #27AE60;
+@containerThemeColor: #27AE60;
+@headerBgColor: @containerThemeColor;
 @headerTitleColor: @white;
 @headerDescColor: @white;
 @headerTitleShadowColor: rgba(0, 0, 0, .1);
 @headerDescShadowColor: rgba(0, 0, 0, .3);
+@codeTextareaBorderColor: #e2e2e2;
+@codeTextareaFocusColor: @containerThemeColor;
+@btnBorderColor: #19af8c;
+@btnBgColor: @containerThemeColor;
+@btnHoverBgColor: #295;
 
 .hex-container {
   .header {
@@ -40,8 +46,67 @@
     .flexbox();
     height: 620px;
 
-    .input-wrapper {
+    .options-wrapper {
       .flex(1);
+
+      .options-tabpanel-body {
+        padding: 0 30px;
+
+        .title {
+          margin: 30px auto 20px;
+          letter-spacing: 1.5px;
+          font-size: 24px;
+        }
+
+        .desc {
+          margin: 10px 0;
+          font-weight: bold;
+          line-height: 20px;
+          font-size: 14px;
+        }
+
+        .code {
+          width: 100%;
+          height: 250px;
+          padding: 10px;
+          border: 1px solid @codeTextareaBorderColor;
+          border-radius: 2px;
+          resize: vertical;
+          box-sizing: border-box;
+          box-shadow: none;
+
+          &:focus {
+            border-color: @codeTextareaFocusColor;
+            box-shadow: 0 0 3px @codeTextareaFocusColor;
+            outline: 0;
+          }
+        }
+
+        .btns-group {
+          margin-top: 30px;
+          text-align: center;
+
+          .btn + .btn {
+            margin-left: 20px;
+          }
+
+          .btn-theme {
+            background-color: @btnBgColor;
+            color: @white;
+            text-shadow: none;
+            background-image: none;
+            border: 1px solid @btnBorderColor;
+
+            &:active,
+            &:focus,
+            &:hover {
+              background-color: @btnHoverBgColor;
+              outline: none;
+              box-shadow: none;
+            }
+          }
+        }
+      }
     }
 
     .result-wrapper {

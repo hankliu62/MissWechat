@@ -25,7 +25,7 @@ const router = new VueRouter({
   routes: routeConfig
 })
 
-sync(store, router);
+// sync(store, router);
 
 // Define your root component for app here
 // vue-router: 1.x.x

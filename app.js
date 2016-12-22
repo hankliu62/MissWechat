@@ -103,6 +103,7 @@ app.use(function(err, req, res, next) { // jshint ignore:line
     // 如果是开发环境，则将异常堆栈输出到页面，方便开发调试
     error = err;
   }
+
   res.render('error', {
     message: err.message,
     error: error
