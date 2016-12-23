@@ -13,12 +13,14 @@ export const setHexConverterState = ({ commit }, payload) => {
 
 export const convert = async ({ commit }, options) => {
   const response = await RestUtil.post(API_HEX_CONVERT, options)
-  const data = response.body.data
-  if (StatusCodes.SUCCESS === data.statusCode) {
+  const body = response.body
+  const code = body.statusCode
+  const data = body.data
+  if (StatusCodes.SUCCESS === code) {
     commit(TOOLS_HEX_CONVERT_SUCCESS, { result: data.result })
   } else {
     commit(TOOLS_HEX_CONVERT_FAIL, {
-      statusCode: data.statusCode,
+      statusCode: code,
       name: data.name || 'Bad Request',
       message: data.messages[0] ? data.messages[0].values()[0] : data.error.toString()
     })

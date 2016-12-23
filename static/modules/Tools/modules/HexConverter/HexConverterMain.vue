@@ -54,7 +54,12 @@
               class="options-header"
               slot="tab"
               :id="states.inputTab.headerId"
-              :selected="optionsTabs.tab === states.inputTab.headerId">Hex Converter Params From</tab>
+              :selected="optionsTabs.tab === states.inputTab.headerId">
+              <span :class="{httpsuccess: result.statusCode === 200, httperror: result.statusCode !== 200}">
+                <i class="icon icon-circle"></i>
+                <em v-text="' ' + result.statusCode + ' '"></em><span v-text="result.statusMessage"></span>
+              </span>
+            </tab>
           </tab-list>
           <tab-panel
             slot="tabpanel"
@@ -62,11 +67,12 @@
             :selected="optionsTabs.panel === states.inputTab.bodyId">
             <ul class="codes" @click.self="onSelectedRow(-1)">
               <li
-                :class="['code', 'code-' + n, { selected: n === selectedIndex }]"
-                :style="{ top: ((n - 1) * 20) + 'px' }"
-                v-for="n in 20"
-                @click.stop.prevent="onSelectedRow(n)">
-                <span>123</span>
+                :class="['code', 'code-' + (index + 1), { selected: index === selectedIndex }]"
+                :style="{ top: (index * 20) + 'px' }"
+                v-for="(row, index) in result.rows"
+                v-if="result && result.rows"
+                @click.stop.prevent="onSelectedRow(index)">
+                <span v-text="row"></span>
               </li>
             </ul>
           </tab-panel>

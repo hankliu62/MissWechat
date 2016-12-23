@@ -7,6 +7,8 @@
 @resultCodesBeforeContentBgColor: #f6f6f6;
 @resultCodeSelectedBgColor: #d5d5d5;
 @resultCodeSelectedBeforeContentBgColor: #222224;
+@httpsuccessColor: #5bb349;
+@httperrorColor: #d96367;
 @resultRowWidth: 42px;
 @resultRowHeight: 20px;
 
@@ -16,6 +18,24 @@
 
   .tablist {
     padding-left: @resultRowWidth;
+
+    .tab {
+      .icon-circle {
+        margin-right: 5px;
+      }
+
+      .httpsuccess {
+        .icon-circle {
+          color: @httpsuccessColor;
+        }
+      }
+
+      .httperror {
+        .icon-circle {
+          color: @httperrorColor;
+        }
+      }
+    }
   }
 
   .tabpanel {
