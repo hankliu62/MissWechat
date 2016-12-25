@@ -98,12 +98,20 @@
             border: 1px solid @btnBorderColor;
 
             &:active,
-            &:focus,
             &:hover {
               background-color: @btnHoverBgColor;
               outline: none;
               box-shadow: none;
             }
+
+            &:focus {
+              outline: none;
+              box-shadow: none;
+            }
+          }
+
+          .btn-upload {
+            padding: 0;
           }
         }
       }

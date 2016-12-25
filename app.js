@@ -13,6 +13,7 @@ var compression = require('compression');
 var app = express();
 app.use(compression()); //use compression
 app.use('/favicons', express.static('favicons'));
+app.use('/deps', express.static('deps'));
 
 if (app.get('env') === 'development') {
   var webpack = require('webpack');

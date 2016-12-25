@@ -38,7 +38,12 @@
               <div class="btns-group">
                 <button type="button" class="btn btn-default btn-theme" @click="onTransform">Transform</button>
                 <button type="button" class="btn btn-default btn-theme" @click="onLoad">Load</button>
-                <button type="button" class="btn btn-default btn-theme" @click="onUpload">Upload</button>
+                <upload
+                  class="btn btn-upload"
+                  @beforeUpload="console.log(123)"
+                >
+                  <button type="button" class="btn btn-default btn-theme">Upload</button>
+                </upload>
               </div>
             </section>
           </tab-panel>
@@ -86,6 +91,7 @@
 import { mapActions, mapState } from 'vuex'
 import { Tabs, TabList, Tab, TabPanel } from '../../../../components/Tabs'
 import HeadroomNav from '../../../../components/HeadroomNav/HeadroomNav'
+import Upload from '../../../../components/Upload/Upload'
 import { HEX_CONVERTER_MAIN_NAVS } from './constants/navs'
 import { PARAM_TYPES } from './constants/constants'
 
@@ -144,7 +150,7 @@ export default {
     }
     Object.assign(this.states.inputTab, appendProperties)
   },
-  components: { Tabs, TabList, Tab, TabPanel, HeadroomNav }
+  components: { Tabs, TabList, Tab, TabPanel, HeadroomNav, Upload }
 }
 </script>
 
