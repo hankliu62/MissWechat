@@ -4,6 +4,7 @@
 .tabbable {
   .flexbox();
   flex-direction: column;
+  height: 100%;
 
   [role="tablist"] {
     background-color: #555;
@@ -20,6 +21,7 @@
     cursor: pointer;
     color: @white;
     font-size: 14px;
+    user-select: none;
 
     &[aria-selected=true] {
       background-color: #444;
@@ -38,6 +40,6 @@
   }
 
   [role="tabpanel"] {
-    .flex(1)
+    .flex(1);
   }
 }

@@ -2,15 +2,13 @@ import { COMMON_MAIN_SET, FETCH_WECHAT_SIGNATURE } from '../constants/types'
 import { SHOW_TOAST, HIDE_TOAST } from '../../../constants/types'
 import { API_FETCH_WECHAT_SIGNATURE } from '../constants/apis'
 import RestUtil from '../../../utils/RestUtil'
-import config from '../../../config/config'
 
 export const setCommonState = function ({ commit }, payload) {
   commit(COMMON_MAIN_SET, payload)
 }
 
 export const fetchWechatSignature = async function ({ commit }, options) {
-  const url = `${config.service_domain}${API_FETCH_WECHAT_SIGNATURE}`
-  const response = await RestUtil.get(url, options)
+  const response = await RestUtil.get(API_FETCH_WECHAT_SIGNATURE, options)
   const signature = response.body.data.signature
   commit(FETCH_WECHAT_SIGNATURE, signature)
 }

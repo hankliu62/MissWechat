@@ -5,6 +5,7 @@ import createLogger from './plugins/Logger'
 import CommonMainState from '../modules/Common/vuex'
 import HomeMainState from '../modules/Home/vuex'
 import GenerateIdMainState from '../modules/Tools/modules/GenerateObjectId/vuex'
+import HexConverterMainState from '../modules/Tools/modules/HexConverter/vuex'
 
 Vue.use(Vuex)
 
@@ -14,7 +15,8 @@ const store = new Vuex.Store({
   modules: {
     commonMain: CommonMainState,
     homeMain: HomeMainState,
-    generateIdMain: GenerateIdMainState
+    generateIdMain: GenerateIdMainState,
+    hexConverterMain: HexConverterMainState
   },
   strict: isDebug,
   plugins: isDebug ? [createLogger()] : []

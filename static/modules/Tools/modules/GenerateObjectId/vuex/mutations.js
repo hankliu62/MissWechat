@@ -6,14 +6,14 @@ import {
 import { SUCCESS_RESULT, ERROR_RESULT, DEFALUT_CODE_TABS } from '../constants/constants'
 
 export default {
-  [TOOLS_GENERATE_MAIN_SET] (state, payload) {
+  [TOOLS_GENERATE_MAIN_SET] (state, { payload }) {
     for (const key in payload) {
       if (payload.hasOwnProperty(key)) {
         state[key] = payload[key]
       }
     }
   },
-  [TOOLS_GENERATE_OBJECTIDS_SUCCESS] (state, objectIds) {
+  [TOOLS_GENERATE_OBJECTIDS_SUCCESS] (state, { objectIds }) {
     state.result = {
       ...SUCCESS_RESULT,
       rows: objectIds

@@ -1,3 +1,5 @@
+import { HEX_CONVERT_ROUTE_PARAMS } from '../constants/constants'
+
 export default {
   path: '/tools',
   component: function (resolve) {
@@ -17,8 +19,14 @@ export default {
       name: 'hexConverter',
       component: function (resolve) {
         require(['../modules/Tools/modules/HexConverter/HexConverterMain'], resolve)
+      },
+      beforeEnter: (to, from, next) => {
+        if (to.params.type && !HEX_CONVERT_ROUTE_PARAMS.includes(to.params.type)) {
+          next('/error/404');
+        }
+        next();
       }
     },
-    { path: 'hex', redirect: 'hex/decode' }
+    { path: 'hex', redirect: 'hex/encode' }
   ]
 }
