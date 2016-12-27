@@ -1,6 +1,7 @@
 @import '../../../../styles/variable';
 @import '../../../../styles/mixins/flexbox';
-@import '../../../../styles/components/result-tabs';
+@import '../../../../styles/components/hk-tabs';
+@import '../../../../styles/components/hk-dialog';
 
 @containerThemeColor: #27AE60;
 @headerBgColor: @containerThemeColor;
@@ -13,6 +14,8 @@
 @btnBorderColor: #19af8c;
 @btnBgColor: @containerThemeColor;
 @btnHoverBgColor: #295;
+@inputInsetShadowColor: rgba(0, 0, 0, .075);
+@inputOutlineShadowColor:rgba(25, 175, 140, .6);
 
 .hex-container {
   .header {
@@ -84,31 +87,6 @@
 
         .btns-group {
           margin-top: 30px;
-          text-align: center;
-
-          .btn + .btn {
-            margin-left: 20px;
-          }
-
-          .btn-theme {
-            background-color: @btnBgColor;
-            color: @white;
-            text-shadow: none;
-            background-image: none;
-            border: 1px solid @btnBorderColor;
-
-            &:active,
-            &:hover {
-              background-color: @btnHoverBgColor;
-              outline: none;
-              box-shadow: none;
-            }
-
-            &:focus {
-              outline: none;
-              box-shadow: none;
-            }
-          }
 
           .btn-upload {
             padding: 0;
@@ -119,6 +97,50 @@
 
     .result-wrapper {
       .flex(1);
+    }
+  }
+
+  .btns-group {
+    text-align: center;
+
+    .btn {
+
+      &:active,
+      &:hover,
+      &:focus {
+        outline: none;
+        box-shadow: none;
+      }
+
+      + .btn {
+        margin-left: 20px;
+      }
+    }
+
+    .btn-theme {
+      background-color: @btnBgColor;
+      color: @white;
+      text-shadow: none;
+      background-image: none;
+      border: 1px solid @btnBorderColor;
+
+      &:active,
+      &:hover {
+        background-color: @btnHoverBgColor;
+      }
+    }
+  }
+
+  .input-theme {
+    &:hover {
+      border-color: @btnBorderColor;
+      box-shadow: inset 0 1px 1px @inputInsetShadowColor, 0 0 8px @inputOutlineShadowColor;
+    }
+  }
+
+  .url-dialog {
+    .form-group {
+      margin: 0;
     }
   }
 }

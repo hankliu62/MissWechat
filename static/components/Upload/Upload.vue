@@ -38,7 +38,9 @@ export default {
     isShowprogress: [Boolean],
     acceptTypes: {
       type: Array,
-      default: ['image/jpg', 'image/jpeg', 'image/png']
+      default: function () {
+        return ['image/jpg', 'image/jpeg', 'image/png']
+      }
     }
   },
   mounted () {
@@ -50,7 +52,13 @@ export default {
       this.maskStyle = { width, height }
 
       const uploader = initUploader({
-        browse_button: 'pickfiles'
+        browse_button: 'pickfiles',
+        multi_selection: true,
+        init: {
+          FileUploaded: function (up, file, info, url) {
+            console.log(url)
+          }
+        }
       })
     }
   },

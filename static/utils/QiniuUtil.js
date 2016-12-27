@@ -1,5 +1,6 @@
 import config from '../config/config'
 import qiniuConfig from '../config/qiniu'
+import { generateObjectId } from './ObjectUtil'
 
 /**
  * init uploader function
@@ -84,11 +85,16 @@ import qiniuConfig from '../config/qiniu'
  *  }
  * @return {Object} created qiniu uploader
  */
-export const initUploader = (options) => {
+export const initUploader = (options = {}) => {
+  options.init = options.init || {}
+  const fileUploadedFn = options.init.FileUploaded || function () {}
+  delete options.init.FileUploaded
+
   const defaultOptions = {
     runtimes: 'html5,flash,html4', // 上传模式,依次退化
     uptoken_url: `${config.service_domain}/qiniu/uptoken?accesskey=${qiniuConfig.accesskey}&bucketname=${qiniuConfig.bucketname}`, // 若未指定uptoken_url,则必须指定 uptoken ,uptoken由其他程序生成
-    unique_names: true, // 默认 false，key为文件名。若开启该选项，SDK会为每个文件自动生成key（文件名）
+    unique_names: false, // 默认 false，key为文件名。若开启该选项，SDK会为每个文件自动生成key（文件名）
+    save_key: false,
     domain: qiniuConfig.domain,   // bucket 域名，下载资源时用到，**必需**
     get_new_uptoken: false,  // 设置上传文件的时候是否每次都重新获取新的token
     max_file_size: '10mb', // 最大文件体积限制
@@ -97,9 +103,38 @@ export const initUploader = (options) => {
     dragdrop: false, // 开启可拖曳上传
     chunk_size: '4mb', // 分块上传时，每片的体积
     auto_start: true, // 选择文件后自动上传，若关闭需要自己绑定事件触发上传,
-    init: {}
+    init: {
+      FilesAdded: function (up, files) {
+        // 读取文件
+        const reader = new window.FileReader()
+        reader.onload = function (e) {
+          const data = e.target.result
+        }
+         // 以DataURL的形式读取文件:
+        reader.readAsText(files[0].getNative())
+      },
+      BeforeUpload: function (up, file) {},
+      UploadProgress: function (up, file) {},
+      FileUploaded: function (up, file, info) {
+        const domain = up.getOption('domain')
+        const res = JSON.parse(info)
+        const url = `${domain}/${res.key}`; // 获取上传成功后的文件的Url
+        fileUploadedFn.call(up, up, file, info, url)
+      },
+      Error: function (up, err, errTip) {},
+      UploadComplete: function (up, file) {},
+      Key: function (up, file) {
+        // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
+        // 该配置必须要在 unique_names: false , save_key: false 时才生效
+        return `${generateObjectId()}${file.name.slice(file.name.lastIndexOf('.'))}`
+      }
+    }
   };
 
-  const uploader = window.Qiniu.uploader({ ...defaultOptions, ...options });
+  const uploader = window.Qiniu.uploader({
+    ...defaultOptions,
+    ...options,
+    init: { ...defaultOptions.init, ...options.init }
+  });
   return uploader;
 };

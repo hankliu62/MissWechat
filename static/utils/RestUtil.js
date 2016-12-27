@@ -22,8 +22,6 @@ Vue.http.interceptors.push((request, next) => {
   request.params = params
   request.url = `${config.service_domain}${request.url}`
 
-  console.log(request.headers)
-
   next(function (response) {
     // Todo: common error handler
     if (response.status === StatusCodes.NOT_FOUND) {

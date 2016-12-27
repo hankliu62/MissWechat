@@ -1,6 +1,7 @@
 <template>
   <div class="hex-container">
     <headroom-nav :nav="nav"></headroom-nav>
+
     <header class="header header-fixed">
       <div class="background-mask"></div>
       <div class="content">
@@ -8,6 +9,7 @@
         <p class="desc">Characteristics of one transform hexadecimal to string and convert string to hexadecimal</p>
       </div>
     </header>
+
     <!-- hex converter panel -->
     <div class="hex-body">
       <!-- params tabs -->
@@ -40,6 +42,7 @@
                 <button type="button" class="btn btn-default btn-theme" @click="onLoad">Load</button>
                 <upload
                   class="btn btn-upload"
+                  :acceptTypes="['text/plain']"
                   @beforeUpload="console.log(123)"
                 >
                   <button type="button" class="btn btn-default btn-theme">Upload</button>
@@ -84,6 +87,16 @@
         </tabs>
       </div>
     </div>
+
+    <el-dialog title="Enter URL" v-model="isShowDialog" size="tiny" custom-class="url-dialog">
+      <div class="form-group">
+        <input type="url" class="form-control input-theme" id="url" placeholder="Enter you url" autocomplete="off">
+      </div>
+      <div slot="footer" class="btns-group dialog-footer">
+        <button class="btn btn-default" @click="onCloseLoadDialog">Cancel</button>
+        <button class="btn btn-default btn-theme" @click="onCloseLoadDialog">Load</button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -106,7 +119,8 @@ export default {
     }
 
     return {
-      code: ''
+      code: '',
+      isShowDialog: false
     }
   },
   methods: {
@@ -119,10 +133,13 @@ export default {
       this.convert({ type: this.states.params.type, code: this.code })
     },
     onLoad () {
-      window.alert('The Function Will Coming')
+      this.isShowDialog = true
     },
     onUpload () {
       window.alert('The Function Will Coming')
+    },
+    onCloseLoadDialog () {
+      this.isShowDialog = false
     }
   },
   computed: {
@@ -156,4 +173,8 @@ export default {
 
 <style scoped lang="less">
 @import './HexConverterMain';
+</style>
+
+<style lang="less">
+@import '../../../../styles/components/hk-dialog';
 </style>
