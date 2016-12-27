@@ -6,13 +6,13 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var request = require('request');
 var todos = require('./routes/todos');
-var config = require('./config/config');
 var AV = require('leanengine');
 var compression = require('compression');
 
 var app = express();
 app.use(compression()); //use compression
 app.use('/favicons', express.static('favicons'));
+app.use('/deps', express.static('deps'));
 
 if (app.get('env') === 'development') {
   var webpack = require('webpack');
@@ -103,6 +103,7 @@ app.use(function(err, req, res, next) { // jshint ignore:line
     // 如果是开发环境，则将异常堆栈输出到页面，方便开发调试
     error = err;
   }
+
   res.render('error', {
     message: err.message,
     error: error

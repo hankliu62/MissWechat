@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import { sync } from 'vuex-router-sync' // 将 vue-router 纳入到 vuex 的管理
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
 // import VueResource from 'vue-resource'
 // import DirectivesPlugin from './directives'
 import routeConfig from './routes/routes'
@@ -15,6 +17,7 @@ import 'babel-polyfill'
 Vue.use(VueRouter)
 // Vue.use(DirectivesPlugin)
 Vue.use(MintUI)
+Vue.use(ElementUI)
 
 // 2. 定义（路由）组件和路由: routeConfig
 // 3. 创建 router 实例，然后传 `routes` 配置

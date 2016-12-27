@@ -121,12 +121,12 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 import OptionsForm from './components/OptionsForm/OptionsForm'
 import HeadroomNav from '../../../../components/HeadroomNav/HeadroomNav'
 import { Tabs, TabList, Tab, TabPanel } from '../../../../components/Tabs'
 import { GENERATE_OBJECTID_MAIN_NAVS } from './constants/navs'
 import { DEFALUT_CODE_TABS, SUCCESS_RESULT } from './constants/constants'
-import { mapActions, mapState } from 'vuex'
 
 export default {
   data () {
