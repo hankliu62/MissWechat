@@ -3,4 +3,4 @@ const config = {
   wechat_appid: 'wx3ea0bef99c473ab5'
 }
 
-export default config;
+export default config

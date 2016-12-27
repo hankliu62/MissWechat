@@ -1,3 +1,6 @@
+import config from '../config/config'
+import qiniuConfig from '../config/qiniu'
+
 /**
  * init uploader function
  * @param  {Object} options:
@@ -84,9 +87,9 @@
 export const initUploader = (options) => {
   const defaultOptions = {
     runtimes: 'html5,flash,html4', // 上传模式,依次退化
-    uptoken: uploadToken, // 若未指定uptoken_url,则必须指定 uptoken ,uptoken由其他程序生成
+    uptoken_url: `${config.service_domain}/qiniu/uptoken?accesskey=${qiniuConfig.accesskey}&bucketname=${qiniuConfig.bucketname}`, // 若未指定uptoken_url,则必须指定 uptoken ,uptoken由其他程序生成
     unique_names: true, // 默认 false，key为文件名。若开启该选项，SDK会为每个文件自动生成key（文件名）
-    domain,   // bucket 域名，下载资源时用到，**必需**
+    domain: qiniuConfig.domain,   // bucket 域名，下载资源时用到，**必需**
     get_new_uptoken: false,  // 设置上传文件的时候是否每次都重新获取新的token
     max_file_size: '10mb', // 最大文件体积限制
     multi_selection: false, // 设置一次只能选择一个文件
@@ -94,8 +97,9 @@ export const initUploader = (options) => {
     dragdrop: false, // 开启可拖曳上传
     chunk_size: '4mb', // 分块上传时，每片的体积
     auto_start: true, // 选择文件后自动上传，若关闭需要自己绑定事件触发上传,
+    init: {}
   };
 
-  const uploader = Qiniu.uploader({ ...defaultOptions, ...options });
+  const uploader = window.Qiniu.uploader({ ...defaultOptions, ...options });
   return uploader;
 };

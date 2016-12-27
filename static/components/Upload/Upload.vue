@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import { initUploader } from '../../utils/QiniuUtil'
+
 const getElementStyle = (elem, styleKey) => {
   if (elem[styleKey]) {
     return elem.style[styleKey]
@@ -46,6 +48,10 @@ export default {
       const height = getElementStyle(slotDOM, 'height')
 
       this.maskStyle = { width, height }
+
+      const uploader = initUploader({
+        browse_button: 'pickfiles'
+      })
     }
   },
   computed: {
