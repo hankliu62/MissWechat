@@ -40,13 +40,22 @@
               <div class="btns-group">
                 <button type="button" class="btn btn-default btn-theme" @click="onTransform">Transform</button>
                 <button type="button" class="btn btn-default btn-theme" @click="onLoad">Load</button>
-                <upload
+                <el-upload
+                  class="btn btn-upload"
+                  accept="text/plain"
+                  :action="states.uploadUrl"
+                  :multiple="false"
+                  :show-upload-list="false"
+                  :before-upload="onBeforeUpload">
+                  <button type="button" class="btn btn-default btn-theme">Upload</button>
+                </el-upload>
+                <!-- <upload
                   class="btn btn-upload"
                   :acceptTypes="['text/plain']"
                   @beforeUpload="console.log(123)"
                 >
                   <button type="button" class="btn btn-default btn-theme">Upload</button>
-                </upload>
+                </upload> -->
               </div>
             </section>
           </tab-panel>
@@ -107,6 +116,7 @@ import HeadroomNav from '../../../../components/HeadroomNav/HeadroomNav'
 import Upload from '../../../../components/Upload/Upload'
 import { HEX_CONVERTER_MAIN_NAVS } from './constants/navs'
 import { PARAM_TYPES } from './constants/constants'
+import config from '../../../../config/config'
 
 export default {
   data () {
@@ -115,12 +125,15 @@ export default {
         headerId: 'input-tab',
         bodyId: 'input-tab-panel'
       },
-      params: this.$route.params
+      params: this.$route.params,
+      // uploadUrl: `http://localhost:3002/v1/api/upload/files`
+      uploadUrl: `${config.service_domain}/v1/api/upload/files`
     }
 
     return {
       code: '',
-      isShowDialog: false
+      isShowDialog: false,
+      uploadFileName: ''
     }
   },
   methods: {
@@ -137,6 +150,14 @@ export default {
     },
     onUpload () {
       window.alert('The Function Will Coming')
+    },
+    onBeforeUpload (file) {
+      var reader = new window.FileReader()
+      reader.onload = function (e) {
+        this.code = e.target.result
+      }.bind(this)
+      reader.readAsText(file)
+      return false
     },
     onCloseLoadDialog () {
       this.isShowDialog = false
@@ -177,4 +198,5 @@ export default {
 
 <style lang="less">
 @import '../../../../styles/components/hk-dialog';
+@import '../../../../styles/components/hk-upload';
 </style>
