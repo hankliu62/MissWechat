@@ -7,6 +7,7 @@ var SOURCE_MAP = false;
 
 config.output.filename = '[name].[chunkhash:6].js';
 config.output.chunkFilename = 'chunks/[id].[chunkhash].js';
+config.states = { children: false };
 
 config.devtool = SOURCE_MAP ? 'source-map' : false;
 config.vue = config.vue || {};
