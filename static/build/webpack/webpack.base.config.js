@@ -60,6 +60,9 @@ module.exports = {
       'no-unused-vars': 0
     }
   },
+  stats: {
+    children: false
+  },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
       names: ['vendor', 'app']
