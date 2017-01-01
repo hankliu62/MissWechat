@@ -2,12 +2,14 @@
 @loadingColor: #0ff934;
 
 .hk-loading-mask {
-  background-color: @loadingMaskBgColor !important;
+  &.el-loading-mask {
+    background-color: @loadingMaskBgColor !important;
 
-  .el-loading-spinner {
-    .path {
-        stroke-width: 5px;
-        stroke: @loadingColor;
+    .el-loading-spinner {
+      .path {
+          stroke-width: 5px;
+          stroke: @loadingColor;
+      }
     }
   }
 }

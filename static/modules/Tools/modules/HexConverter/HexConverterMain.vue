@@ -41,7 +41,7 @@
                 <button type="button" class="btn btn-default btn-theme" @click="onTransform">Transform</button>
                 <button type="button" class="btn btn-default btn-theme" @click="onBeforeLoad">Load</button>
                 <el-upload
-                  class="btn btn-upload"
+                  class="btn btn-upload hk-upload"
                   accept="text/plain"
                   :action="states.uploadUrl"
                   :multiple="false"
@@ -101,7 +101,7 @@
       title="Enter URL"
       v-model="isShowLoadDialog"
       size="tiny"
-      custom-class="url-dialog"
+      custom-class="hk-dialog url-dialog"
       @close="onCloseLoadDialog">
       <div class="form-group">
         <input
