@@ -36,10 +36,10 @@
                 name="code"
                 placeholder="Write you code"
                 v-model="code"
-              ></textarea>
+                @change="onChangeCode"></textarea>
               <div class="btns-group">
                 <button type="button" class="btn btn-default btn-theme" @click="onTransform">Transform</button>
-                <button type="button" class="btn btn-default btn-theme" @click="onLoad">Load</button>
+                <button type="button" class="btn btn-default btn-theme" @click="onBeforeLoad">Load</button>
                 <el-upload
                   class="btn btn-upload"
                   accept="text/plain"
@@ -97,13 +97,25 @@
       </div>
     </div>
 
-    <el-dialog title="Enter URL" v-model="isShowDialog" size="tiny" custom-class="url-dialog">
+    <el-dialog
+      title="Enter URL"
+      v-model="isShowLoadDialog"
+      size="tiny"
+      custom-class="url-dialog"
+      @close="onCloseLoadDialog">
       <div class="form-group">
-        <input type="url" class="form-control input-theme" id="url" placeholder="Enter you url" autocomplete="off">
+        <input
+          id="url"
+          class="form-control input-theme"
+          type="url"
+          placeholder="Enter you url"
+          autocomplete="off"
+          v-model="loadUrl"
+          @change="onChangeUrl">
       </div>
       <div slot="footer" class="btns-group dialog-footer">
         <button class="btn btn-default" @click="onCloseLoadDialog">Cancel</button>
-        <button class="btn btn-default btn-theme" @click="onCloseLoadDialog">Load</button>
+        <button class="btn btn-default btn-theme" @click="onLoad">Load</button>
       </div>
     </el-dialog>
   </div>
@@ -130,14 +142,10 @@ export default {
       uploadUrl: `${config.service_domain}/v1/api/upload/files`
     }
 
-    return {
-      code: '',
-      isShowDialog: false,
-      uploadFileName: ''
-    }
+    return {}
   },
   methods: {
-    ...(mapActions(['convert'])),
+    ...(mapActions(['convert', 'getLoadFileContent'])),
     setState: mapActions(['setHexConverterState'])['setHexConverterState'],
     onSelectedRow (index) {
       this.setState({ selectedIndex: index })
@@ -145,28 +153,38 @@ export default {
     onTransform () {
       this.convert({ type: this.states.params.type, code: this.code })
     },
-    onLoad () {
-      this.isShowDialog = true
+    onBeforeLoad () {
+      this.setState({ isShowLoadDialog: true })
     },
-    onUpload () {
-      window.alert('The Function Will Coming')
+    async onLoad () {
+      await this.getLoadFileContent(this.loadUrl)
+      this.setState({ isShowLoadDialog: false })
     },
     onBeforeUpload (file) {
       var reader = new window.FileReader()
       reader.onload = function (e) {
-        this.code = e.target.result
+        this.setState({ code: e.target.result })
       }.bind(this)
       reader.readAsText(file)
       return false
     },
     onCloseLoadDialog () {
-      this.isShowDialog = false
+      this.setState({ isShowLoadDialog: false, loadUrl: '' })
+    },
+    onChangeCode (e) {
+      this.setState({ code: e.target.value })
+    },
+    onChangeUrl (e) {
+      this.setState({ loadUrl: e.target.value })
     }
   },
   computed: {
     ...mapState({
       isShowExamples: (state) => state.hexConverterMain.isShowExamples,
+      isShowLoadDialog: (state) => state.hexConverterMain.isShowLoadDialog,
       selectedIndex: (state) => state.hexConverterMain.selectedIndex,
+      code: (state) => state.hexConverterMain.code,
+      loadUrl: (state) => state.hexConverterMain.loadUrl,
       optionsTabs: (state) => state.hexConverterMain.optionsTabs,
       nav: (state) => state.hexConverterMain.nav,
       result: (state) => state.hexConverterMain.result,

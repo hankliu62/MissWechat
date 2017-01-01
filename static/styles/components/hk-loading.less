@@ -1,0 +1,13 @@
+@loadingMaskBgColor: rgba(255, 255, 255, .168627);
+@loadingColor: #0ff934;
+
+.hk-loading-mask {
+  background-color: @loadingMaskBgColor !important;
+
+  .el-loading-spinner {
+    .path {
+        stroke-width: 5px;
+        stroke: @loadingColor;
+    }
+  }
+}
