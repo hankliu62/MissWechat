@@ -3,6 +3,7 @@ import { SUCCESS_RESULT } from '../../../constants/constants'
 
 export default {
   isShowExamples: false,
+  isShowLoadDialog: false,
   selectedIndex: -1,
   optionsTabs: {
     tab: 'input-tab',
@@ -18,5 +19,7 @@ export default {
   },
   example: {
     rows: []
-  }
+  },
+  code: '',
+  loadUrl: ''
 }
