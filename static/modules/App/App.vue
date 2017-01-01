@@ -22,8 +22,12 @@ export default {
 }
 </script>
 
+<style scoped lang="less">
+@import './App';
+</style>
+
 <style lang="less">
 @import '../../styles/reset';
 @import '../../styles/app';
-@import './App';
+@import '../../styles/components/hk-loading';
 </style>

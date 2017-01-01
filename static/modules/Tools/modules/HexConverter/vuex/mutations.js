@@ -1,7 +1,8 @@
 import {
   TOOLS_HEX_CONVERT_SUCCESS,
   TOOLS_HEX_CONVERT_FAIL,
-  TOOLS_HEX_CONVERTER_MAIN_SET
+  TOOLS_HEX_CONVERTER_MAIN_SET,
+  TOOLS_HEX_GET_LOADFILE_CONTENT
 } from '../constants/types'
 import { SUCCESS_RESULT } from '../../../constants/constants'
 
@@ -29,5 +30,8 @@ export default {
     }
     state.isShowExamples = true
     state.selectedIndex = -1
+  },
+  [TOOLS_HEX_GET_LOADFILE_CONTENT] (state, { code }) {
+    state.code = code
   }
 }
