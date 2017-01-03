@@ -27,6 +27,14 @@ export default {
         next();
       }
     },
-    { path: 'hex', redirect: 'hex/encode' }
+    { path: 'hex', redirect: 'hex/encode' },
+    {
+      path: 'qrcode/:type', // ['qrcode/type', 'qrcode/url']
+      name: 'qrcodeGenerator',
+      component: function (resolve) {
+        require(['../modules/Tools/modules/QrcodeGenerator/QrcodeGeneratorMain'], resolve)
+      }
+    },
+    { path: 'qrcode', redirect: 'qrcode/text' }
   ]
 }
