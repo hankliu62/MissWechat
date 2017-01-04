@@ -1,0 +1,155 @@
+@import '../../../../styles/variable';
+@import '../../../../styles/mixins/flexbox';
+
+@collapseScreenMaxWidth: 640px;
+@navbarHeight: 50px;
+@navToggleColor: #444;
+@navHeaderColor: @white;
+@navHeaderBgColor: #1c1c1c;
+@navItemColor: @white;
+@navItemActiveColor: @grass;
+@navItemHoverColor: #5dff3f;
+@navItemHoverBgColor: rgba(255, 255, 255, .1);
+
+.qrcode-container {
+  .navbar {
+    margin: 0;
+    border-radius: 0;
+    background-image: url('./images/debut_dark.png');
+    background-repeat: repeat;
+    font-size: 14px;
+
+    .navbar-header {
+      float: left;
+      width: 200px;
+      line-height: @navbarHeight;
+      padding: 0 8px 0 12px;
+      color: @navHeaderColor;
+      background-color: @navHeaderBgColor;
+    }
+
+    .nav-collapse {
+      .navs-wrapper {
+        display: block;
+        width: 100%;
+        list-style: none;
+        margin: 0;
+      }
+
+      .nav {
+        display: inline-block;
+
+        &:focus {
+          outline: 0;
+        }
+
+        > a {
+          color: @navItemColor;
+          display: block;
+          transition: background .3s ease;
+          line-height: @navbarHeight - 30px;
+          padding: 15px 20px;
+          text-decoration: none;
+
+          &:hover {
+            background-color: @navItemHoverBgColor;
+            color: @navItemHoverColor;
+          }
+
+          &:focus {
+            outline: 0;
+          }
+        }
+
+        &.active {
+          > a {
+            color: @navItemActiveColor;
+
+            &:hover {
+              color: @navItemActiveColor;
+            }
+          }
+        }
+      }
+    }
+
+    .nav-toggle {
+      display: none
+    }
+
+    @media screen and (max-width: @collapseScreenMaxWidth) {
+      .nav-collapse {
+        // clip: rect(0 0 0 0);
+        display: block;
+        overflow: hidden;
+        width: 100%;
+      }
+
+      .nav-toggle {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-touch-callout: none;
+        user-select: none;
+        text-decoration: none;
+        text-indent: -999px;
+        position: relative;
+        overflow: hidden;
+        width: 62px;
+        height: @navbarHeight;
+        float: right;
+        display: block;
+        background-color: @navToggleColor;
+        background-image: url('./images/hamburger-retina.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+
+        &:before {
+          color: @navToggleColor; /* Edit this to change the icon color */
+          font-family: "responsivenav";
+          font-style: normal;
+          font-weight: normal;
+          font-variant: normal;
+          font-size: 28px;
+          text-transform: none;
+          position: absolute;
+          content: "\2261";
+          text-indent: -999px;
+          text-align: center;
+          line-height: @navbarHeight;
+          speak: none;
+          width: 100%;
+          top: 0;
+          left: 0;
+        }
+
+        &.active:before {
+          font-size: 24px;
+          content: "\78";
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: @collapseScreenMaxWidth) {
+  .qrcode-html-navs-toggled {
+    .navbar {
+      .nav-collapse {
+        .navs-wrapper {
+          margin-bottom: 10px;
+        }
+
+        .nav {
+          display: block;
+        }
+
+        &.opened {
+          max-height: initial !important;
+        }
+      }
+    }
+  }
+}
+
+
