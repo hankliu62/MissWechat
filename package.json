@@ -33,6 +33,7 @@
     "animate.css": "3.5.2",
     "autoprefixer": "6.5.3",
     "autoprefixer-loader": "3.2.0",
+    "autosize": "^3.0.20",
     "babel-core": "6.18.2",
     "babel-loader": "6.2.8",
     "babel-plugin-transform-runtime": "6.15.0",

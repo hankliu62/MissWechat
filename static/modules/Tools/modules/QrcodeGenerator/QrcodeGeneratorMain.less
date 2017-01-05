@@ -10,9 +10,16 @@
 @navItemActiveColor: @grass;
 @navItemHoverColor: #5dff3f;
 @navItemHoverBgColor: rgba(255, 255, 255, .1);
+@containerBgColor: #f8f8f8;
+
+.nav-background () {
+  background-image: url('./images/debut_dark.png');
+  background-repeat: repeat;
+}
 
 .qrcode-container {
   .navbar {
+    .nav-background();
     position: fixed;
     top: 0;
     left: 0;
@@ -20,8 +27,6 @@
     margin: 0;
     border-radius: 0;
     border: 0;
-    background-image: url('./images/debut_dark.png');
-    background-repeat: repeat;
     font-size: 14px;
     z-index: 1021;
 
@@ -29,17 +34,18 @@
       float: left;
       width: 200px;
       line-height: @navbarHeight;
-      padding: 0 15px 0 70px;
+      padding: 0 15px 0 60px;
       color: @navHeaderColor;
       background-color: @navHeaderBgColor;
-
       background-image: url('./images/logo.png');
-      background-size: 40px;
+      background-size: 30px;
       background-position: 15px center;
       background-repeat: no-repeat;
     }
 
     .nav-collapse {
+      transition-timing-function: ease !important;
+
       .navs-wrapper {
         display: block;
         width: 100%;
@@ -150,16 +156,56 @@
   .container-fluid {
     position: relative;
     margin-top: @navbarHeight;
+    padding: 0;
+    transition: margin-top 284ms ease;
+    overflow: hidden;
+    background-color: @containerBgColor;
+
+    .brace {
+      margin-bottom: -99999px;
+      padding: 0 0 99999px;
+
+      &:before {
+        content: '*';
+        color: transparent;
+      }
+    }
+
+    .main-content-wrap {
+      min-height: 626px;
+      padding-top: 30px;
+
+      .qrcode-generate-box {
+        .flexbox();
+      }
+
+      .qrcode-generate-wrap {
+        .flex(1);
+      }
+
+      .qrcode-preview-wrap {
+        width: 300px;
+        margin-left: 20px;
+      }
+    }
   }
 }
 
 @media screen and (max-width: @collapseScreenMaxWidth) {
   .qrcode-html-navs-toggled {
     .navbar {
+      background-image: none;
+
+      .navbar-header {
+        width: 100%;
+      }
+
       .nav-collapse {
-        .navs-wrapper {
-          margin-bottom: 10px;
-        }
+        .nav-background();
+
+        // .navs-wrapper {
+        //   margin-bottom: 10px;
+        // }
 
         .nav {
           display: block;
@@ -169,6 +215,11 @@
           max-height: initial !important;
         }
       }
+    }
+
+    .container-fluid {
+      position: relative;
+      margin-top: @navbarHeight * 7;
     }
   }
 }
