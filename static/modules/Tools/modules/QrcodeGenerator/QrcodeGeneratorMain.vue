@@ -33,7 +33,8 @@
 </template>
 
 <script>
-import { QRCODE_GENERATOR_MAIN_NAVS } from './constants/nav'
+import { mapActions } from 'vuex'
+import { QRCODE_GENERATOR_MAIN_NAVS } from './constants/navs'
 import TextQrcodeGenerate from './components/TextQrcodeGenerate/TextQrcodeGenerate'
 import QrcodePreview from './components/QrcodePreview/QrcodePreview'
 
@@ -48,6 +49,7 @@ export default {
     }
   },
   mounted () {
+    this.fetchQiniuUptoken()
     const ResponsiveNav = require('responsive-nav')
     var navigation = ResponsiveNav('navs', {
       customToggle: '.nav-toggle',
@@ -56,8 +58,8 @@ export default {
     })
   },
   methods: {
+    ...mapActions(['fetchQiniuUptoken']),
     onGenerateQrcode (params) {
-      console.log(params.value)
       const AraleQRCode = require('arale-qrcode')
       const qrcode = new AraleQRCode({
         render: 'canvas',

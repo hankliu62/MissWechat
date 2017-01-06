@@ -1,4 +1,4 @@
-import { COMMON_MAIN_SET, FETCH_WECHAT_SIGNATURE } from '../constants/types'
+import { COMMON_MAIN_SET, FETCH_WECHAT_SIGNATURE, FETCH_QINIU_UPTOKEN } from '../constants/types'
 import { SHOW_TOAST, HIDE_TOAST } from '../../../constants/types'
 
 export default {
@@ -11,6 +11,9 @@ export default {
   },
   [FETCH_WECHAT_SIGNATURE] (state, signature) {
     state.signature = signature
+  },
+  [FETCH_QINIU_UPTOKEN] (state, qiniu) {
+    state.qiniu = qiniu
   },
   [SHOW_TOAST] (state, message) {
     state.toast.count = ++state.toast.count

@@ -6,6 +6,7 @@ import CommonMainState from '../modules/Common/vuex'
 import HomeMainState from '../modules/Home/vuex'
 import GenerateIdMainState from '../modules/Tools/modules/GenerateObjectId/vuex'
 import HexConverterMainState from '../modules/Tools/modules/HexConverter/vuex'
+import QrcodeGeneratorMainState from '../modules/Tools/modules/QrcodeGenerator/vuex'
 
 Vue.use(Vuex)
 
@@ -16,7 +17,8 @@ const store = new Vuex.Store({
     commonMain: CommonMainState,
     homeMain: HomeMainState,
     generateIdMain: GenerateIdMainState,
-    hexConverterMain: HexConverterMainState
+    hexConverterMain: HexConverterMainState,
+    qrcodeGeneratorMain: QrcodeGeneratorMainState
   },
   strict: isDebug,
   plugins: isDebug ? [createLogger()] : []

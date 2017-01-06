@@ -24,14 +24,13 @@ Vue.http.interceptors.push((request, next) => {
 
   const current = new Date()
   const tmoffset = current.getTimezoneOffset() / 60
-  const params = {
+  request.params = {
     ...(request.params || {}),
     time: current.valueOf(),
     tmoffset
   }
 
-  request.params = params
-  request.url = `${config.service_domain}${request.url}`
+  request.url = request.params.isExternalUrl ? request.url : `${config.service_domain}${request.url}`
 
   next(function (response) {
     if (loadinger) {

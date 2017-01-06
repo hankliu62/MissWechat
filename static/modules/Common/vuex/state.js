@@ -8,5 +8,9 @@ export default {
   toast: {
     count: 0,
     content: ''
+  },
+  qiniu: {
+    domain: '',
+    uploadToken: ''
   }
 }
