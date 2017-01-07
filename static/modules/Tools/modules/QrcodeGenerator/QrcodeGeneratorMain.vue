@@ -1,18 +1,29 @@
 <template>
   <div class="qrcode-container">
     <div class="navbar">
-      <div class="navbar-header">Qrcode Generator</div>
+      <div class="navbar-header">二维码生成器</div>
       <div role="navigation" id="navs" class="nav-collapse">
         <ul class="navs-wrapper">
           <li
-            v-for="item in nav"
+            v-for="item in nav.items"
             :class="['nav', { active: item.link.indexOf(states.params.type) >= 0 }]">
             <a :href="item.link" v-text="item.name"></a>
           </li>
         </ul>
       </div>
-      <a href="#nav" class="nav-toggle">Menu</a>
+      <a href="#nav" class="nav-toggle">
+        <svg class="icon hidden" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+        </svg>
+      </a>
     </div>
+    <header class="header header-fixed">
+      <div class="background-mask"></div>
+      <div class="content">
+        <h1 class="title">Qrcode Genetator</h1>
+        <p class="desc">The most professional qrcode online generate site, can be simple and efficient to help you achieve the requirements of qrcode production.</p>
+      </div>
+    </header>
     <div class="container-fluid main-content-view">
       <div class="row ov main-content">
         <div class="brace left-brace col-md-1"></div>
@@ -22,7 +33,7 @@
               <text-qrcode-generate @generate="onGenerateQrcode"></text-qrcode-generate>
             </div>
             <div class="qrcode-preview-wrap">
-              <qrcode-preview url="http://oiq00n80p.bkt.clouddn.com/585f4ac893a1ae6e07c1f373.jpg?imageView2/1/w/230/h/230"></qrcode-preview>
+              <qrcode-preview :url="qrcodeUrl" @download="onDownloadQrcode"></qrcode-preview>
             </div>
           </div>
         </div>
@@ -33,10 +44,10 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
-import { QRCODE_GENERATOR_MAIN_NAVS } from './constants/navs'
+import { mapActions, mapState } from 'vuex'
 import TextQrcodeGenerate from './components/TextQrcodeGenerate/TextQrcodeGenerate'
 import QrcodePreview from './components/QrcodePreview/QrcodePreview'
+import DownloadUtil from '../../../../utils/DownloadUtil'
 
 export default {
   data () {
@@ -44,9 +55,13 @@ export default {
       params: this.$route.params
     }
 
-    return {
-      nav: QRCODE_GENERATOR_MAIN_NAVS
-    }
+    return {}
+  },
+  computed: {
+    ...mapState({
+      nav: (state) => state.qrcodeGeneratorMain.nav,
+      qrcodeUrl: (state) => state.qrcodeGeneratorMain.qrcodeUrl
+    })
   },
   mounted () {
     this.fetchQiniuUptoken()
@@ -58,7 +73,7 @@ export default {
     })
   },
   methods: {
-    ...mapActions(['fetchQiniuUptoken']),
+    ...mapActions(['fetchQiniuUptoken', 'generateTextQrcode']),
     onGenerateQrcode (params) {
       const AraleQRCode = require('arale-qrcode')
       const qrcode = new AraleQRCode({
@@ -69,8 +84,17 @@ export default {
         background: '#FFFFFF',
         foreground: '#000000'
       });
-      console.log(qrcode)
-      console.log(qrcode.toDataURL('image/png'))
+
+      if (qrcode) {
+        const dataURL = qrcode.toDataURL('image/png')
+        const base64Data = dataURL.replace(/^data:image\/\w+;base64,/, '');
+        this.generateTextQrcode(base64Data)
+      }
+    },
+    onDownloadQrcode () {
+      const index = this.qrcodeUrl.lastIndexOf('/') + 1
+      const filename = this.qrcodeUrl.slice(index)
+      DownloadUtil.download(this.qrcodeUrl, filename)
     }
   },
   components: { TextQrcodeGenerate, QrcodePreview }

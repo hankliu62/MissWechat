@@ -12,7 +12,7 @@
           <img class="qrimage" :src="url" />
         </div>
         <div class="btn-group dropdown">
-          <button class="btn btn-download">下载</button>
+          <button class="btn btn-download" @click="onDownload">下载</button>
           <button class="btn btn-more"></button>
         </div>
       </div>
@@ -30,6 +30,11 @@ export default {
   props: {
     url: {
       type: String
+    }
+  },
+  methods: {
+    onDownload () {
+      this.$emit('download')
     }
   }
 }

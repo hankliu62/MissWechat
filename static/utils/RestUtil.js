@@ -31,6 +31,7 @@ Vue.http.interceptors.push((request, next) => {
   }
 
   request.url = request.params.isExternalUrl ? request.url : `${config.service_domain}${request.url}`
+  delete request.params.isExternalUrl
 
   next(function (response) {
     if (loadinger) {

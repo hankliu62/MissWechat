@@ -3,13 +3,18 @@
 
 @collapseScreenMaxWidth: 640px;
 @navbarHeight: 50px;
+@headerHeight: 450px;
 @navToggleColor: #444;
-@navHeaderColor: @white;
+@navHeaderColor: @darkGreen;
 @navHeaderBgColor: #1c1c1c;
 @navItemColor: @white;
-@navItemActiveColor: @grass;
-@navItemHoverColor: #5dff3f;
+@navItemActiveColor: @grass2;
+@navItemHoverColor: @grassLighter;
 @navItemHoverBgColor: rgba(255, 255, 255, .1);
+@headerTitleColor: @white;
+@headerTitleShadowColor: rgba(0, 0, 0, .1);
+@headerDescColor: @white;
+@headerDescShadowColor: rgba(0, 0, 0, .3);
 @containerBgColor: #f8f8f8;
 
 .nav-background () {
@@ -153,9 +158,56 @@
     }
   }
 
+  .header {
+    min-height: @headerHeight;
+    background-image: url('./images/header_bg_1.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding-top: @navbarHeight;
+    position: relative;
+    overflow: hidden;
+
+    .background-mask {
+      background-color: @darkGreen;
+      position: absolute;
+      top: @navbarHeight;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      opacity: .9;
+    }
+
+    .content {
+      position: relative;
+    }
+
+    .title {
+      margin-top: 80px;
+      text-align: center;
+      font-size: 60px;
+      color: @headerTitleColor;
+      // color: #494949;
+      text-shadow: 5px 5px 0 @headerTitleShadowColor;
+      font-weight: bolder;
+      line-height: 70px;
+      font-family: "Lucida Grande", "Helvetica Neue", "Arial", "Hiragino Sans GB", "Noto Sans CJK SC", "Heiti SC", "Microsoft YaHei", "WenQuanYi Microhei", sans-serif;
+      // font-family: 'Gotham', 'proxima-nova', 'proxima nova', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    .desc {
+      text-align: center;
+      font-size: 32px;
+      color: @headerDescColor;
+      text-shadow: 2px 2px 0 @headerDescShadowColor;
+      max-width: 1000px;
+      margin: 25px auto 0;
+      font-family: "Georgia", "Times New Roman", "Songti SC", "SimSun", serif;
+    }
+  }
+
   .container-fluid {
     position: relative;
-    margin-top: @navbarHeight;
     padding: 0;
     transition: margin-top 284ms ease;
     overflow: hidden;
@@ -217,8 +269,7 @@
       }
     }
 
-    .container-fluid {
-      position: relative;
+    .header {
       margin-top: @navbarHeight * 7;
     }
   }
