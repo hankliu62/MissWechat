@@ -1,0 +1,86 @@
+@import '../../../../../../styles/variable';
+@import '../../../../../../styles/mixins/flexbox';
+@import '../../../../../../styles/mixins/button';
+
+@qrcodeBoxHeight: 290px;
+@qrcodeBoxBorderColor: rgba(120, 130, 140, .25);
+@qrcodeBoxGuideTextColor: #666;
+@qrcodeBtnBorderColor: rgba(120, 130, 140, .25);
+@qrcodeBtnColor: #373a3c;
+@qrcodeBtnHoverBgColor: #f8f8f8;
+
+.qrcode-preview-wrap {
+  .qrcode-content {
+    .qrimage-wrap {
+      .flexbox();
+      flex-direction: column;
+      height: @qrcodeBoxHeight;
+      border-radius: 2px;
+
+      .thumbnail {
+        .flex(1);
+        border: 1px solid @qrcodeBoxBorderColor;
+        padding: 7px 20px;
+        margin-bottom: 4px;
+
+        .qrimage {
+          border-radius: 2px;
+          max-width: 230px;
+        }
+      }
+
+      .btn-group {
+        .flexbox();
+        height: 40px;
+        font-size: 0;
+
+        .btn {
+          .btn(@qrcodeBtnColor, transparent, @white, @qrcodeBtnHoverBgColor);
+          box-shadow: inset 0 0 0 1px @qrcodeBtnBorderColor;
+          font-size: 16px;
+          border: 0;
+
+          &:hover,
+          &:active,
+          &:focus {
+            box-shadow: inset 0 0 0 1px @qrcodeBtnBorderColor;
+          }
+        }
+
+        .btn-download {
+          .flex(1);
+        }
+
+        .btn-more {
+          width: 40px;
+          margin-left: -1px;
+          font: normal normal normal 14px/1 FontAwesome;
+
+          &:before {
+            content: "\f142";
+          }
+        }
+      }
+    }
+
+    .guide-wrap {
+      position: relative;
+      height: @qrcodeBoxHeight;
+      border: 1px solid @qrcodeBoxBorderColor;
+      border-radius: 2px;
+
+      .guide-wrap-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        .content {
+          text-align: center;
+          font-size: 18px;
+          color: @qrcodeBoxGuideTextColor;
+        }
+      }
+    }
+  }
+}

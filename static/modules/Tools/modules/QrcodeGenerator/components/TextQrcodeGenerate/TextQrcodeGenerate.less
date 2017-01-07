@@ -1,0 +1,33 @@
+@import '../../../../../../styles/components/hk-input';
+@import '../../../../../../styles/mixins/button';
+
+@toggleIconColor: #999;
+
+.text-qrcode-generater {
+  position: relative;
+
+  .hk-text {
+    min-height: 290px;
+    font-size: 16px;
+  }
+
+  .btn-group {
+    display: block;
+    margin-top: 50px;
+    text-align: center;
+
+    .btn {
+      .btn();
+      float: none;
+    }
+  }
+
+  .icon {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    cursor: pointer;
+    z-index: 1;
+    color: @toggleIconColor;
+  }
+}

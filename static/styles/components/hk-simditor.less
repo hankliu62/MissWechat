@@ -1,0 +1,23 @@
+@import '../../../deps/simditor/simditor.css';
+@import '../variable';
+
+@simditorPadding: 10px;
+
+.hk-simditor {
+  .simditor {
+    .simditor-wrapper {
+      .simditor-placeholder {
+        padding: @simditorPadding + 1px;
+      }
+
+      .simditor-body {
+        padding: @simditorPadding;
+      }
+    }
+
+    &.focus {
+      border-color: @darkGreen;
+      box-shadow: 0 0 3px @darkGreen;
+    }
+  }
+}
