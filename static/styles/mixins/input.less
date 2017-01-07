@@ -1,0 +1,21 @@
+@defaultBorderColor: #e2e2e2;
+@defaultFocusBorderColor: #27AE60;
+@defaultFocusShadowColor: #27AE60;
+
+.text (@borderColor: @defaultBorderColor, @focusBorderColor: @defaultFocusBorderColor,
+    @focusShadowColor: @defaultFocusShadowColor) {
+  width: 100%;
+  height: 250px;
+  padding: 10px;
+  border: 1px solid @borderColor;
+  border-radius: 2px;
+  resize: vertical;
+  box-sizing: border-box;
+  box-shadow: none;
+
+  &:focus {
+    border-color: @focusBorderColor;
+    box-shadow: 0 0 3px @focusShadowColor;
+    outline: 0;
+  }
+}

@@ -1,4 +1,14 @@
-import { HEX_CONVERT_ROUTE_PARAMS } from '../constants/constants'
+import { PARAM_TYPES as HEX_PARAM_TYPES } from '../modules/Tools/modules/HexConverter/constants/constants'
+import { PARAM_TYPES as QRCODE_PARAM_TYPES } from '../modules/Tools/modules/QrcodeGenerator/constants/constants'
+
+const checkParamsHooks = (enableParams = []) => {
+  return (to, from, next) => {
+    if (to.params.type && !enableParams.includes(to.params.type)) {
+      next('/error/404');
+    }
+    next();
+  }
+}
 
 export default {
   path: '/tools',
@@ -20,13 +30,17 @@ export default {
       component: function (resolve) {
         require(['../modules/Tools/modules/HexConverter/HexConverterMain'], resolve)
       },
-      beforeEnter: (to, from, next) => {
-        if (to.params.type && !HEX_CONVERT_ROUTE_PARAMS.includes(to.params.type)) {
-          next('/error/404');
-        }
-        next();
-      }
+      beforeEnter: checkParamsHooks(Object.values(HEX_PARAM_TYPES))
     },
-    { path: 'hex', redirect: 'hex/encode' }
+    { path: 'hex', redirect: 'hex/encode' },
+    {
+      path: 'qrcode/:type', // ['qrcode/text', 'qrcode/url']
+      name: 'qrcodeGenerator',
+      component: function (resolve) {
+        require(['../modules/Tools/modules/QrcodeGenerator/QrcodeGeneratorMain'], resolve)
+      },
+      beforeEnter: checkParamsHooks(Object.values(QRCODE_PARAM_TYPES))
+    },
+    { path: 'qrcode', redirect: 'qrcode/text' }
   ]
 }

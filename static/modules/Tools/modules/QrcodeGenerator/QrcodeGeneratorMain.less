@@ -1,0 +1,278 @@
+@import '../../../../styles/variable';
+@import '../../../../styles/mixins/flexbox';
+
+@collapseScreenMaxWidth: 640px;
+@navbarHeight: 50px;
+@headerHeight: 450px;
+@navToggleColor: #444;
+@navHeaderColor: @darkGreen;
+@navHeaderBgColor: #1c1c1c;
+@navItemColor: @white;
+@navItemActiveColor: @grass2;
+@navItemHoverColor: @grassLighter;
+@navItemHoverBgColor: rgba(255, 255, 255, .1);
+@headerTitleColor: @white;
+@headerTitleShadowColor: rgba(0, 0, 0, .1);
+@headerDescColor: @white;
+@headerDescShadowColor: rgba(0, 0, 0, .3);
+@containerBgColor: #f8f8f8;
+
+.nav-background () {
+  background-image: url('./images/debut_dark.png');
+  background-repeat: repeat;
+}
+
+.qrcode-container {
+  .navbar {
+    .nav-background();
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    border-radius: 0;
+    border: 0;
+    font-size: 14px;
+    z-index: 1021;
+
+    .navbar-header {
+      float: left;
+      width: 200px;
+      line-height: @navbarHeight;
+      padding: 0 15px 0 60px;
+      color: @navHeaderColor;
+      background-color: @navHeaderBgColor;
+      background-image: url('./images/logo.png');
+      background-size: 30px;
+      background-position: 15px center;
+      background-repeat: no-repeat;
+    }
+
+    .nav-collapse {
+      transition-timing-function: ease !important;
+
+      .navs-wrapper {
+        display: block;
+        width: 100%;
+        list-style: none;
+        margin: 0;
+      }
+
+      .nav {
+        display: inline-block;
+        cursor: pointer;
+
+        &:focus {
+          outline: 0;
+        }
+
+        > a {
+          color: @navItemColor;
+          display: block;
+          transition: background .3s ease;
+          line-height: @navbarHeight - 30px;
+          padding: 15px 20px;
+          text-decoration: none;
+
+          &:hover {
+            background-color: @navItemHoverBgColor;
+            color: @navItemHoverColor;
+          }
+
+          &:focus {
+            outline: 0;
+          }
+        }
+
+        &.active {
+          pointer-events: none;
+
+          > a {
+            color: @navItemActiveColor;
+
+            &:hover {
+              color: @navItemActiveColor;
+              background-color: transparent;
+            }
+          }
+        }
+      }
+    }
+
+    .nav-toggle {
+      display: none
+    }
+
+    @media screen and (max-width: @collapseScreenMaxWidth) {
+      .nav-collapse {
+        // clip: rect(0 0 0 0);
+        display: block;
+        overflow: hidden;
+        width: 100%;
+        max-height: 0;
+      }
+
+      .nav-toggle {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-touch-callout: none;
+        user-select: none;
+        text-decoration: none;
+        text-indent: -999px;
+        position: relative;
+        overflow: hidden;
+        width: 62px;
+        height: @navbarHeight;
+        float: right;
+        display: block;
+        background-color: @navToggleColor;
+        background-image: url('./images/hamburger-retina.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+
+        &:before {
+          color: @navToggleColor; /* Edit this to change the icon color */
+          font-family: "responsivenav";
+          font-style: normal;
+          font-weight: normal;
+          font-variant: normal;
+          font-size: 28px;
+          text-transform: none;
+          position: absolute;
+          content: "\2261";
+          text-indent: -999px;
+          text-align: center;
+          line-height: @navbarHeight;
+          speak: none;
+          width: 100%;
+          top: 0;
+          left: 0;
+        }
+
+        &.active:before {
+          font-size: 24px;
+          content: "\78";
+        }
+      }
+    }
+  }
+
+  .header {
+    min-height: @headerHeight;
+    background-image: url('./images/header_bg_1.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding-top: @navbarHeight;
+    position: relative;
+    overflow: hidden;
+
+    .background-mask {
+      background-color: @darkGreen;
+      position: absolute;
+      top: @navbarHeight;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      opacity: .9;
+    }
+
+    .content {
+      position: relative;
+    }
+
+    .title {
+      margin-top: 80px;
+      text-align: center;
+      font-size: 60px;
+      color: @headerTitleColor;
+      // color: #494949;
+      text-shadow: 5px 5px 0 @headerTitleShadowColor;
+      font-weight: bolder;
+      line-height: 70px;
+      font-family: "Lucida Grande", "Helvetica Neue", "Arial", "Hiragino Sans GB", "Noto Sans CJK SC", "Heiti SC", "Microsoft YaHei", "WenQuanYi Microhei", sans-serif;
+      // font-family: 'Gotham', 'proxima-nova', 'proxima nova', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+
+    .desc {
+      text-align: center;
+      font-size: 32px;
+      color: @headerDescColor;
+      text-shadow: 2px 2px 0 @headerDescShadowColor;
+      max-width: 1000px;
+      margin: 25px auto 0;
+      font-family: "Georgia", "Times New Roman", "Songti SC", "SimSun", serif;
+    }
+  }
+
+  .container-fluid {
+    position: relative;
+    padding: 0;
+    transition: margin-top 284ms ease;
+    overflow: hidden;
+    background-color: @containerBgColor;
+
+    .brace {
+      margin-bottom: -99999px;
+      padding: 0 0 99999px;
+
+      &:before {
+        content: '*';
+        color: transparent;
+      }
+    }
+
+    .main-content-wrap {
+      min-height: 626px;
+      padding-top: 30px;
+
+      .qrcode-generate-box {
+        .flexbox();
+      }
+
+      .qrcode-generate-wrap {
+        .flex(1);
+      }
+
+      .qrcode-preview-wrap {
+        width: 300px;
+        margin-left: 20px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: @collapseScreenMaxWidth) {
+  .qrcode-html-navs-toggled {
+    .navbar {
+      background-image: none;
+
+      .navbar-header {
+        width: 100%;
+      }
+
+      .nav-collapse {
+        .nav-background();
+
+        // .navs-wrapper {
+        //   margin-bottom: 10px;
+        // }
+
+        .nav {
+          display: block;
+        }
+
+        &.opened {
+          max-height: initial !important;
+        }
+      }
+    }
+
+    .header {
+      margin-top: @navbarHeight * 7;
+    }
+  }
+}
+
+
