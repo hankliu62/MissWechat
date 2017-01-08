@@ -1,5 +1,42 @@
 @import '../mixins/input';
 
+@errorColor: #cd5a55;
+@formTipColor: #aaa;
+
 .hk-text {
   .text();
+
+  + .form-tip {
+    display: block;
+    margin-top: 5px;
+    line-height: 1;
+    font-size: 12px;
+    color: @formTipColor;
+  }
 }
+
+.hk-input {
+  .input();
+
+  + .form-tip {
+    display: block;
+    margin-top: 5px;
+    line-height: 1;
+    font-size: 12px;
+    color: @formTipColor;
+  }
+}
+
+.highlight {
+  .hk-input,
+  .hk-text {
+    &.form-control-error {
+      border-color: @errorColor;
+
+      + .form-tip {
+        color: @errorColor;
+      }
+    }
+  }
+}
+

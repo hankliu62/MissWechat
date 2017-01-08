@@ -42,16 +42,34 @@
       <div class="code-wrapper">
         <tabs v-model="codeTabs" @selected="onSelectCodeTab">
           <tab-list slot="tablist">
-            <tab id="results" panelId="results-panel" slot="tab" :selected="codeTabs.tab === 'results'">
+            <tab
+              id="results"
+              panelId="results-panel"
+              slot="tab"
+              :selected="codeTabs.tab === 'results'"
+              :index="0">
               <span :class="{httpsuccess: result.statusCode === 200, httperror: result.statusCode !== 200}">
                 <i class="icon icon-circle"></i>
                 <em v-text="' ' + result.statusCode + ' '"></em><span v-text="result.statusMessage"></span>
               </span>
             </tab>
-            <tab v-if="isShowMetadata" id="metadata" panelId="metadata-panel" slot="tab" :selected="codeTabs.tab === 'metadata'">
+            <tab
+              id="metadata"
+              panelId="metadata-panel"
+              slot="tab"
+              v-if="isShowMetadata"
+              :selected="codeTabs.tab === 'metadata'"
+              :index="1">
               Metadata
             </tab>
-            <tab v-if="isShowExamples" id="examples" class="tab-examples" panelId="examples-panel" slot="tab" :selected="codeTabs.tab === 'examples'">
+            <tab
+              id="examples"
+              panelId="examples-panel"
+              slot="tab"
+              class="tab-examples"
+              v-if="isShowExamples"
+              :selected="codeTabs.tab === 'examples'"
+              :index="3">
               <span class="for-example">
                 <i class="glyphicon glyphicon-circle-arrow-left"></i>
                 <span> to examples</span>
@@ -60,9 +78,10 @@
           </tab-list>
 
           <tab-panel
-            :selected="codeTabs.panel === 'results-panel'"
             id="results-panel"
-            slot="tabpanel">
+            slot="tabpanel"
+            :selected="codeTabs.panel === 'results-panel'"
+            :index="0">
             <ul class="rows-wrapper" @click.self="onSelectedRow(-1)">
               <li
                 :class="['row-item', { selected: (item - 1) === selectedIndex }]"
@@ -77,10 +96,11 @@
             </ul>
           </tab-panel>
           <tab-panel
+            id="metadata-panel"
+            slot="tabpanel"
             v-if="isShowMetadata"
             :selected="codeTabs.panel === 'metadata-panel'"
-            id="metadata-panel"
-            slot="tabpanel">
+            :index="1">
             <ul class="rows-wrapper" @click.self="onSelectedRow(-1)">
               <li
                 v-if="metadatas[states.params.type]"
@@ -97,10 +117,11 @@
             </ul>
           </tab-panel>
           <tab-panel
+            id="examples-panel"
+            slot="tabpanel"
             v-if="isShowExamples"
             :selected="codeTabs.panel === 'examples-panel'"
-            id="examples-panel"
-            slot="tabpanel">
+            :index="2">
             <ul class="rows-wrapper" @click.self="onSelectedRow(-1)">
               <li
                 :class="['row-item', { selected: (item - 1) === selectedIndex }]"
@@ -138,9 +159,9 @@ export default {
   methods: {
     ...mapActions(['createObjectIds']),
     setState: mapActions(['setGeneratorState'])['setGeneratorState'],
-    onSelectCodeTab (value) {
+    onSelectCodeTab (tab) {
       this.setState({selectedIndex: -1})
-      if (value && value.tab === 'examples') {
+      if (tab && tab.id === 'examples') {
         this.setState({
           codeTabs: {...DEFALUT_CODE_TABS},
           isShowMetadata: false,
@@ -149,7 +170,7 @@ export default {
         })
         return
       }
-      this.setState({codeTabs: value})
+      this.setState({codeTabs: { tab: tab.id, panel: tab.panelId }})
     },
     onGenerateOIds ({ param, number, type }) {
       this.createObjectIds({ param, number, type })

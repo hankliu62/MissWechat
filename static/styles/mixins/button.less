@@ -4,23 +4,39 @@
 @defaultBtnBgColor: #27AE60;
 @defaultBtnHoverBgColor: #295;
 
-.btn (@textColor: @white, @borderColor: @defaultBtnBorderColor, @bgColor: @defaultBtnBgColor,
-    @hoverBgColor: @defaultBtnHoverBgColor) {
-  background-color: @bgColor;
-  color: @textColor;
+.set-color (@color) when (iscolor(@color)) {
+  color: @color;
+}
+
+.set-border-color (@color) when (iscolor(@color)) {
+  border-color: @color;
+}
+
+.set-bg-color (@color) when (iscolor(@color)) {
+  background-color: @color;
+}
+
+.btn (@textColor, @borderColor, @bgColor, @textHoverColor, @borderHoverColor, @hoverBgColor) {
+  border: 1px solid transparent;
+  .set-color(@textColor);
+  .set-border-color(@borderColor);
+  .set-bg-color(@bgColor);
   text-shadow: none;
   background-image: none;
-  border: 1px solid @borderColor;
 
   &:focus {
+    .set-color(@textHoverColor);
     outline: none;
     box-shadow: none;
   }
 
   &:active,
   &:hover {
+    .set-color(@textHoverColor);
+    .set-border-color(@borderHoverColor);
+    .set-bg-color(@hoverBgColor);
+
     outline: none;
     box-shadow: none;
-    background-color: @hoverBgColor;
   }
 }

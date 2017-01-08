@@ -1,5 +1,5 @@
 @import '../../../../../../styles/components/hk-input';
-@import '../../../../../../styles/mixins/button';
+@import '../../styles/variable';
 
 @toggleIconColor: #999;
 
@@ -7,7 +7,7 @@
   position: relative;
 
   .hk-text {
-    min-height: 290px;
+    min-height: @qrcodePreviewBoxHeight;
     font-size: 16px;
   }
 
@@ -17,7 +17,6 @@
     text-align: center;
 
     .btn {
-      .btn();
       float: none;
     }
   }
