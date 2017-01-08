@@ -1,5 +1,5 @@
 <template>
-  <div class="qrcode-preview-wrap">
+  <div class="qrcode-preview-box">
     <div class="qrcode-content">
       <div class="guide-wrap" v-if="!url">
         <div class="guide-wrap-text">
@@ -16,8 +16,6 @@
           <button class="btn btn-more"></button>
         </div>
       </div>
-    </div>
-    <div class="qrcode-tools">
     </div>
   </div>
 </template>
@@ -42,4 +40,8 @@ export default {
 
 <style scoped lang="less">
 @import './QrcodePreview';
+</style>
+
+<style lang="less">
+@import './QrcodePreviewModule';
 </style>

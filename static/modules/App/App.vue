@@ -27,7 +27,5 @@ export default {
 </style>
 
 <style lang="less">
-@import '../../styles/reset';
 @import '../../styles/app';
-@import '../../styles/components/hk-loading';
 </style>

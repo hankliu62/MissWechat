@@ -28,5 +28,4 @@ export default {
 
 <style lang="less">
 @import './Simditor';
-@import '../../styles/components/hk-simditor';
 </style>

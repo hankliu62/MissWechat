@@ -4,6 +4,7 @@
     :class="['tabpanel', className, { selected: selected, hidden: !selected }]"
     :id="id"
     :aria-labelledby="tabId"
+    :tab-panel-index="index"
   ><slot></slot></div>
 </template>
 
@@ -13,7 +14,8 @@ export default {
     className: String,
     selected: Boolean,
     id: String,
-    tabId: String
+    tabId: String,
+    index: null
   }
 }
 </script>

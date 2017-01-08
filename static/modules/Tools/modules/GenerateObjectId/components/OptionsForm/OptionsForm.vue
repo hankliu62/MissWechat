@@ -31,8 +31,8 @@
       </div>
     </div>
     <div class="btns-group">
-      <button type="submit" class="btn btn-primary">Try it</button>
-      <button type="button" class="btn btn-default" @click="onReset">Reset</button>
+      <button type="submit" class="btn hk-btn btn-theme">Try it</button>
+      <button type="button" class="btn hk-btn btn-cancel" @click="onReset">Reset</button>
     </div>
   </form>
 </template>

@@ -1,35 +1,41 @@
 @import '../../styles/variable';
 @import '../../styles/mixins/flexbox';
 
+@tabListCardBgColor: #555;
+@tabListCardColor: @white;
+@tabListCardSelectedBgColor: #444;
+@tabListCardSelectedBorderColor: #444;
+@tabListCardDisabledColor: #7f7f7f;
+
+@tabListUnderlinedBgColor: transparent;
+@tabListUnderlinedColor: #666;
+@tabListUnderlinedBorderColor: @common-border;
+@tabListUnderlinedSelectedBgColor: transparent;
+@tabListUnderlinedSelectedColor: @darkGreen;
+@tabListUnderlinedSelectedBorderColor: @darkGreen;
+@tabListUnderlinedDisabledColor: #ccc;
+
+
 .tabbable {
   .flexbox();
   flex-direction: column;
   height: 100%;
 
   [role="tablist"] {
-    background-color: #555;
-    padding-left: 12px;
     margin-bottom: 0;
   }
 
   [role="tab"] {
     display: inline-block;
-    border: 1px solid transparent;
+    border-bottom: 1px solid transparent;
     position: relative;
     list-style: none;
-    padding: 6px 12px;
+    padding: 6px 16px;
     cursor: pointer;
-    color: @white;
     font-size: 14px;
     user-select: none;
 
-    &[aria-selected=true] {
-      background-color: #444;
-      border-color: #444;
-    }
-
     &[aria-disabled=true] {
-      color: #7f7f7f;
       cursor: default;
     }
 
@@ -41,5 +47,70 @@
 
   [role="tabpanel"] {
     .flex(1);
+  }
+
+  // type: card
+  &.card {
+    [role="tablist"] {
+      background-color: @tabListCardBgColor;
+      padding-left: 12px;
+    }
+
+    [role="tab"] {
+      border-bottom: 1px solid transparent;
+      color: @tabListCardColor;
+
+      &[aria-selected=true] {
+        background-color: @tabListCardSelectedBgColor;
+        border-color: @tabListCardSelectedBorderColor;
+      }
+
+      &[aria-disabled=true] {
+        color: @tabListCardDisabledColor;
+      }
+    }
+  }
+
+  // type: underlined
+  &.underlined {
+    [role="tablist"] {
+      background-color: @tabListUnderlinedBgColor;
+      padding-left: 0;
+      border-bottom: 1px solid @tabListUnderlinedBorderColor;
+    }
+
+    [role="tab"] {
+      border-bottom: 3px solid transparent;
+      color: @tabListUnderlinedColor;
+
+      &[aria-selected=true] {
+        color: @tabListUnderlinedSelectedColor;
+        border-color: @tabListUnderlinedSelectedBorderColor;
+        background-color: @tabListUnderlinedSelectedBgColor;
+        margin-bottom: -1px;
+        position: relative;
+      }
+
+      &[aria-disabled=true] {
+        color: @tabListUnderlinedDisabledColor;
+        cursor: default;
+      }
+
+      &:focus {
+        border-color: @tabListUnderlinedSelectedBorderColor;
+        outline: none;
+      }
+    }
+  }
+
+  &.justified {
+    [role="tablist"] {
+      .flexbox();
+    }
+
+    [role="tab"] {
+      .flex(1);
+      text-align: center;
+    }
   }
 }

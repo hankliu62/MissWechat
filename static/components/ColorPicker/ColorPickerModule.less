@@ -1,0 +1,71 @@
+@import '../../styles/variable';
+@import '../../styles/mixins/flexbox';
+
+@colorPickerPreviewBoxBgColor: @white;
+@colorPickerPreviewBoxBorderColor: #d9d9d9;
+@colorPickerBgColor: @white;
+@colorPickerBorderColor: #d9d9d9;
+@colorPickerShapeBorderColor: #737373;
+@colorPickerDisplayBoxBgColor: @white;
+@colorPickerDisplayBoxBorderColor: #737373;
+
+.hk-color-picker {
+  .color-picker-form {
+    .colorPicker {
+      .flexbox();
+      margin: 0;
+      background-color: transparent;
+      border: 0;
+
+      &:before {
+        border-bottom: 8px solid @colorPickerBorderColor;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        left: 81px;
+        top: -8px;
+      }
+
+      .twod {
+        .flex(1);
+        margin: 0;
+        cursor: cell;
+
+        .pointer {
+          .shape {
+            &.shape2 {
+              margin-top: -4px;
+              margin-left: -4px;
+              border: 1px solid @colorPickerShapeBorderColor;
+              background-color: @white;
+              opacity: .8;
+            }
+
+            &.shape1 {
+              display: none;
+            }
+          }
+        }
+      }
+
+      .oned {
+        margin: 0;
+        margin-left: 10px;
+        cursor: pointer;
+
+        .pointer {
+          .shape {
+            margin-top: -2.5px;
+            margin-left: 0;
+            height: 5px;
+            border: 0;
+            border-top: 1px solid @colorPickerShapeBorderColor;
+            border-bottom: 1px solid @colorPickerShapeBorderColor;
+            border-radius: 0;
+            background-color: @white;
+            opacity: .8;
+          }
+        }
+      }
+    }
+  }
+}

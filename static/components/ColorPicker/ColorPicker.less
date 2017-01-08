@@ -1,0 +1,83 @@
+@import '../../styles/variable';
+@import '../../styles/mixins/flexbox';
+
+@colorPickerPreviewBoxBgColor: @white;
+@colorPickerPreviewBoxBorderColor: #d9d9d9;
+@colorPickerBgColor: @white;
+@colorPickerBorderColor: #d9d9d9;
+@colorPickerShapeBorderColor: #737373;
+@colorPickerDisplayBoxBgColor: @white;
+@colorPickerDisplayBoxBorderColor: #737373;
+
+.hk-color-picker {
+  position: relative;
+  height: 100%;
+
+  .color-picker-source {
+    position: absolute;
+    top: 50%;
+    margin-top: -12.5px;
+    width: 25px;
+    height: 25px;
+    padding: 3px;
+    background-color: @colorPickerPreviewBoxBgColor;
+    border: 1px solid @colorPickerPreviewBoxBorderColor;
+    cursor: pointer;
+
+    .color-preview-box {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .color-picker-form {
+    position: absolute;
+    left: -80px;
+    top: -200px;
+    padding: 10px;
+    border-radius: 2px;
+    background-color: @colorPickerBgColor;
+    border: 1px solid @colorPickerBorderColor;
+    z-index: 1;
+
+    .color-input-wrapper {
+      .flexbox();
+      margin-top: 10px;
+      margin-bottom: 15px;
+
+      .color-display {
+        width: 30px;
+        height: 30px;
+        border-radius: 2px;
+        background-color: @colorPickerDisplayBoxBgColor;
+        border: 1px solid @colorPickerDisplayBoxBorderColor;
+        display: inline-block;
+        vertical-align: top;
+        margin-right: 5px;
+      }
+
+      .input-box {
+        .flex(1);
+
+        .color-input {
+          width: 100%;
+        }
+      }
+    }
+
+    .btn-group {
+      float: right;
+
+      .btn {
+        border-radius: 2px;
+      }
+
+      .btn + .btn {
+        &.btn-cancel {
+          float: none;
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+}

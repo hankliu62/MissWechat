@@ -1,0 +1,35 @@
+@import '../variable';
+
+@sliderButtonDraggingBgColor: #13ce66;
+
+.hk-slider {
+  &.el-slider {
+    .el-slider__runway {
+      margin: 13px 0;
+    }
+
+    .el-slider__bar {
+      background-color: @darkGreen;
+    }
+
+    .el-slider__button {
+      background-color: @darkGreen;
+
+      &.hover,
+      &.dragging
+      &:hover {
+        background-color: @sliderButtonDraggingBgColor;
+      }
+    }
+  }
+}
+
+.el-tooltip__popper {
+  &.is-dark {
+    > span {
+      &:after {
+        content: ' px';
+      }
+    }
+  }
+}

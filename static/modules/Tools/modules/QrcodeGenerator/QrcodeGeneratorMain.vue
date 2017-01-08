@@ -34,6 +34,7 @@
             </div>
             <div class="qrcode-preview-wrap">
               <qrcode-preview :url="qrcodeUrl" @download="onDownloadQrcode"></qrcode-preview>
+              <qrcode-tools></qrcode-tools>
             </div>
           </div>
         </div>
@@ -47,6 +48,7 @@
 import { mapActions, mapState } from 'vuex'
 import TextQrcodeGenerate from './components/TextQrcodeGenerate/TextQrcodeGenerate'
 import QrcodePreview from './components/QrcodePreview/QrcodePreview'
+import QrcodeTools from './components/QrcodeTools/QrcodeTools'
 import DownloadUtil from '../../../../utils/DownloadUtil'
 
 export default {
@@ -97,7 +99,7 @@ export default {
       DownloadUtil.download(this.qrcodeUrl, filename)
     }
   },
-  components: { TextQrcodeGenerate, QrcodePreview }
+  components: { TextQrcodeGenerate, QrcodePreview, QrcodeTools }
 }
 </script>
 

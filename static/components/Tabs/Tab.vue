@@ -3,7 +3,7 @@
     :class="['tab', {[activeTabClassName]: selected, [disabledTabClassName]: disabled}]"
     role="tab"
     :id="id"
-    :tabIndex="selected ? '0' : null"
+    :tab-index="index"
     :aria-selected="selected ? 'true' : 'false'"
     :aria-disabled="disabled ? 'true' : 'false'"
     :aria-controls="panelId"
@@ -25,12 +25,14 @@ export default {
       type: String,
       default: 'disabled'
     },
-    panelId: String
+    panelId: String,
+    index: Number,
+    value: null
   },
   methods: {
     onClickTab () {
       if (!this.disabled) {
-        this.$parent.$parent.$emit('selected', { tab: this.id, panel: this.panelId })
+        this.$parent.$parent.$emit('selected', this, this.index)
       }
     }
   }
