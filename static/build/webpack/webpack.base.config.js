@@ -38,7 +38,7 @@ module.exports = {
       { test: /\.js$/, loader: 'babel!eslint', exclude: /node_modules/ },
       { test: /\.css$/, loader: 'style!css' },
       { test: /.(png|jpe?g|gif|svg|webp)/, loader: 'url', exclude: /node_modules/ },
-      { test: /\.(eot|woff|svg|ttf|woff2|gif|appcache)(\?|$)/, loader: 'file-loader?name=[name].[ext]', exclude: /^node_modules$/}
+      { test: /\.(eot|woff|svg|ttf|woff2|appcache)(\?|$)/, loader: 'file-loader?name=[name].[ext]', exclude: /^node_modules$/}
     ]
   },
   vue: {

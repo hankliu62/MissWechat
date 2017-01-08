@@ -13,7 +13,7 @@
     </textarea>
     <simditor :options="simditorOptions" v-if="isShowSimditor"></simditor>
     <div class="btn-group">
-      <button class="btn btn-theme" @click="onGenerateQrcode">生产二维码</button>
+      <button class="btn hk-btn btn-theme" @click="onGenerateQrcode">生产二维码</button>
     </div>
   </div>
 </template>
@@ -56,4 +56,8 @@ export default {
 
 <style scoped lang="less">
 @import './TextQrcodeGenerate';
+</style>
+
+<style lang="less">
+@import '../../../../../../styles/components/hk-btn';
 </style>

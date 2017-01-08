@@ -1,0 +1,43 @@
+@import '../../../../../../styles/mixins/flexbox';
+
+@propertyItemTitleColor: #666;
+@propertyItemHeight: 30px;
+
+.qrcode-tools-panel {
+  font-size: 0;
+
+  .basic-property-item {
+    .flexbox();
+    width: 100%;
+    font-size: 14px;
+    line-height: @propertyItemHeight;
+
+    .property-item-title {
+      font-weight: normal;
+      margin-bottom: 0;
+      color: @propertyItemTitleColor;
+      padding-right: 10px;
+      font-size: 14px;
+    }
+
+    .property-item-content {
+      .flex(1);
+    }
+
+    + .basic-property-item {
+      margin-top: 10px;
+    }
+  }
+
+  .two-item-preline {
+    .flexbox();
+
+    .basic-property-item {
+      .flex(1);
+
+      &:nth-child(2) {
+        margin-top: 0;
+      }
+    }
+  }
+}

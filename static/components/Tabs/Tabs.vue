@@ -1,5 +1,5 @@
 <template>
-<div class="tabbable">
+<div :class="['tabbable', type]">
   <slot name="tablist"></slot>
   <slot name="tabpanel"></slot>
 </div>
@@ -11,7 +11,11 @@ export default {
     return {}
   },
   props: {
-    value: {}
+    value: {},
+    type: {
+      type: String,
+      default: 'card'
+    }
   }
 }
 </script>

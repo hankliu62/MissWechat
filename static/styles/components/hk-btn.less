@@ -1,0 +1,23 @@
+@import '../variable';
+@import '../mixins/button';
+
+@defaultBtnColor: @white;
+@defaultBtnBorderColor: #19af8c;
+@defaultBtnBgColor: #27AE60;
+@defaultBtnHoverBgColor: #295;
+
+@btnCancelColor: #787878;
+@btnCancelBorderColor: #dbdbdb;
+@btnCancelBgColor: @white;
+@btnCancelHoverBgColor: #dbdbdb;
+@btnCancelHoverColor: #555;
+
+.hk-btn {
+  &.btn-theme {
+    .btn(@defaultBtnColor, @defaultBtnBorderColor, @defaultBtnBgColor, @defaultBtnColor, @defaultBtnBorderColor, @defaultBtnHoverBgColor);
+  }
+
+  &.btn-cancel {
+    .btn(@btnCancelColor, @btnCancelBorderColor, @btnCancelBgColor, @btnCancelHoverColor, @btnCancelBorderColor, @btnCancelHoverBgColor);
+  }
+}

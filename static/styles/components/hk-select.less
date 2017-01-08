@@ -1,0 +1,45 @@
+@import '../variable';
+
+@selectHeight: 30px;
+@selectDropdownItemColor: #999;
+
+.hk-select {
+  &.el-select {
+    .el-input__icon {
+      height: @selectHeight;
+    }
+
+    .el-input__inner {
+      height: @selectHeight;
+
+      &:focus {
+        border-color: @darkGreen;
+      }
+    }
+  }
+}
+
+.hk-select-dropdown {
+  &.el-select-dropdown {
+    .el-select-dropdown__list {
+      padding: 0;
+    }
+
+    .el-select-dropdown__item {
+      height: @selectHeight;
+      padding: 5px 10px;
+      color: @selectDropdownItemColor;
+
+      &.selected {
+        color: @selectDropdownItemColor;
+        background-color: transparent;
+      }
+
+      &.hover,
+      &:hover {
+        color: @white;
+        background-color: @darkGreen;
+      }
+    }
+  }
+}

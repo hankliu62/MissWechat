@@ -1,0 +1,42 @@
+@import '../../../styles/variable';
+@loadingMaskBgColor: rgba(0, 0 ,0, .25);
+@loadingTextColor: @darkGreen;
+
+.hk-loading-mask {
+  position: absolute;
+  margin: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10000;
+  background-color: @loadingMaskBgColor;
+
+  &.is-fullscreen {
+    position: fixed;
+  }
+
+  .el-loading-spinner {
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    display: inline-block;
+    transform: translate(-50%, -50%);
+    max-width: 360px;
+    text-align: center;
+    width: auto;
+
+    .el-loading-icon {
+      width: 32px;
+      height: 32px;
+      display: block;
+    }
+
+    .el-loading-text {
+      color: @loadingTextColor;
+      margin: 3px 0;
+      font-size: 14px;
+    }
+  }
+}
+
