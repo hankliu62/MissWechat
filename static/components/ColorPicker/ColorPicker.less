@@ -32,13 +32,14 @@
 
   .color-picker-form {
     position: absolute;
-    left: -80px;
-    top: -200px;
+    left: 0;
+    top: 110%;
     padding: 10px;
     border-radius: 2px;
     background-color: @colorPickerBgColor;
     border: 1px solid @colorPickerBorderColor;
-    z-index: 1;
+    z-index: 1023;
+    transform: translateX(-50%);
 
     .color-input-wrapper {
       .flexbox();
@@ -79,5 +80,14 @@
         }
       }
     }
+  }
+
+  .picker-mask {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1022;
   }
 }
