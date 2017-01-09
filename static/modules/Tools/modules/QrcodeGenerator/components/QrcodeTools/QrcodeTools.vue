@@ -25,6 +25,9 @@
         <template v-if="tab.value === QRCODE_TOOLS_TAB_TYPES.COLOR">
           <color-tools-panel></color-tools-panel>
         </template>
+        <template v-if="tab.value === QRCODE_TOOLS_TAB_TYPES.LOGO">
+          <logo-tools-panel></logo-tools-panel>
+        </template>
       </tab-panel>
     </tabs>
   </div>
@@ -34,6 +37,7 @@
 import { Tabs, TabList, Tab, TabPanel } from '../../../../../../components/Tabs'
 import BasicToolsPanel from '../BasicToolsPanel/BasicToolsPanel'
 import ColorToolsPanel from '../ColorToolsPanel/ColorToolsPanel'
+import LogoToolsPanel from '../LogoToolsPanel/LogoToolsPanel'
 import { QRCODE_TOOLS_TAB_TYPES, QRCODE_TOOLS_TABS } from '../../constants/constants'
 export default {
   data () {
@@ -51,7 +55,7 @@ export default {
       this.selectedTab = tab.value
     }
   },
-  components: { Tabs, TabList, Tab, TabPanel, BasicToolsPanel, ColorToolsPanel }
+  components: { Tabs, TabList, Tab, TabPanel, BasicToolsPanel, ColorToolsPanel, LogoToolsPanel }
 }
 </script>
 

@@ -1,0 +1,49 @@
+@import '../../../../../../styles/variable';
+@import '../../../../../../styles/mixins/flexbox';
+
+@dialogBodyPaddingWidth: 25px;
+
+.logos-dialog {
+  .logos-group {
+    padding: 0 @dialogBodyPaddingWidth;
+
+    .logos-group-item {
+      .flexbox();
+
+      + .logos-group-item {
+        margin-top: 10px;
+      }
+
+      .logo-item {
+        .flex(1);
+        padding: 10px;
+        height: 82px;
+        border: 1px solid @common-border;
+        border-radius: 2px;
+        text-align: center;
+        cursor: pointer;
+
+        + .logo-item {
+          margin-left: 10px;
+        }
+
+        &.selected {
+          border-color: @darkGreen;
+          box-shadow: 0 0 3px @darkGreen
+        }
+      }
+    }
+  }
+
+  .btn-group {
+    width: 100%;
+    margin-top: 25px;
+    padding: 25px @dialogBodyPaddingWidth 0;
+    border-top: 1px solid @common-border;
+    text-align: center;
+
+    .btn {
+      width: 100%;
+    }
+  }
+}

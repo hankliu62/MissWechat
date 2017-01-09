@@ -1,9 +1,9 @@
 <template>
   <div class="hk-color-picker">
-    <div class="color-picker-source" @click="onClickShowPicker">
+    <div ref="pickerSource" class="color-picker-source" @click="onClickShowPicker">
       <div class="color-preview-box" :style="{ backgroundColor: value }"></div>
     </div>
-    <form class="color-picker-form" @submit.prevent="onSubmit" v-show="isShow">
+    <form ref="pickerPopup" class="color-picker-form" @submit.prevent="onSubmit" v-show="isShow">
       <div :id="states.id" class="color-picker-target"></div>
       <div class="color-input-wrapper">
         <span class="color-display" :style="{ backgroundColor: pickedColor }"></span>
@@ -17,9 +17,10 @@
       </div>
       <div class="btn-group clearfix">
         <input class="btn hk-btn btn-theme" type="submit" value="确认" />
-        <span class="btn hk-btn btn-cancel" type="cancel" @click="onCancelPick">取消</span>
+        <span class="btn hk-btn btn-cancel" type="cancel" @click="onCancelPicker">取消</span>
       </div>
     </form>
+    <div class="picker-mask" v-if="isShow" @click.self="onCancelPicker"></div>
   </div>
 </template>
 
@@ -27,6 +28,7 @@
 import colorjoe from 'colorjoe'
 import 'colorjoe/css/colorjoe.css'
 import ColorUtil from '../../utils/ColorUtil'
+import ElementUtil from '../../utils/ElementUtil'
 
 const setPickerColor = function (vm, color) {
   if (vm.states.colorPicker) {
@@ -68,7 +70,7 @@ export default {
         this.isErrorColor = true
       }
     },
-    onCancelPick () {
+    onCancelPicker () {
       this.isShow = false;
     },
     onFocusColorInput () {
@@ -77,12 +79,41 @@ export default {
   },
   watch: {
     isShow (nextValue) {
+      const container = document.getElementById('html-container')
+
       if (nextValue) {
         if (!this.states.colorPicker) {
           this.states.colorPicker = colorjoe.rgb(this.states.id, '#000')
           this.states.colorPicker.on('change', function (color) {
             this.pickedColor = ColorUtil.toHex(color.css())
           }.bind(this))
+        }
+
+        if (this.$refs && this.$refs.pickerSource && container) {
+          const containerSize = ElementUtil.getElementSize(container)
+          const position = ElementUtil.getElementRelativePosition(this.$refs.pickerSource)
+          const size = ElementUtil.getElementSize(this.$refs.pickerSource)
+          const parent = this.$refs.pickerSource.offsetParent
+          let parentSize = { ...position }
+          if (parent) {
+            parentSize = ElementUtil.getElementSize(parent)
+          }
+
+          if (this.$refs && this.$refs.pickerPopup) {
+            console.log(containerSize.height - position.top < 350 + 20)
+            if (containerSize.height - position.top < 350 + 20) {
+              const styleObject = {
+                top: '-10%',
+                transform: 'translate(-50%, -100%)',
+                webkitTransform: 'translate(-50%, -100%)',
+                mozTransform: 'translate(-50%, -100%)',
+                msTransform: 'translate(-50%, -100%)',
+                oTransform: 'translate(-50%, -100%)'
+              }
+              ElementUtil.setElementStyle(this.$refs.pickerPopup, styleObject)
+            }
+          }
+          console.log(position, size, parentSize, containerSize)
         }
 
         if (this.value && this.value !== this.pickedColor) {
