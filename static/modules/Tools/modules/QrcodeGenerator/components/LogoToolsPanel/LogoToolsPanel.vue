@@ -2,7 +2,9 @@
   <div class="qrcode-tools-panel logo-tools-panel">
     <div class="two-item-preline">
       <div class="basic-property-item">
-        <button class="btn hk-btn btn-theme">上传 LOGO</button>
+        <upload>
+          <button class="btn hk-btn btn-theme">上传 LOGO</button>
+        </upload>
       </div>
       <div class="basic-property-item">
         <button class="btn hk-btn btn-theme" @click="onOpenLogosDialog">常用 LOGO</button>
@@ -23,6 +25,7 @@
 
 <script>
 import LogosDialog from '../LogosDialog/LogosDialog'
+import Upload from '../../../../../../components/Upload/Upload'
 
 export default {
   data () {
@@ -46,7 +49,7 @@ export default {
       this.logoUrl = ''
     }
   },
-  components: { LogosDialog }
+  components: { LogosDialog, Upload }
 }
 </script>
 

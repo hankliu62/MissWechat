@@ -3,7 +3,7 @@ import RestUtil from './RestUtil'
 import { API_FILES_DOWNLOAD } from '../constants/apis'
 
 class DownloadUtil {
-  static download (dataUrl, filename = ObjectUtil.generateObjectId()) {
+  static async download (dataUrl, filename = ObjectUtil.generateObjectId()) {
     const saveLink = document.createElementNS('http://www.w3.org/1999/xhtml', 'a')
     if ('download' in saveLink) {
       saveLink.download = filename
@@ -17,7 +17,8 @@ class DownloadUtil {
         url: encodeURIComponent(dataUrl),
         filename
       }
-      RestUtil.get(API_FILES_DOWNLOAD, { params })
+      const response = await RestUtil.get(API_FILES_DOWNLOAD, { params })
+      console.log(response)
     }
   }
 }
