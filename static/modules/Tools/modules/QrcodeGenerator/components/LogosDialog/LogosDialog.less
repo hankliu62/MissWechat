@@ -1,0 +1,32 @@
+@import '../../../../../../styles/variable';
+@import '../../../../../../styles/mixins/flexbox';
+
+.logos-dialog {
+  .logos-group {
+    .logos-group-item {
+      .flexbox();
+
+      + .logos-group-item {
+        margin-top: 10px;
+      }
+
+      .logo-item {
+        .flex(1);
+        padding: 10px;
+        border: 1px solid @common-border;
+        border-radius: 2px;
+        text-align: center;
+        cursor: pointer;
+
+        + .logo-item {
+          margin-left: 10px;
+        }
+
+        &.selected {
+          border-color: @darkGreen;
+          box-shadow: 0 0 3px @darkGreen
+        }
+      }
+    }
+  }
+}
