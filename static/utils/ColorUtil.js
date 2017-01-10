@@ -13,7 +13,7 @@ class ColorUtil {
       let hexStr = '#'
       for (const item of colors) {
         const hex = Number(item).toString(16)
-        hexStr += hex === '0' ? `${hex}${hex}` : hex
+        hexStr += hex.length === 1 ? `0${hex}` : hex
       }
 
       if (hexStr.length !== 7) {

@@ -10,8 +10,8 @@
         <button class="btn hk-btn btn-theme" @click="onOpenLogosDialog">常用 LOGO</button>
       </div>
     </div>
-    <div class="logo-preview" v-if="logoUrl">
-      <img class="logo-source" :src="logoUrl" />
+    <div class="logo-preview" v-if="url">
+      <img class="logo-source" :src="url" />
       <i class="icon-remove" @click="onRemoveLogo"></i>
     </div>
 
@@ -31,8 +31,11 @@ export default {
   data () {
     return {
       isShowLogosDialog: false,
-      logoUrl: ''
+      url: ''
     }
+  },
+  props: {
+    logoUrl: String
   },
   methods: {
     onOpenLogosDialog () {
@@ -42,14 +45,23 @@ export default {
       this.isShowLogosDialog = false
     },
     onSelectLogoFromDialog (url) {
-      this.logoUrl = url
+      this.onSetLogoUrl(url)
       this.onCloseLogosDialog()
     },
     onRemoveLogo () {
-      this.logoUrl = ''
+      this.$emit('onSetLogoUrl', '')
     },
     onUploadedFile (url) {
-      this.logoUrl = `${url}?imageView2/1/w/40/h/40`
+      this.onSetLogoUrl(`${url}?imageView2/1/w/40/h/40`)
+    },
+    onSetLogoUrl (url) {
+      this.url = url
+      this.$emit('onSetLogoUrl', url)
+    }
+  },
+  watch: {
+    logoUrl (newValue) {
+      this.url = newValue
     }
   },
   components: { LogosDialog, Upload }

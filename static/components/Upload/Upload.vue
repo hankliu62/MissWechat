@@ -48,7 +48,6 @@ export default {
 
       const init = {
         FileUploaded: function (uploader, file, info, url) {
-          console.log(url)
           that.$emit('onUploadedFile', url)
         },
         Error: function (uploader, err, errTip) {
