@@ -20,13 +20,23 @@
         :index="index"
         :selected="selectedTab === tab.value">
         <template v-if="tab.value === QRCODE_TOOLS_TAB_TYPES.BASIC">
-          <basic-tools-panel></basic-tools-panel>
+          <basic-tools-panel
+            :faultToleranceLevel="faultToleranceLevel"
+            :size="size"
+            @onSetLevel="onSetLevel"
+            @onSetSize="onSetSize">
+          </basic-tools-panel>
         </template>
         <template v-if="tab.value === QRCODE_TOOLS_TAB_TYPES.COLOR">
-          <color-tools-panel></color-tools-panel>
+          <color-tools-panel
+            :foreground="foreground"
+            :background="background"
+            @onSetForeground="onSetForeground"
+            @onSetBackground="onSetBackground">
+          </color-tools-panel>
         </template>
         <template v-if="tab.value === QRCODE_TOOLS_TAB_TYPES.LOGO">
-          <logo-tools-panel></logo-tools-panel>
+          <logo-tools-panel :logoUrl="logoUrl" @onSetLogoUrl="onSetLogoUrl"></logo-tools-panel>
         </template>
       </tab-panel>
     </tabs>
@@ -49,10 +59,30 @@ export default {
     }
   },
   props: {
+    faultToleranceLevel: Number,
+    size: Number,
+    foreground: String,
+    background: String,
+    logoUrl: String
   },
   methods: {
     onSelectCodeTab (tab, index) {
       this.selectedTab = tab.value
+    },
+    onSetLevel (faultToleranceLevel) {
+      this.$emit('onSetLevel', faultToleranceLevel)
+    },
+    onSetSize (size) {
+      this.$emit('onSetSize', size)
+    },
+    onSetForeground (foreground) {
+      this.$emit('onSetForeground', foreground)
+    },
+    onSetBackground (background) {
+      this.$emit('onSetBackground', background)
+    },
+    onSetLogoUrl (url) {
+      this.$emit('onSetLogoUrl', url)
     }
   },
   components: { Tabs, TabList, Tab, TabPanel, BasicToolsPanel, ColorToolsPanel, LogoToolsPanel }

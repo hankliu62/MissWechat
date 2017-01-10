@@ -35,7 +35,7 @@ export default {
     }
   },
   props: {
-    model: [String]
+    qrcodeContent: Object
   },
   mounted () {
     if (this.$refs.text) {
@@ -48,6 +48,11 @@ export default {
     },
     onToggleEditor () {
       this.isShowSimditor = !this.isShowSimditor
+    }
+  },
+  watch: {
+    qrcodeContent (content) {
+      this.value = content ? content[PARAM_TYPES.TEXT] || '' : ''
     }
   },
   components: { Simditor }

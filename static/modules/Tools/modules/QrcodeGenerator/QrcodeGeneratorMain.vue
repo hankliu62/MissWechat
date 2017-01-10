@@ -30,11 +30,22 @@
         <div class="main-content-wrap col-md-10">
           <div class="qrcode-generate-box">
             <div class="qrcode-generate-wrap">
-              <text-qrcode-generate @generate="onGenerateQrcode"></text-qrcode-generate>
+              <text-qrcode-generate :qrcodeContent="qrcodeContent" @generate="onGenerateQrcode"></text-qrcode-generate>
             </div>
             <div class="qrcode-preview-wrap">
               <qrcode-preview :url="qrcodeUrl" @download="onDownloadQrcode"></qrcode-preview>
-              <qrcode-tools></qrcode-tools>
+              <qrcode-tools
+                :faultToleranceLevel="faultToleranceLevel"
+                :size="size"
+                :foreground="foreground"
+                :background="background"
+                :logoUrl="logoUrl"
+                @onSetLevel="onSetLevel"
+                @onSetSize="onSetSize"
+                @onSetForeground="onSetForeground"
+                @onSetBackground="onSetBackground"
+                @onSetLogoUrl="onSetLogoUrl">
+              </qrcode-tools>
             </div>
           </div>
         </div>
@@ -62,7 +73,13 @@ export default {
   computed: {
     ...mapState({
       nav: (state) => state.qrcodeGeneratorMain.nav,
-      qrcodeUrl: (state) => state.qrcodeGeneratorMain.qrcodeUrl
+      qrcodeUrl: (state) => state.qrcodeGeneratorMain.qrcodeUrl,
+      faultToleranceLevel: (state) => state.qrcodeGeneratorMain.faultToleranceLevel,
+      size: (state) => state.qrcodeGeneratorMain.size,
+      foreground: (state) => state.qrcodeGeneratorMain.foreground,
+      background: (state) => state.qrcodeGeneratorMain.background,
+      logoUrl: (state) => state.qrcodeGeneratorMain.logoUrl,
+      qrcodeContent: (state) => state.qrcodeGeneratorMain.qrcodeContent
     })
   },
   mounted () {
@@ -75,21 +92,29 @@ export default {
     })
   },
   methods: {
+    setState: mapActions(['setQrcodeGeneratorState'])['setQrcodeGeneratorState'],
     ...mapActions(['fetchQiniuUptoken', 'generateTextQrcode']),
     onGenerateQrcode (params) {
+      this.setState({ [params.type]: params.value })
       const AraleQRCode = require('arale-qrcode')
-      const qrcode = new AraleQRCode({
+      const options = {
         render: 'canvas',
         text: params.value,
-        size: 256,
-        correctLevel: 2,
-        background: '#FFFFFF',
-        foreground: '#000000'
-      });
+        size: this.size,
+        correctLevel: this.faultToleranceLevel,
+        background: this.background,
+        foreground: this.foreground
+      }
+
+      if (this.logoUrl) {
+        options.image = this.logoUrl
+        options.imageSize = 30
+      }
+      const qrcode = new AraleQRCode(options)
 
       if (qrcode) {
         const dataURL = qrcode.toDataURL('image/png')
-        const base64Data = dataURL.replace(/^data:image\/\w+;base64,/, '');
+        const base64Data = dataURL.replace(/^data:image\/\w+;base64,/, '')
         this.generateTextQrcode(base64Data)
       }
     },
@@ -97,6 +122,21 @@ export default {
       const index = this.qrcodeUrl.lastIndexOf('/') + 1
       const filename = this.qrcodeUrl.slice(index)
       DownloadUtil.download(this.qrcodeUrl, filename)
+    },
+    onSetLevel (faultToleranceLevel) {
+      this.setState({ faultToleranceLevel })
+    },
+    onSetSize (size) {
+      this.setState({ size })
+    },
+    onSetForeground (foreground) {
+      this.setState({ foreground })
+    },
+    onSetBackground (background) {
+      this.setState({ background })
+    },
+    onSetLogoUrl (logoUrl) {
+      this.setState({ logoUrl })
     }
   },
   components: { TextQrcodeGenerate, QrcodePreview, QrcodeTools }

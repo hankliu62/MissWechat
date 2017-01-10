@@ -11,6 +11,10 @@
 import { initUploader } from '../../utils/QiniuUtil'
 import ElementUtil from '../../utils/ElementUtil'
 
+const CONSTANTS = {
+  MAX_FILE_SIZE: '5mb'
+}
+
 export default {
   data () {
     return {
@@ -20,7 +24,10 @@ export default {
   },
   props: {
     isShowProgress: Boolean,
-    acceptTypes: String
+    acceptTypes: String,
+    maxFileSize: Number,
+    title: String,
+    extensions: String
   },
   mounted () {
     if (this.$slots.default) {
@@ -31,14 +38,28 @@ export default {
       this.maskStyle = { width, height }
       const that = this
 
+      const filters = {
+        max_file_size: this.maxFileSize || CONSTANTS.MAX_FILE_SIZE
+      }
+
+      if (this.title && this.extensions) {
+        filters.mime_types = [{ title: this.title, extensions: this.extensions }]
+      }
+
+      const init = {
+        FileUploaded: function (uploader, file, info, url) {
+          that.$emit('onUploadedFile', url)
+        },
+        Error: function (uploader, err, errTip) {
+          console.log({ uploader, err, errTip })
+        }
+      }
+
       const uploader = initUploader({
         browse_button: 'pickfiles',
-        multi_selection: true,
-        init: {
-          FileUploaded: function (up, file, info, url) {
-            that.$emit('onUploadedFile', url)
-          }
-        }
+        multi_selection: false,
+        filters,
+        init
       })
     }
   }

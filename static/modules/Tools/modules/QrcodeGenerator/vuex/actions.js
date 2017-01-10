@@ -1,9 +1,13 @@
 import { API_GENERATE_OBJECTIDS } from '../../GenerateObjectId/constants/apis'
-import { TOOLS_QRCODE_GENERATE_SUCCESS } from '../constants/types'
+import { TOOLS_QRCODE_GENERATE_SUCCESS, TOOLS_QRCODE_GENERATOR_MAIN_SET } from '../constants/types'
 import Session from '../../../../../libs/Session'
 import RestUtil from '../../../../../utils/RestUtil'
 import StringUtil from '../../../../../utils/StringUtil'
 import qiniuConfig from '../../../../../config/qiniu'
+
+export const setQrcodeGeneratorState = function ({ commit }, payload) {
+  commit(TOOLS_QRCODE_GENERATOR_MAIN_SET, { payload })
+}
 
 export const generateTextQrcode = async function ({ commit }, body) {
   const qiniu = Session.getQiniu()

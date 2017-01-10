@@ -23,19 +23,21 @@
 
 <script>
 import ColorPicker from '../../../../../../components/ColorPicker/ColorPicker'
+
 export default {
   data () {
-    return {
-      foreground: '#000000',
-      background: '#FFFFFF'
-    }
+    return {}
+  },
+  props: {
+    foreground: String,
+    background: String
   },
   methods: {
-    onChooseForeground (color) {
-      this.foreground = color
+    onChooseForeground (foreground) {
+      this.$emit('onSetForeground', foreground)
     },
-    onChooseBackground (color) {
-      this.background = color
+    onChooseBackground (background) {
+      this.$emit('onSetBackground', background)
     }
   },
   components: { ColorPicker }
