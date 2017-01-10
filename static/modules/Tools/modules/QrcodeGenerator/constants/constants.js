@@ -46,3 +46,8 @@ export const FAULT_TOLERANCE_LEVELS = [
     label: '6%'
   }
 ]
+
+export const DEFAULT_FAULT_TOLERANCE_LEVEL = FAULT_TOLERANCE_LEVELS[0].value
+export const DEFAULT_QRCODE_SIZE = 300
+export const DEFAULT_QRCODE_FOREGROUND = '#000000'
+export const DEFAULT_QRCODE_BACKGROUND = '#FFFFFF'

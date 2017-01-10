@@ -8,7 +8,7 @@
             class="hk-select"
             placeholder="请选择"
             popper-class="hk-select-dropdown"
-            v-model="currentFaultToleranceLevels"
+            v-model="currentLevel"
             @change="onSelectFaultToleranceLevel">
             <el-option
               v-for="item in faultToleranceLevels"
@@ -32,23 +32,36 @@
 </template>
 
 <script>
-import { FAULT_TOLERANCE_LEVELS } from '../../constants/constants'
+import { FAULT_TOLERANCE_LEVELS, DEFAULT_FAULT_TOLERANCE_LEVEL } from '../../constants/constants'
+
 export default {
   data () {
     return {
       faultToleranceLevels: FAULT_TOLERANCE_LEVELS,
-      currentFaultToleranceLevels: FAULT_TOLERANCE_LEVELS[0].value,
-      size: 300
+      currentLevel: DEFAULT_FAULT_TOLERANCE_LEVEL,
+      currentSize: 300
     }
+  },
+  props: {
+    faultToleranceLevel: Number,
+    size: Number
   },
   methods: {
     onSelectFaultToleranceLevel (level) {
-      this.currentFaultToleranceLevels = level
-      this.$emit('onSelectFaultToleranceLevel', level)
+      this.faultToleranceLevel = level
+      this.$emit('onSetLevel', level)
     },
     onChangeSize (size) {
       this.size = size
-      this.$emit('onChangeSize', size)
+      this.$emit('onSetSize', size)
+    }
+  },
+  watch: {
+    faultToleranceLevel (newValue) {
+      this.currentLevel = newValue
+    },
+    size (newValue) {
+      this.currentSize = newValue
     }
   }
 }
