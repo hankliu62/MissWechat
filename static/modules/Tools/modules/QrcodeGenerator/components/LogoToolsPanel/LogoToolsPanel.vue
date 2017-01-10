@@ -2,7 +2,7 @@
   <div class="qrcode-tools-panel logo-tools-panel">
     <div class="two-item-preline">
       <div class="basic-property-item">
-        <upload>
+        <upload title="Image files" extensions="jpg,jpeg,gif,png" @onUploadedFile="onUploadedFile">
           <button class="btn hk-btn btn-theme">上传 LOGO</button>
         </upload>
       </div>
@@ -47,6 +47,9 @@ export default {
     },
     onRemoveLogo () {
       this.logoUrl = ''
+    },
+    onUploadedFile (url) {
+      this.logoUrl = `${url}?imageView2/1/w/40/h/40`
     }
   },
   components: { LogosDialog, Upload }

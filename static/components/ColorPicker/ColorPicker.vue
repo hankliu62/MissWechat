@@ -100,7 +100,6 @@ export default {
           }
 
           if (this.$refs && this.$refs.pickerPopup) {
-            console.log(containerSize.height - position.top < 350 + 20)
             if (containerSize.height - position.top < 350 + 20) {
               const styleObject = {
                 top: '-10%',
@@ -113,7 +112,6 @@ export default {
               ElementUtil.setElementStyle(this.$refs.pickerPopup, styleObject)
             }
           }
-          console.log(position, size, parentSize, containerSize)
         }
 
         if (this.value && this.value !== this.pickedColor) {
