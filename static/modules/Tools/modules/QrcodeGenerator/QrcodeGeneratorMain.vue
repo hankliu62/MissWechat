@@ -61,6 +61,7 @@ import TextQrcodeGenerate from './components/TextQrcodeGenerate/TextQrcodeGenera
 import QrcodePreview from './components/QrcodePreview/QrcodePreview'
 import QrcodeTools from './components/QrcodeTools/QrcodeTools'
 import DownloadUtil from '../../../../utils/DownloadUtil'
+import Qrcode from '../../../../libs/qrcode'
 
 export default {
   data () {
@@ -96,7 +97,6 @@ export default {
     ...mapActions(['fetchQiniuUptoken', 'generateTextQrcode']),
     onGenerateQrcode (params) {
       this.setState({ [params.type]: params.value })
-      const AraleQRCode = require('arale-qrcode')
       const options = {
         render: 'canvas',
         text: params.value,
@@ -108,15 +108,17 @@ export default {
 
       if (this.logoUrl) {
         options.image = this.logoUrl
-        options.imageSize = 30
+        options.imageSize = 50
       }
-      const qrcode = new AraleQRCode(options)
+      const qrcode = new Qrcode(options)
 
-      if (qrcode) {
-        const dataURL = qrcode.toDataURL('image/png')
-        const base64Data = dataURL.replace(/^data:image\/\w+;base64,/, '')
-        this.generateTextQrcode(base64Data)
-      }
+      qrcode.create().then(function (qr) {
+        if (qr) {
+          const dataURL = qr.toDataURL('image/png')
+          const base64Data = dataURL.replace(/^data:image\/\w+;base64,/, '')
+          this.generateTextQrcode(base64Data)
+        }
+      }.bind(this))
     },
     onDownloadQrcode () {
       const index = this.qrcodeUrl.lastIndexOf('/') + 1
