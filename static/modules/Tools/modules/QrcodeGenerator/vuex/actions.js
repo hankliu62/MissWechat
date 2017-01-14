@@ -26,7 +26,7 @@ export const generateTextQrcode = async function ({ commit }, body) {
     type: 'time',
     code: `${~~(new Date().valueOf() / 1000)}`,
     number: 1
-  });
+  })
   const keyName = `${generateIdsResponse.body.data.items[0]}.png`
   const serverUrl = `${qiniuConfig.uploadBase64Url}/key/${StringUtil.base64Encode(keyName)}`
   const response = await RestUtil.post(serverUrl, body, options)

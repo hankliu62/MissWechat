@@ -30,7 +30,14 @@
         <div class="main-content-wrap col-md-10">
           <div class="qrcode-generate-box">
             <div class="qrcode-generate-wrap">
-              <text-qrcode-generate :qrcodeContent="qrcodeContent" @generate="onGenerateQrcode"></text-qrcode-generate>
+              <qrcode-generate-form @generate="onGenerateQrcode">
+                <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.TEXT">
+                  <text-qrcode-generate :qrcodeContent="qrcodeContent" @changeContent="onChangeContent"></text-qrcode-generate>
+                </template>
+                <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.URL">
+                  <url-qrcode-generate :qrcodeContent="qrcodeContent" @changeContent="onChangeContent"></url-qrcode-generate>
+                </template>
+              </qrcode-generate-form>
             </div>
             <div class="qrcode-preview-wrap">
               <qrcode-preview :url="qrcodeUrl" @download="onDownloadQrcode"></qrcode-preview>
@@ -57,16 +64,48 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import QrcodeGenerateForm from './components/QrcodeGenerateForm/QrcodeGenerateForm'
 import TextQrcodeGenerate from './components/TextQrcodeGenerate/TextQrcodeGenerate'
+import UrlQrcodeGenerate from './components/UrlQrcodeGenerate/UrlQrcodeGenerate'
 import QrcodePreview from './components/QrcodePreview/QrcodePreview'
 import QrcodeTools from './components/QrcodeTools/QrcodeTools'
+import { PARAM_TYPES } from './constants/constants'
 import DownloadUtil from '../../../../utils/DownloadUtil'
+import RegExpUtil from '../../../../utils/RegExpUtil'
+import { Notification } from '../../../../services'
 import Qrcode from '../../../../libs/qrcode'
+
+const validateContent = function (vm) {
+  let isValided = true
+  const { type } = vm.states.params
+  const text = vm.qrcodeContent[type]
+  switch (type) {
+    case PARAM_TYPES.TEXT:
+      if (!RegExpUtil.testRequired(text)) {
+        Notification.service({content: '请输入二维码内容！', type: 'error'})
+        isValided = false
+      }
+      break
+    case PARAM_TYPES.URL:
+      if (!RegExpUtil.test(['required', 'url'], text)) {
+        Notification.service({content: '请输入正确的二维码网址！', type: 'error'})
+        isValided = false
+      }
+      break
+    default:
+      isValided = true
+  }
+  return isValided
+}
 
 export default {
   data () {
     this.states = {
       params: this.$route.params
+    }
+
+    this.CONSTANTS = {
+      PARAM_TYPES
     }
 
     return {}
@@ -95,11 +134,21 @@ export default {
   methods: {
     setState: mapActions(['setQrcodeGeneratorState'])['setQrcodeGeneratorState'],
     ...mapActions(['fetchQiniuUptoken', 'generateTextQrcode']),
-    onGenerateQrcode (params) {
-      this.setState({ [params.type]: params.value })
+    onGenerateQrcode () {
+      const { type } = this.states.params
+      let text = this.qrcodeContent[type]
+      if (!validateContent(this)) {
+        return
+      }
+
+      if (type === PARAM_TYPES.URL && !RegExpUtil.testUrlProtocol(text)) {
+        text = `http://${text}`
+        this.onChangeContent(text)
+      }
+
       const options = {
         render: 'canvas',
-        text: params.value,
+        text,
         size: this.size,
         correctLevel: this.faultToleranceLevel,
         background: this.background,
@@ -119,6 +168,10 @@ export default {
           this.generateTextQrcode(base64Data)
         }
       }.bind(this))
+    },
+    onChangeContent (content) {
+      const qrcodeContent = { ...this.qrcodeContent, [this.states.params.type]: content }
+      this.setState({ qrcodeContent })
     },
     onDownloadQrcode () {
       const index = this.qrcodeUrl.lastIndexOf('/') + 1
@@ -141,7 +194,7 @@ export default {
       this.setState({ logoUrl })
     }
   },
-  components: { TextQrcodeGenerate, QrcodePreview, QrcodeTools }
+  components: { QrcodeGenerateForm, TextQrcodeGenerate, UrlQrcodeGenerate, QrcodePreview, QrcodeTools }
 }
 </script>
 

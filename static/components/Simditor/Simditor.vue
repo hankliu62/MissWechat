@@ -15,13 +15,26 @@ export default {
       default: function () {
         return {}
       }
+    },
+    content: String
+  },
+  computed: {
+    content (newValue) {
+      this.editor.setValue(newValue)
     }
   },
   mounted () {
-    const editor = new window.Simditor({
+    this.editor = new Simditor({
       textarea: this.$refs.simditor,
       ...this.options
     });
+
+    this.editor.on('valuechanged', () => this.$emit('valuechanged', this.editor.getValue()))
+  },
+  destroyed () {
+    if (this.editor) {
+      this.editor.destroy()
+    }
   }
 }
 </script>

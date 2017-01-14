@@ -9,12 +9,10 @@
       placeholder="请输入文字内容"
       ref="text"
       v-model="value"
-      v-if="!isShowSimditor">
+      v-if="!isShowSimditor"
+      @change="onChange">
     </textarea>
-    <simditor :options="simditorOptions" v-if="isShowSimditor"></simditor>
-    <div class="btn-group">
-      <button class="btn hk-btn btn-theme" @click="onGenerateQrcode">生产二维码</button>
-    </div>
+    <simditor :content="value" :options="simditorOptions" v-if="isShowSimditor" @valuechanged="onChangeContent"></simditor>
   </div>
 </template>
 
@@ -43,11 +41,17 @@ export default {
     }
   },
   methods: {
-    onGenerateQrcode () {
-      this.$emit('generate', { type: PARAM_TYPES.TEXT, value: this.value })
-    },
     onToggleEditor () {
       this.isShowSimditor = !this.isShowSimditor
+      this.value = ''
+    },
+    onChange (event) {
+      this.value = event.target.value;
+      this.$emit('changeContent', this.value)
+    },
+    onChangeContent (content) {
+      this.value = content;
+      this.$emit('changeContent', this.value)
     }
   },
   watch: {
@@ -61,8 +65,4 @@ export default {
 
 <style scoped lang="less">
 @import './TextQrcodeGenerate';
-</style>
-
-<style lang="less">
-@import '../../../../../../styles/components/hk-btn';
 </style>
