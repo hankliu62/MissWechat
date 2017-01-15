@@ -29,10 +29,15 @@ class RegExpUtil {
 
     return true
   }
+
+  static removeHTMLTags (src) {
+    return src.replace(RegExpUtil.htmlTag, '')
+  }
 }
 
 RegExpUtil.url = /^((ftp|http|https):\/\/)*([\w-]+\.)+(\w+)(:[0-9]+)?(\/|([\w#!:.?+=&%@!\-/]+))?$/
 RegExpUtil.required = /\S+/
 RegExpUtil.urlProtocol = /^(ftp|http|https):\/\//
+RegExpUtil.htmlTag = /<[^>]+>/g
 
 export default RegExpUtil

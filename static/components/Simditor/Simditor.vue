@@ -5,6 +5,12 @@
 </template>
 
 <script>
+const CONSTANTS = {
+  DEFAULT_OPTIONS: {
+    toolbar: [ 'title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale',
+      'color', 'ol', 'ul', 'blockquote', 'table', 'hr', 'indent', 'outdent', 'alignment' ]
+  }
+}
 export default {
   data () {
     return {}
@@ -26,6 +32,7 @@ export default {
   mounted () {
     this.editor = new Simditor({
       textarea: this.$refs.simditor,
+      ...CONSTANTS.DEFAULT_OPTIONS,
       ...this.options
     });
 

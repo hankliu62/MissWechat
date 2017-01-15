@@ -58,9 +58,6 @@ export default {
     }
   },
   methods: {
-    onEnter (e) {
-      console.log(this, e, 'vvvvvvvvvvvvvvvv')
-    },
     ...mapActions(['fetchProducts'])
   },
   created: function () {

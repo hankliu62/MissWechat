@@ -19,7 +19,9 @@ export default {
   methods: {
     onChange (event) {
       this.value = event.target.value;
-      this.$emit('changeContent', this.value)
+      const qrcodeContent = this.qrcodeContent || {}
+      const content = { ...qrcodeContent, [PARAM_TYPES.URL]: this.value }
+      this.$emit('onChangeContent', content)
     }
   },
   watch: {

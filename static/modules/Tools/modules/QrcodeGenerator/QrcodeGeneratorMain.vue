@@ -30,12 +30,25 @@
         <div class="main-content-wrap col-md-10">
           <div class="qrcode-generate-box">
             <div class="qrcode-generate-wrap">
-              <qrcode-generate-form @generate="onGenerateQrcode">
+              <qrcode-generate-form @generate="onGenerateQrcode" :btnText="generateBtnText">
                 <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.TEXT">
-                  <text-qrcode-generate :qrcodeContent="qrcodeContent" @changeContent="onChangeContent"></text-qrcode-generate>
+                  <text-qrcode-generate
+                    :qrcodeContent="qrcodeContent"
+                    :isShowEditor="isShowEditor"
+                    @onToggleIsShowEditor="onToggleIsShowEditor"
+                    @onChangeContent="onChangeContent">
+                  </text-qrcode-generate>
                 </template>
                 <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.URL">
-                  <url-qrcode-generate :qrcodeContent="qrcodeContent" @changeContent="onChangeContent"></url-qrcode-generate>
+                  <url-qrcode-generate :qrcodeContent="qrcodeContent" @onChangeContent="onChangeContent"></url-qrcode-generate>
+                </template>
+                <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.IMAGE">
+                  <image-qrcode-generate
+                    :qrcodeContent="qrcodeContent"
+                    :isShowEditor="isShowEditor"
+                    @onToggleIsShowEditor="onToggleIsShowEditor"
+                    @onChangeContent="onChangeContent">
+                  </image-qrcode-generate>
                 </template>
               </qrcode-generate-form>
             </div>
@@ -67,27 +80,31 @@ import { mapActions, mapState } from 'vuex'
 import QrcodeGenerateForm from './components/QrcodeGenerateForm/QrcodeGenerateForm'
 import TextQrcodeGenerate from './components/TextQrcodeGenerate/TextQrcodeGenerate'
 import UrlQrcodeGenerate from './components/UrlQrcodeGenerate/UrlQrcodeGenerate'
+import ImageQrcodeGenerate from './components/ImageQrcodeGenerate/ImageQrcodeGenerate'
 import QrcodePreview from './components/QrcodePreview/QrcodePreview'
 import QrcodeTools from './components/QrcodeTools/QrcodeTools'
 import { PARAM_TYPES } from './constants/constants'
 import DownloadUtil from '../../../../utils/DownloadUtil'
 import RegExpUtil from '../../../../utils/RegExpUtil'
 import { Notification } from '../../../../services'
-import Qrcode from '../../../../libs/qrcode'
 
 const validateContent = function (vm) {
   let isValided = true
   const { type } = vm.states.params
-  const text = vm.qrcodeContent[type]
+  const content = vm.qrcodeContent[type]
+  const isShowEditor = vm.isShowEditor
+  let value = ''
   switch (type) {
     case PARAM_TYPES.TEXT:
-      if (!RegExpUtil.testRequired(text)) {
+      value = isShowEditor ? content.html : content.text
+      if (!RegExpUtil.testRequired(value)) {
         Notification.service({content: '请输入二维码内容！', type: 'error'})
         isValided = false
       }
       break
     case PARAM_TYPES.URL:
-      if (!RegExpUtil.test(['required', 'url'], text)) {
+      value = content
+      if (!RegExpUtil.test(['required', 'url'], value)) {
         Notification.service({content: '请输入正确的二维码网址！', type: 'error'})
         isValided = false
       }
@@ -96,6 +113,23 @@ const validateContent = function (vm) {
       isValided = true
   }
   return isValided
+}
+
+const getQrcodeOptions = function (vm) {
+  const options = {
+    render: 'canvas',
+    size: vm.size,
+    correctLevel: vm.faultToleranceLevel,
+    background: vm.background,
+    foreground: vm.foreground
+  }
+
+  if (vm.logoUrl) {
+    options.image = vm.logoUrl
+    options.imageSize = 50
+  }
+
+  return options
 }
 
 export default {
@@ -119,8 +153,17 @@ export default {
       foreground: (state) => state.qrcodeGeneratorMain.foreground,
       background: (state) => state.qrcodeGeneratorMain.background,
       logoUrl: (state) => state.qrcodeGeneratorMain.logoUrl,
+      isShowEditor: (state) => state.qrcodeGeneratorMain.isShowEditor,
       qrcodeContent: (state) => state.qrcodeGeneratorMain.qrcodeContent
-    })
+    }),
+    generateBtnText () {
+      return this.isShowEditor ? '生成活码' : '生成二维码'
+    },
+    isGenerateLiveQrcode () {
+      const { states, isShowEditor } = this
+      const { type } = states.params
+      return [PARAM_TYPES.IMAGE].includes(type) || isShowEditor
+    }
   },
   mounted () {
     this.fetchQiniuUptoken()
@@ -133,45 +176,63 @@ export default {
   },
   methods: {
     setState: mapActions(['setQrcodeGeneratorState'])['setQrcodeGeneratorState'],
-    ...mapActions(['fetchQiniuUptoken', 'generateTextQrcode']),
+    ...mapActions(['fetchQiniuUptoken', 'generateTextQrcode', 'generateLiveQrcode']),
     onGenerateQrcode () {
-      const { type } = this.states.params
-      let text = this.qrcodeContent[type]
       if (!validateContent(this)) {
         return
       }
 
-      if (type === PARAM_TYPES.URL && !RegExpUtil.testUrlProtocol(text)) {
-        text = `http://${text}`
-        this.onChangeContent(text)
+      const { isGenerateLiveQrcode } = this
+      if (isGenerateLiveQrcode) {
+        this.onGenerateLiveQrcode()
+        return
       }
 
-      const options = {
-        render: 'canvas',
-        text,
-        size: this.size,
-        correctLevel: this.faultToleranceLevel,
-        background: this.background,
-        foreground: this.foreground
+      const { qrcodeContent, states } = this
+      const { type } = states.params
+      const content = qrcodeContent[type]
+      let text = content
+
+      switch (type) {
+        case PARAM_TYPES.TEXT:
+          text = content.text
+          break
+        case PARAM_TYPES.URL:
+          if (!RegExpUtil.testUrlProtocol(text)) {
+            text = `http://${content}`
+            this.onChangeContent({ ...qrcodeContent, [PARAM_TYPES.URL]: text })
+          }
+          break
+        default:
+          break
       }
 
-      if (this.logoUrl) {
-        options.image = this.logoUrl
-        options.imageSize = 50
-      }
-      const qrcode = new Qrcode(options)
-
-      qrcode.create().then(function (qr) {
-        if (qr) {
-          const dataURL = qr.toDataURL('image/png')
-          const base64Data = dataURL.replace(/^data:image\/\w+;base64,/, '')
-          this.generateTextQrcode(base64Data)
-        }
-      }.bind(this))
+      const options = getQrcodeOptions(this)
+      options.text = text
+      this.generateTextQrcode(options)
     },
-    onChangeContent (content) {
-      const qrcodeContent = { ...this.qrcodeContent, [this.states.params.type]: content }
+    async onGenerateLiveQrcode () {
+      const { type } = this.states.params
+      const options = getQrcodeOptions(this)
+      this.generateLiveQrcode({ options, type })
+    },
+    onChangeContent (qrcodeContent) {
       this.setState({ qrcodeContent })
+    },
+    onToggleIsShowEditor () {
+      const { isShowEditor, qrcodeContent, states } = this
+      const { type } = states.params
+      const content = { ...qrcodeContent[type] }
+      if (isShowEditor) {
+        switch (type) {
+          case PARAM_TYPES.TEXT:
+            content.text = RegExpUtil.removeHTMLTags(content.html)
+            break
+          default:
+            break
+        }
+      }
+      this.setState({ isShowEditor: !this.isShowEditor, qrcodeContent: { ...qrcodeContent, [type]: content } })
     },
     onDownloadQrcode () {
       const index = this.qrcodeUrl.lastIndexOf('/') + 1
@@ -194,7 +255,14 @@ export default {
       this.setState({ logoUrl })
     }
   },
-  components: { QrcodeGenerateForm, TextQrcodeGenerate, UrlQrcodeGenerate, QrcodePreview, QrcodeTools }
+  components: {
+    QrcodeGenerateForm,
+    TextQrcodeGenerate,
+    UrlQrcodeGenerate,
+    ImageQrcodeGenerate,
+    QrcodePreview,
+    QrcodeTools
+  }
 }
 </script>
 
