@@ -5,6 +5,12 @@
 </template>
 
 <script>
+const CONSTANTS = {
+  DEFAULT_OPTIONS: {
+    toolbar: [ 'title', 'bold', 'italic', 'underline', 'strikethrough', 'fontScale',
+      'color', 'ol', 'ul', 'blockquote', 'table', 'hr', 'indent', 'outdent', 'alignment' ]
+  }
+}
 export default {
   data () {
     return {}
@@ -15,13 +21,27 @@ export default {
       default: function () {
         return {}
       }
+    },
+    content: String
+  },
+  computed: {
+    content (newValue) {
+      this.editor.setValue(newValue)
     }
   },
   mounted () {
-    const editor = new window.Simditor({
+    this.editor = new Simditor({
       textarea: this.$refs.simditor,
+      ...CONSTANTS.DEFAULT_OPTIONS,
       ...this.options
     });
+
+    this.editor.on('valuechanged', () => this.$emit('valuechanged', this.editor.getValue()))
+  },
+  destroyed () {
+    if (this.editor) {
+      this.editor.destroy()
+    }
   }
 }
 </script>

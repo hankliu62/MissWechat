@@ -60,6 +60,10 @@ export default {
         })
       }
     }
+
+    if (this.states.matched.some(record => record.meta.fullscreen)) {
+      document.body.className += ' is-fullscreen'
+    }
   }
 }
 </script>

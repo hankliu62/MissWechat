@@ -1,0 +1,22 @@
+@import '../../../../../../styles/mixins/flexbox';
+@import '../../../../../../styles/variable';
+
+.text-qrcode-generater {
+  .image-content-wrap {
+    .flexbox();
+    margin-bottom: 20px;
+    cursor: pointer;
+
+    .image-name {
+      .flex(1);
+      border: 1px solid @common-border;
+      border-right: 0;
+      height: 34px;
+      cursor: pointer;
+    }
+
+    .btn-upload-image {
+      border-radius: 0;
+    }
+  }
+}

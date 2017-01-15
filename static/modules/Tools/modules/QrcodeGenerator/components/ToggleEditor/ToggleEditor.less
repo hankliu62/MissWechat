@@ -1,0 +1,22 @@
+@import '../../../../../../styles/components/hk-input';
+@import '../../styles/variable';
+
+@toggleIconColor: #999;
+
+.toggle-editor-wrap {
+  position: relative;
+
+  .hk-text {
+    min-height: @qrcodePreviewBoxHeight;
+    font-size: 16px;
+  }
+
+  .icon {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    cursor: pointer;
+    z-index: 1;
+    color: @toggleIconColor;
+  }
+}

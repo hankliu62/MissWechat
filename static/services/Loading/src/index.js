@@ -1,7 +1,7 @@
 import Vue from 'vue'
-import loadingVue from './Loading'
+import LoadingVue from './Loading'
 
-const LoadingConstructor = Vue.extend(loadingVue);
+const LoadingConstructor = Vue.extend(LoadingVue);
 
 const defaultOptions = {
   text: null,

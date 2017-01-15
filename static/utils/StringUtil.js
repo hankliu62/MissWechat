@@ -1,8 +1,8 @@
 class StringUtil {
   // static method for UTF-8 encoding
   static utf8Encode (str) {
-    str = str.replace(/\r\n/g, '\n');
-    let result = '';
+    str = str.replace(/\r\n/g, '\n')
+    let result = ''
     for (let i = 0, length = str.length; i < length; i++) {
       const c = str.charCodeAt(i)
       if (c < 128) {
