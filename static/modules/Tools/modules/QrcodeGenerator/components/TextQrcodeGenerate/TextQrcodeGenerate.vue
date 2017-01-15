@@ -1,68 +1,71 @@
 <template>
   <div class="text-qrcode-generater">
-    <i
-      :class="['icon icon-2x', { 'icon-angle-up': isShowSimditor, 'icon-angle-down': !isShowSimditor }]"
-      @click.stop.prevent.self="onToggleEditor">
-    </i>
-    <textarea
-      class="form-control hk-text"
-      placeholder="请输入文字内容"
-      ref="text"
-      v-model="value"
-      v-if="!isShowSimditor">
-    </textarea>
-    <simditor :options="simditorOptions" v-if="isShowSimditor"></simditor>
-    <div class="btn-group">
-      <button class="btn hk-btn btn-theme" @click="onGenerateQrcode">生产二维码</button>
-    </div>
+    <toggle-editor
+      :content="content"
+      :isShowEditor="isShowEditor"
+      @onChangeText="onChangeText"
+      @onChangeHtml="onChangeHtml"
+      @onToggleIsShowEditor="onToggleIsShowEditor">
+    </toggle-editor>
   </div>
 </template>
 
 <script>
-import autosize from 'autosize';
-import { PARAM_TYPES } from '../../constants/constants';
-import Simditor from '../../../../../../components/Simditor/Simditor'
+import { PARAM_TYPES } from '../../constants/constants'
+import ToggleEditor from '../ToggleEditor/ToggleEditor'
+
+const CONSTANTS = {
+  DEFAULT_TEXT_CONTENT: {
+    text: '',
+    html: ''
+  }
+}
+
+const getTextContent = function (vm) {
+  const qrcodeContent = vm.qrcodeContent || {}
+  const textContent = qrcodeContent[PARAM_TYPES.TEXT] ? qrcodeContent[PARAM_TYPES.TEXT] : CONSTANTS.DEFAULT_TEXT_CONTENT
+  return textContent
+}
 
 export default {
   data () {
-    this.simditorOptions = {
-      placeholder: '请输入文字内容'
-    }
-
-    return {
-      value: '',
-      isShowSimditor: false
-    }
+    return {}
   },
   props: {
-    qrcodeContent: Object
-  },
-  mounted () {
-    if (this.$refs.text) {
-      autosize(this.$refs.text);
-    }
+    qrcodeContent: Object,
+    isShowEditor: Boolean
   },
   methods: {
-    onGenerateQrcode () {
-      this.$emit('generate', { type: PARAM_TYPES.TEXT, value: this.value })
+    onToggleIsShowEditor () {
+      this.$emit('onToggleIsShowEditor')
     },
-    onToggleEditor () {
-      this.isShowSimditor = !this.isShowSimditor
+    onChangeText (text) {
+      const textContent = getTextContent(this)
+      const qrcodeContent = {
+        ...(this.qrcodeContent || {}),
+        [PARAM_TYPES.TEXT]: { text, html: textContent.html }
+      }
+      this.$emit('onChangeContent', qrcodeContent)
+    },
+    onChangeHtml (html) {
+      const textContent = getTextContent(this)
+      const qrcodeContent = {
+        ...(this.qrcodeContent || {}),
+        [PARAM_TYPES.TEXT]: { text: textContent.text, html }
+      }
+      this.$emit('onChangeContent', qrcodeContent)
     }
   },
-  watch: {
-    qrcodeContent (content) {
-      this.value = content ? content[PARAM_TYPES.TEXT] || '' : ''
+  computed: {
+    content () {
+      const textContent = getTextContent(this)
+      return { ...textContent }
     }
   },
-  components: { Simditor }
+  components: { ToggleEditor }
 }
 </script>
 
 <style scoped lang="less">
 @import './TextQrcodeGenerate';
-</style>
-
-<style lang="less">
-@import '../../../../../../styles/components/hk-btn';
 </style>

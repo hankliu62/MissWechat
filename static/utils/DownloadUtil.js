@@ -18,7 +18,6 @@ class DownloadUtil {
         filename
       }
       const response = await RestUtil.get(API_FILES_DOWNLOAD, { params })
-      console.log(response)
     }
   }
 }

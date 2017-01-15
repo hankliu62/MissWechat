@@ -22,10 +22,7 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
-@import './App';
-</style>
-
 <style lang="less">
+@import './App';
 @import '../../styles/app';
 </style>

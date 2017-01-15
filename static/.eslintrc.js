@@ -18,6 +18,7 @@ module.exports = {
   'globals': {
     'localStorage': true,
     'location': true,
-    'Image': true
+    'Image': true,
+    'Simditor': true
   }
 };

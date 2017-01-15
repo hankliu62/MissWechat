@@ -17,12 +17,25 @@ export default {
   foreground: DEFAULT_QRCODE_FOREGROUND,
   background: DEFAULT_QRCODE_BACKGROUND,
   logoUrl: '',
+  isShowEditor: false,
   qrcodeContent: {
-    [PARAM_TYPES.TEXT]: '',
+    [PARAM_TYPES.TEXT]: {
+      text: '',
+      html: ''
+    },
     [PARAM_TYPES.URL]: '',
     [PARAM_TYPES.VCARD]: '',
     [PARAM_TYPES.FILE]: '',
-    [PARAM_TYPES.IMAGE]: '',
+    [PARAM_TYPES.IMAGE]: {
+      image: {
+        key: '',
+        url: ''
+      },
+      content: {
+        text: '',
+        html: ''
+      }
+    },
     [PARAM_TYPES.WECHAT]: ''
   }
 }

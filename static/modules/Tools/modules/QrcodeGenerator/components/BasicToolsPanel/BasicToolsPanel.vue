@@ -24,7 +24,7 @@
       <label class="property-item-title">大小：</label>
       <div class="property-item-content">
         <template>
-          <el-slider class="hk-slider" :min="62" :max="620" v-model="size" @change="onChangeSize"></el-slider>
+          <el-slider class="hk-slider" :min="62" :max="620" v-model="currentSize" @change="onChangeSize"></el-slider>
         </template>
       </div>
     </div>
@@ -52,7 +52,6 @@ export default {
       this.$emit('onSetLevel', level)
     },
     onChangeSize (size) {
-      this.size = size
       this.$emit('onSetSize', size)
     }
   },

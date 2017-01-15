@@ -6,6 +6,10 @@ class ArrayUtil {
     array.length && temp.push(array)
     return temp
   }
+
+  static isArray (obj) {
+    return Object.prototype.toString.call(obj).slice(8, -1) === 'Array'
+  }
 }
 
 export default ArrayUtil
