@@ -78,8 +78,8 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vender.min.js?[chunkhash]',
-      chunks:['vender']
+      name: 'vender.min',
+      chunks: ['vender', 'app']
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new HtmlWebpackPlugin({

@@ -51,3 +51,21 @@ export const DEFAULT_FAULT_TOLERANCE_LEVEL = FAULT_TOLERANCE_LEVELS[0].value
 export const DEFAULT_QRCODE_SIZE = 300
 export const DEFAULT_QRCODE_FOREGROUND = '#000000'
 export const DEFAULT_QRCODE_BACKGROUND = '#FFFFFF'
+
+export const UPLOAD_FILE_TYPES = {
+  text: {
+    title: '文档类',
+    mimes: ['pdf', 'doc', 'docx', 'ppt', 'pptx', 'vcf', 'pot', 'potx', 'xls', 'xlsx', 'txt', 'rtf', 'wps', 'dps'],
+    icon: 'http://oiq00n80p.bkt.clouddn.com/icon-textfile.png'
+  },
+  image: {
+    title: '图片类',
+    mimes: ['jpg', 'jpeg', 'gif', 'png', 'bmp'],
+    icon: 'http://oiq00n80p.bkt.clouddn.com/icon-imagefile.png'
+  },
+  video: {
+    title: '音频类',
+    mimes: ['mp3', 'wma', 'mid'],
+    icon: 'http://oiq00n80p.bkt.clouddn.com/icon-videofile.png'
+  }
+}

@@ -4,7 +4,8 @@
       <upload
         :titles="['Doc files', 'Image files', 'Video files']"
         :extensions="['pdf,doc,docx,ppt,pptx,vcf,pot,potx,xls,xlsx,txt,rtf,wps,dps', 'jpg,jpeg,gif,png,bmp', 'mp3,wma,mid']"
-        @onUploadedFile="onUploadedFile">
+        @onUploadedFile="onUploadedFile"
+        :isCreateKey="false">
         <div class="file-content-wrap">
           <input class="hk-input file-name" placeholder="请选择上传的文件" v-model="file.key" disabled/>
           <div class="btn hk-btn btn-theme btn-upload-file" v-text="btnText"></div>
@@ -25,17 +26,9 @@
         placement="top"
         popper-class="hk-tooltip-popper">
         <ul slot="content" class="file-qrcode file-types">
-          <li class="file-type-item">
-            <span class="file-type-name">文档类: </span>
-            <span class="file-type-contents">pdf,doc,docx,ppt,pptx,vcf,pot,potx,xls,xlsx,txt,rtf,wps,dps</span>
-          </li>
-          <li class="file-type-item">
-            <span class="file-type-name">图片类: </span>
-            <span class="file-type-contents">jpg,jpeg,gif,png,bmp</span>
-          </li>
-          <li class="file-type-item">
-            <span class="file-type-name">音频类: </span>
-            <span class="file-type-contents">mp3,wma,mid</span>
+          <li class="file-type-item" v-for="(type, key) in CONSTANTS.UPLOAD_FILE_TYPES">
+            <span class="file-type-name" v-text="type.title + ': '"></span>
+            <span class="file-type-contents" v-text="type.mimes.join(',')"></span>
           </li>
         </ul>
         <span class="upload-types-tip"><i class="fa fa-question-circle"></i>支持文件格式</span>
@@ -45,7 +38,7 @@
 </template>
 
 <script>
-import { PARAM_TYPES } from '../../constants/constants'
+import { PARAM_TYPES, UPLOAD_FILE_TYPES } from '../../constants/constants'
 import ToggleEditor from '../ToggleEditor/ToggleEditor'
 import Upload from '../../../../../../components/Upload/Upload'
 
@@ -70,6 +63,10 @@ const getFileContent = function (vm) {
 
 export default {
   data () {
+    this.CONSTANTS = {
+      UPLOAD_FILE_TYPES
+    }
+
     return {}
   },
   props: {
