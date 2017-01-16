@@ -1,0 +1,21 @@
+@import '../variable';
+
+.hk-tooltip-popper {
+  &.el-tooltip__popper {
+    &.is-dark {
+      background-color: @black;
+
+      > span {
+        &:after {
+          content: '';
+        }
+      }
+
+      .popper__arrow {
+        &:after {
+          border-top-color: @black;
+        }
+      }
+    }
+  }
+}

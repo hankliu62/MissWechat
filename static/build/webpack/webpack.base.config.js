@@ -6,8 +6,20 @@ var nodeModulesPath = path.resolve(staticPath, '../node_modules')
 
 var commonPath = {
   distDir: path.resolve(staticPath, '../dist'),
-  templateHtml: path.join(staticPath, 'template.html')
+  templateHtml: path.join(staticPath, 'template.html'),
+  depsDir: path.join(staticPath, '../deps')
 };
+
+var depsFiles = [
+  path.join(commonPath.depsDir, 'lib-flexible/flexible.js'),
+  path.join(commonPath.depsDir, 'qiniu-jssdk/plupload.full.min.js'),
+  path.join(commonPath.depsDir, 'qiniu-jssdk/qiniu.min.js'),
+  path.join(commonPath.depsDir, 'simditor/jquery.min.js'),
+  path.join(commonPath.depsDir, 'simditor/module.js'),
+  path.join(commonPath.depsDir, 'simditor/hotkeys.js'),
+  path.join(commonPath.depsDir, 'simditor/uploader.js'),
+  path.join(commonPath.depsDir, 'simditor/simditor.js')
+]
 
 module.exports = {
   commonPath,
@@ -18,6 +30,7 @@ module.exports = {
       'vue-router',
       'vue-resource'
     ]
+    // deps: depsFiles
   },
   output: {
     path: path.resolve(commonPath.distDir, 'static'), // 打包输出目录
@@ -65,13 +78,15 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor', 'app']
+      name: 'vender.min',
+      chunks: ['vender', 'app']
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new HtmlWebpackPlugin({
       title: 'Miss 小店',
       filename: 'index.html',
       template: commonPath.templateHtml
+      // chunks: ['deps', 'app', 'vender']
     }),
     new webpack.NoErrorsPlugin()
   ]

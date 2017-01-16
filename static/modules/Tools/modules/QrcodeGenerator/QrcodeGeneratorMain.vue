@@ -42,6 +42,14 @@
                 <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.URL">
                   <url-qrcode-generate :qrcodeContent="qrcodeContent" @onChangeContent="onChangeContent"></url-qrcode-generate>
                 </template>
+                <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.FILE">
+                  <file-qrcode-generate
+                    :qrcodeContent="qrcodeContent"
+                    :isShowEditor="isShowEditor"
+                    @onToggleIsShowEditor="onToggleIsShowEditor"
+                    @onChangeContent="onChangeContent">
+                  </file-qrcode-generate>
+                </template>
                 <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.IMAGE">
                   <image-qrcode-generate
                     :qrcodeContent="qrcodeContent"
@@ -80,6 +88,7 @@ import { mapActions, mapState } from 'vuex'
 import QrcodeGenerateForm from './components/QrcodeGenerateForm/QrcodeGenerateForm'
 import TextQrcodeGenerate from './components/TextQrcodeGenerate/TextQrcodeGenerate'
 import UrlQrcodeGenerate from './components/UrlQrcodeGenerate/UrlQrcodeGenerate'
+import FileQrcodeGenerate from './components/FileQrcodeGenerate/FileQrcodeGenerate'
 import ImageQrcodeGenerate from './components/ImageQrcodeGenerate/ImageQrcodeGenerate'
 import QrcodePreview from './components/QrcodePreview/QrcodePreview'
 import QrcodeTools from './components/QrcodeTools/QrcodeTools'
@@ -106,6 +115,20 @@ const validateContent = function (vm) {
       value = content
       if (!RegExpUtil.test(['required', 'url'], value)) {
         Notification.service({content: '请输入正确的二维码网址！', type: 'error'})
+        isValided = false
+      }
+      break
+    case PARAM_TYPES.FILE:
+      value = content
+      if (!RegExpUtil.testRequired(value.file.url)) {
+        Notification.service({content: '请先上传文件', type: 'error'})
+        isValided = false
+      }
+      break
+    case PARAM_TYPES.IMAGE:
+      value = content
+      if (!RegExpUtil.testRequired(value.image.url)) {
+        Notification.service({content: '请先上传图片', type: 'error'})
         isValided = false
       }
       break
@@ -157,12 +180,12 @@ export default {
       qrcodeContent: (state) => state.qrcodeGeneratorMain.qrcodeContent
     }),
     generateBtnText () {
-      return this.isShowEditor ? '生成活码' : '生成二维码'
+      return this.isGenerateLiveQrcode ? '生成活码' : '生成二维码'
     },
     isGenerateLiveQrcode () {
       const { states, isShowEditor } = this
       const { type } = states.params
-      return [PARAM_TYPES.IMAGE].includes(type) || isShowEditor
+      return [PARAM_TYPES.FILE, PARAM_TYPES.IMAGE].includes(type) || isShowEditor
     }
   },
   mounted () {
@@ -259,6 +282,7 @@ export default {
     QrcodeGenerateForm,
     TextQrcodeGenerate,
     UrlQrcodeGenerate,
+    FileQrcodeGenerate,
     ImageQrcodeGenerate,
     QrcodePreview,
     QrcodeTools
