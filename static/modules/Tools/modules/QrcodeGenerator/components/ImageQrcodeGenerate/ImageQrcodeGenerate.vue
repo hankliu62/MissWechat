@@ -1,10 +1,10 @@
 <template>
-  <div class="text-qrcode-generater">
+  <div class="image-qrcode-generater">
     <div class="image-upload-wrap">
-      <upload title="Image Title" extensions="jpeg,jpg,png,gif" @onUploadedFile="onUploadedFile">
+      <upload titles="Image files" extensions="jpeg,jpg,png,gif" @onUploadedFile="onUploadedFile">
         <div class="image-content-wrap">
-          <input class="hk-input image-name" placeholder="请选择图片" v-model="image.key" disabled/>
-          <div class="btn hk-btn btn-theme btn-upload-image">上传本地图片</div>
+          <input class="hk-input image-name" placeholder="请选择上传的图片" v-model="image.key" disabled/>
+          <div class="btn hk-btn btn-theme btn-upload-image" v-text="btnText"></div>
         </div>
       </upload>
     </div>
@@ -15,6 +15,16 @@
       @onChangeHtml="onChangeHtml"
       @onToggleIsShowEditor="onToggleIsShowEditor">
     </toggle-editor>
+    <div class="upload-tips">
+      <el-tooltip
+        class="item"
+        effect="dark"
+        content="jpg,jpeg,gif,png"
+        placement="top"
+        popper-class="hk-tooltip-popper">
+        <span class="upload-types-tip"><i class="fa fa-question-circle"></i>支持图片格式</span>
+      </el-tooltip>
+    </div>
   </div>
 </template>
 
@@ -96,6 +106,10 @@ export default {
     image () {
       const imageContent = getImageContent(this)
       return imageContent.image
+    },
+    btnText () {
+      const imageContent = getImageContent(this)
+      return imageContent.image && imageContent.image.url ? '重新上传' : '上传本地图片'
     }
   },
   components: { ToggleEditor, Upload }

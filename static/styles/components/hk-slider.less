@@ -26,9 +26,17 @@
 
 .el-tooltip__popper {
   &.is-dark {
-    > span {
+    background-color: @black;
+
+    > span:first-child {
       &:after {
         content: ' px';
+      }
+    }
+
+    .popper__arrow {
+      &:after {
+        border-top-color: @black;
       }
     }
   }

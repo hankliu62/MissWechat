@@ -25,7 +25,16 @@ export default {
     },
     [PARAM_TYPES.URL]: '',
     [PARAM_TYPES.VCARD]: '',
-    [PARAM_TYPES.FILE]: '',
+    [PARAM_TYPES.FILE]: {
+      file: {
+        key: '',
+        url: ''
+      },
+      content: {
+        text: '',
+        html: ''
+      }
+    },
     [PARAM_TYPES.IMAGE]: {
       image: {
         key: '',

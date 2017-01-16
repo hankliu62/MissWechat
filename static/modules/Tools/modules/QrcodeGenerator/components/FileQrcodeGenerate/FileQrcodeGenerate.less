@@ -3,13 +3,13 @@
 
 @uploadTipsColor: #999;
 
-.image-qrcode-generater {
-  .image-content-wrap {
+.file-qrcode-generater {
+  .file-content-wrap {
     .flexbox();
     margin-bottom: 20px;
     cursor: pointer;
 
-    .image-name {
+    .file-name {
       .flex(1);
       border: 1px solid @common-border;
       border-right: 0;
@@ -17,7 +17,7 @@
       cursor: pointer;
     }
 
-    .btn-upload-image {
+    .btn-upload-file {
       border-radius: 0;
     }
   }
@@ -36,6 +36,16 @@
         &:before {
           content: '\f059';
         }
+      }
+    }
+  }
+}
+
+.file-qrcode {
+  &.file-types {
+    .file-type-item {
+      + .file-type-item {
+        margin-top: 5px;
       }
     }
   }

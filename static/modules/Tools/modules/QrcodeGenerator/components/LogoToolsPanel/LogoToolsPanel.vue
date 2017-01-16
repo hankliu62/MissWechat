@@ -2,7 +2,7 @@
   <div class="qrcode-tools-panel logo-tools-panel">
     <div class="two-item-preline">
       <div class="basic-property-item">
-        <upload title="Image files" extensions="jpg,jpeg,gif,png" @onUploadedFile="onUploadedFile">
+        <upload titles="Image files" extensions="jpg,jpeg,gif,png" @onUploadedFile="onUploadedFile">
           <button class="btn hk-btn btn-theme">上传 LOGO</button>
         </upload>
       </div>

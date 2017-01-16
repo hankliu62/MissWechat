@@ -11,6 +11,7 @@
 import { initUploader } from '../../utils/QiniuUtil'
 import ElementUtil from '../../utils/ElementUtil'
 import { showLoading } from '../../utils/LoadingUtil'
+import ArrayUtil from '../../utils/ArrayUtil'
 
 const CONSTANTS = {
   MAX_FILE_SIZE: '5mb'
@@ -36,7 +37,7 @@ export default {
       default: true
     },
     maxFileSize: Number,
-    title: String,
+    titles: String,
     extensions: String
   },
   mounted () {
@@ -53,8 +54,15 @@ export default {
         max_file_size: this.maxFileSize || CONSTANTS.MAX_FILE_SIZE
       }
 
-      if (this.title && this.extensions) {
-        filters.mime_types = [{ title: this.title, extensions: this.extensions }]
+      if (this.titles && this.extensions) {
+        if (ArrayUtil.isArray(this.titles)) {
+          filters.mime_types = []
+          for (const [index, title] of this.titles.entries()) {
+            filters.mime_types.push({ title: this.title, extensions: this.extensions[index] || '*' })
+          }
+        } else {
+          filters.mime_types = [{ title: this.title, extensions: this.extensions }]
+        }
       }
 
       const init = {
