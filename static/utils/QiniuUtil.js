@@ -89,6 +89,8 @@ export const initUploader = (options = {}) => {
   options.init = options.init || {}
   const fileUploadedFn = options.init.FileUploaded || function () {}
   delete options.init.FileUploaded
+  const isCreateKey = 'isCreateKey' in options ? options.isCreateKey : true
+  delete options.isCreateKey
 
   const defaultOptions = {
     runtimes: 'html5,flash,html4', // 上传模式,依次退化
@@ -97,7 +99,7 @@ export const initUploader = (options = {}) => {
     save_key: false, // 默认false。若在服务端生成uptoken的上传策略中指定了sava_key，则开启，SDK在前端将不对key进行任何处理
     domain: qiniuConfig.domain,   // bucket 域名，下载资源时用到，**必需**
     get_new_uptoken: false,  // 设置上传文件的时候是否每次都重新获取新的token
-    max_file_size: '10mb', // 最大文件体积限制
+    max_file_size: '15mb', // 最大文件体积限制
     multi_selection: false, // 设置一次只能选择一个文件
     max_retries: 3, // 上传失败最大重试次数
     dragdrop: false, // 开启可拖曳上传
@@ -126,15 +128,18 @@ export const initUploader = (options = {}) => {
       Key: function (up, file) {
         // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
         // 该配置必须要在 unique_names: false , save_key: false 时才生效
-        return `${generateObjectId()}${file.name.slice(file.name.lastIndexOf('.'))}`
+        return up.isCreateKey ? `${generateObjectId()}${file.name.slice(file.name.lastIndexOf('.'))}` : file.name
       }
     }
   };
 
-  const uploader = window.Qiniu.uploader({
+  const uploaderOptions = {
     ...defaultOptions,
     ...options,
     init: { ...defaultOptions.init, ...options.init }
-  });
+  }
+
+  const uploader = window.Qiniu.uploader(uploaderOptions);
+  uploader.isCreateKey = isCreateKey
   return uploader;
 };

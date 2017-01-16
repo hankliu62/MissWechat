@@ -11,9 +11,11 @@
 import { initUploader } from '../../utils/QiniuUtil'
 import ElementUtil from '../../utils/ElementUtil'
 import { showLoading } from '../../utils/LoadingUtil'
+import ArrayUtil from '../../utils/ArrayUtil'
+import { Notification } from '../../services'
 
 const CONSTANTS = {
-  MAX_FILE_SIZE: '5mb'
+  MAX_FILE_SIZE: '15mb'
 }
 
 export default {
@@ -35,9 +37,13 @@ export default {
       type: Boolean,
       default: true
     },
+    isCreateKey: {
+      type: Boolean,
+      default: true
+    },
     maxFileSize: Number,
-    title: String,
-    extensions: String
+    titles: [String, Array],
+    extensions: [String, Array]
   },
   mounted () {
     if (this.$slots.default) {
@@ -53,8 +59,15 @@ export default {
         max_file_size: this.maxFileSize || CONSTANTS.MAX_FILE_SIZE
       }
 
-      if (this.title && this.extensions) {
-        filters.mime_types = [{ title: this.title, extensions: this.extensions }]
+      if (this.titles && this.extensions) {
+        if (ArrayUtil.isArray(this.titles)) {
+          filters.mime_types = []
+          for (const [index, title] of this.titles.entries()) {
+            filters.mime_types.push({ title: this.title, extensions: this.extensions[index] || '*' })
+          }
+        } else {
+          filters.mime_types = [{ title: this.title, extensions: this.extensions }]
+        }
       }
 
       const init = {
@@ -74,6 +87,7 @@ export default {
           if (that.isShowLoading && that.loadinger) {
             that.loadinger.close()
           }
+          Notification.service({content: errTip, type: 'error'})
           console.log({ uploader, err, errTip })
         }
       }
@@ -81,6 +95,7 @@ export default {
       this.uploader = initUploader({
         browse_button: this.id,
         multi_selection: false,
+        isCreateKey: this.isNewName,
         filters,
         init
       })
