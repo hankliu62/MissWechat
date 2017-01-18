@@ -35,7 +35,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(commonPath.distDir, 'static'), // 打包输出目录
-    publicPath: '' // webpack-dev-server访问的路径
+    publicPath: '/' // webpack-dev-server访问的路径
   },
   resolve: {
     extensions: ['', '.js', '.vue']
