@@ -41,7 +41,8 @@ if (app.get('env') === 'development') {
   app.engine('.html', ejs.__express);
   app.set('view engine', 'html');
 
-  app.use(express.static('dist'));
+  app.use(express.static('dist/static'));
+  app.use(express.static('dist/deps'));
 
   app.get('*', function(req, res) {
     res.render('index');
