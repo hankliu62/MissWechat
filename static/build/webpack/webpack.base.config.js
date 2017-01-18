@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 var staticPath = path.resolve(__dirname, '../../');
 var nodeModulesPath = path.resolve(staticPath, '../node_modules')
 
@@ -34,7 +35,7 @@ module.exports = {
   },
   output: {
     path: path.resolve(commonPath.distDir, 'static'), // 打包输出目录
-    publicPath: '/static/' // webpack-dev-server访问的路径
+    publicPath: '' // webpack-dev-server访问的路径
   },
   resolve: {
     extensions: ['', '.js', '.vue']
@@ -82,6 +83,9 @@ module.exports = {
       chunks: ['vender', 'app']
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
+    new CopyWebpackPlugin([
+      { from: 'deps', to: 'deps' }
+    ]),
     new HtmlWebpackPlugin({
       title: 'Miss 小店',
       filename: 'index.html',
