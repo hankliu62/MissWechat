@@ -30,7 +30,10 @@
         <div class="main-content-wrap col-md-10">
           <div class="qrcode-generate-box">
             <div class="qrcode-generate-wrap">
-              <qrcode-generate-form @generate="onGenerateQrcode" :btnText="generateBtnText">
+              <qrcode-generate-form
+                @generate="onGenerateQrcode"
+                :btnText="generateBtnText"
+                :isShowBtn="states.params.type !== CONSTANTS.PARAM_TYPES.WECHAT">
                 <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.TEXT">
                   <text-qrcode-generate
                     :qrcodeContent="qrcodeContent"
@@ -40,7 +43,10 @@
                   </text-qrcode-generate>
                 </template>
                 <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.URL">
-                  <url-qrcode-generate :qrcodeContent="qrcodeContent" @onChangeContent="onChangeContent"></url-qrcode-generate>
+                  <url-qrcode-generate
+                    :qrcodeContent="qrcodeContent"
+                    @onChangeContent="onChangeContent">
+                  </url-qrcode-generate>
                 </template>
                 <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.FILE">
                   <file-qrcode-generate
@@ -57,6 +63,12 @@
                     @onToggleIsShowEditor="onToggleIsShowEditor"
                     @onChangeContent="onChangeContent">
                   </image-qrcode-generate>
+                </template>
+                <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.WECHAT">
+                  <wechat-qrcode-generate
+                    :qrcodeContent="qrcodeContent"
+                    @onChangeContent="onChangeContent">
+                  </wechat-qrcode-generate>
                 </template>
               </qrcode-generate-form>
             </div>
@@ -90,6 +102,7 @@ import TextQrcodeGenerate from './components/TextQrcodeGenerate/TextQrcodeGenera
 import UrlQrcodeGenerate from './components/UrlQrcodeGenerate/UrlQrcodeGenerate'
 import FileQrcodeGenerate from './components/FileQrcodeGenerate/FileQrcodeGenerate'
 import ImageQrcodeGenerate from './components/ImageQrcodeGenerate/ImageQrcodeGenerate'
+import WechatQrcodeGenerate from './components/WechatQrcodeGenerate/WechatQrcodeGenerate'
 import QrcodePreview from './components/QrcodePreview/QrcodePreview'
 import QrcodeTools from './components/QrcodeTools/QrcodeTools'
 import { PARAM_TYPES } from './constants/constants'
@@ -284,6 +297,7 @@ export default {
     UrlQrcodeGenerate,
     FileQrcodeGenerate,
     ImageQrcodeGenerate,
+    WechatQrcodeGenerate,
     QrcodePreview,
     QrcodeTools
   }
