@@ -45,6 +45,11 @@ export default {
         html: ''
       }
     },
-    [PARAM_TYPES.WECHAT]: ''
+    [PARAM_TYPES.WECHAT]: {
+      public: {
+        name: ''
+      },
+      personal: {}
+    }
   }
 }

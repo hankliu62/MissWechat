@@ -12,7 +12,7 @@
       v-model="value"
       v-if="!disabled"
       @change="onChange" />
-    <div class="btn hk-btn btn-theme" v-text="btnText"></div>
+    <div class="btn hk-btn btn-theme" v-text="btnText" @click="onClickBtn"></div>
   </div>
 </template>
 
@@ -36,6 +36,9 @@ export default {
     onChange (event) {
       this.value = event.target.value
       this.$emit('onChangeModel', this.value)
+    },
+    onClickBtn () {
+      this.$emit('onClickBtn', this.value)
     }
   },
   watch: {
