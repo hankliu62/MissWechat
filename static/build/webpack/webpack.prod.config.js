@@ -4,6 +4,7 @@ var cssLoaders = require('./loaders/css-loaders');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var WebpackMd5HashPlugin = require('webpack-md5-hash');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 var webpack = require('webpack');
 var SOURCE_MAP = false;
 
@@ -40,6 +41,18 @@ config.plugins.push(
   }),
   new ExtractTextPlugin('[name].[contenthash:6].css', {
     allChunks: true // 若要按需加载 CSS 则请注释掉该行
+  }),
+  new HtmlWebpackPlugin({
+    title: 'Miss 小店',
+    filename: 'index.html',
+    template: config.commonPath.templateHtml,
+    // chunks: ['app', 'vendors'],   // 配置该html文件要添加的模块
+    minify: {
+      collapseWhitespace: true,
+      removeAttributeQuotes: true,
+      removeComments: true,
+      removeEmptyAttributes: true
+    }
   }),
   new WebpackMd5HashPlugin()
 );
