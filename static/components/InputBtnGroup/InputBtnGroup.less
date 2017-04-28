@@ -1,0 +1,25 @@
+@import '../../styles/variable';
+@import '../../styles/mixins/flexbox';
+
+.input-button-group {
+  .flexbox();
+
+  .hk-input {
+    .flex(1);
+    height: 34px;
+    border-right: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+
+    &:focus {
+      + .hk-btn {
+        box-shadow: 1px 0 1px @darkGreen;
+      }
+    }
+  }
+
+  .hk-btn {
+    border-radius: 0;
+    min-width: 100px;
+  }
+}

@@ -28,7 +28,7 @@ NotificationConstructor.prototype.close = function () {
   observers.splice(this.index, 1)
   this.onClose && this.onClose()
   this.timer && clearTimeout(this.timer)
-  this.$destory()
+  this.$destory && this.$destory()
 }
 
 NotificationConstructor.prototype.broadcast = function (type, ...args) {

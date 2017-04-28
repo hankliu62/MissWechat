@@ -15,6 +15,14 @@
 @tabListUnderlinedSelectedBorderColor: @darkGreen;
 @tabListUnderlinedDisabledColor: #ccc;
 
+@tabListPillsBgColor: transparent;
+@tabListPillsColor: #666;
+@tabListPillsBorderColor: transparent;
+@tabListPillsSelectedBgColor: @darkGreen;
+@tabListPillsSelectedColor: @white;
+@tabListPillsSelectedBorderColor: transparent;
+@tabListPillsDisabledColor: #ccc;
+
 
 .tabbable {
   .flexbox();
@@ -98,6 +106,36 @@
 
       &:focus {
         border-color: @tabListUnderlinedSelectedBorderColor;
+        outline: none;
+      }
+    }
+  }
+
+  // type: pills
+  &.pills {
+    [role="tablist"] {
+      background-color: @tabListPillsBgColor;
+      padding-left: 0;
+      border-bottom: 1px solid @tabListPillsBorderColor;
+    }
+
+    [role="tab"] {
+      border-bottom: 0;
+      color: @tabListPillsColor;
+      border-radius: 16px;
+
+      &[aria-selected=true] {
+        color: @tabListPillsSelectedColor;
+        background-color: @tabListPillsSelectedBgColor;
+        position: relative;
+      }
+
+      &[aria-disabled=true] {
+        color: @tabListPillsDisabledColor;
+        cursor: default;
+      }
+
+      &:focus {
         outline: none;
       }
     }

@@ -1,0 +1,41 @@
+@import '../../../../styles/variable';
+
+.tools-main {
+  .tools-main-body {
+    width: 40%;
+    margin: 0 auto;
+    padding-top: 100px;
+
+    .title {
+      margin: 0;
+      color: @grayLighter;
+      font-size: 18px;
+    }
+
+    .tools {
+      margin-top: 20px;
+      padding-top: 10px;
+      border-top: 1px solid @common-border;
+
+      .tool-item {
+        display: inline-block;
+        padding-top: 10px;
+        width: 50%;
+
+        .menu {
+          padding-left: 20px;
+          color: @darkGreen;
+          font-size: 16px;
+          cursor: pointer;
+
+          &:hover,
+          &:active,
+          &:focus {
+            text-decoration: none;
+            color: @greenDarker;
+          }
+        }
+      }
+    }
+  }
+}

@@ -72,6 +72,7 @@
     "nodemon": "1.11.0",
     "plupload": "2.2.1",
     "postcss-loader": "1.1.1",
+    "progress-bar-webpack-plugin": "1.9.3",
     "responsive-nav": "1.0.39",
     "simditor": "2.3.6",
     "style-loader": "0.13.1",

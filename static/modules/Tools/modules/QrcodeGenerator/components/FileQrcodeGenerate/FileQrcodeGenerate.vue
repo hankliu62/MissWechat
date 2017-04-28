@@ -31,7 +31,7 @@
             <span class="file-type-contents" v-text="type.mimes.join(',')"></span>
           </li>
         </ul>
-        <span class="upload-types-tip"><i class="fa fa-question-circle"></i>支持文件格式</span>
+        <span class="upload-types-tip"><icon-question-circle></icon-question-circle>支持文件格式</span>
       </el-tooltip>
     </div>
   </div>
@@ -41,6 +41,7 @@
 import { PARAM_TYPES, UPLOAD_FILE_TYPES } from '../../constants/constants'
 import ToggleEditor from '../ToggleEditor/ToggleEditor'
 import Upload from '../../../../../../components/Upload/Upload'
+import IconQuestionCircle from '../../../../../../components/IconQuestionCircle/IconQuestionCircle'
 
 const CONSTANTS = {
   DEFAULT_FILE_CONTENT: {
@@ -125,7 +126,7 @@ export default {
       return fileContent.file && fileContent.file.url ? '重新上传' : '上传本地文件'
     }
   },
-  components: { ToggleEditor, Upload }
+  components: { ToggleEditor, Upload, IconQuestionCircle }
 }
 </script>
 

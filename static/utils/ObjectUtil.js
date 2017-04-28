@@ -1,11 +1,19 @@
 import ObjectID from 'bson-objectid'
 
-function find (list, f) {
+export function find (list, f) {
   return list.filter(f)[0]
 }
 
-function isArray (arr) {
-  return Object.prototype.toString.call(arr).slice(8, -1) === 'string'
+export function isArray (arr) {
+  return Object.prototype.toString.call(arr).slice(8, -1) === 'Array'
+}
+
+export function isObject (object) {
+  return Object.prototype.toString.call(object).slice(8, -1) === 'Object'
+}
+
+export function isString (str) {
+  return Object.prototype.toString.call(str).slice(8, -1) === 'String'
 }
 
 export function cloneDeep (obj, cache = []) {

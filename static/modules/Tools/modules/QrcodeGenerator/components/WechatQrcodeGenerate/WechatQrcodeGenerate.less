@@ -1,0 +1,40 @@
+@collapseHoverBgColor: #eee;
+@collapseColor: #999;
+
+.wechat-qrcode-generater {
+  .tabbable {
+    [role="tabpanel"] {
+      padding: 15px 0;
+    }
+  }
+
+  .wechat-collapse {
+    margin-top: 30px;
+    color: @collapseColor;
+
+    &.wechat-image-collapse {
+      margin-top: 0;
+    }
+
+    .icon-collapse-trigger {
+      margin-top: 2px;
+      display: none;
+    }
+
+    .collapse-wechat-header {
+      padding: 5px;
+    }
+
+    .collapse-content {
+      padding: 0 20px 10px 25px;
+    }
+
+    &:hover {
+      background-color: @collapseHoverBgColor;
+
+      .icon-collapse-trigger {
+        display: inline-block;
+      }
+    }
+  }
+}
