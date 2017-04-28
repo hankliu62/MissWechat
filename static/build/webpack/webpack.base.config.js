@@ -1,6 +1,5 @@
 var path = require('path');
 var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var staticPath = path.resolve(__dirname, '../../');
 var nodeModulesPath = path.resolve(staticPath, '../node_modules')
@@ -86,12 +85,6 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: 'deps', to: 'deps' }
     ]),
-    new HtmlWebpackPlugin({
-      title: 'Miss 小店',
-      filename: 'index.html',
-      template: commonPath.templateHtml
-      // chunks: ['deps', 'app', 'vender']
-    }),
     new webpack.NoErrorsPlugin()
   ]
 };

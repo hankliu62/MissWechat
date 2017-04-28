@@ -1,6 +1,8 @@
 var config = require('./webpack.base.config');
 var cssLoaders = require('./loaders/css-loaders');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ProgressBarPlugin = require('progress-bar-webpack-plugin')
 var webpack = require('webpack');
 
 config.output.filename = '[name].chunk.js'; // 输出文件名
@@ -28,7 +30,13 @@ config.entry.app = [
 
 config.plugins.push(
   new webpack.HotModuleReplacementPlugin(),
-  new ExtractTextPlugin('app.min.css')
+  new ExtractTextPlugin('app.min.css'),
+  new HtmlWebpackPlugin({
+    title: 'Miss 小店',
+    filename: 'index.html',
+    template: config.commonPath.templateHtml
+  }),
+  new ProgressBarPlugin({summary: false})
 );
 
 module.exports = config;

@@ -2,7 +2,8 @@ import {
   API_UPLOAD_BASE64_IMAGE,
   API_UPLOAD_CONTENT_PAGE,
   API_UPLOAD_IMAGE_PAGE,
-  API_UPLOAD_FILE_PAGE
+  API_UPLOAD_FILE_PAGE,
+  API_UPLOAD_WECHAT_PAGE
 } from '../constants/apis'
 import { TOOLS_QRCODE_GENERATE_SUCCESS, TOOLS_QRCODE_GENERATOR_MAIN_SET } from '../constants/types'
 import { PARAM_TYPES, UPLOAD_FILE_TYPES } from '../constants/constants'
@@ -82,6 +83,20 @@ export const generateLiveFileQrcode = async function ({ commit, state }, options
   await generateTextQrcode({ commit }, options)
 }
 
+export const generateLiveWechatQrcode = async function ({ commit, state }) {
+  const { qrcodeContent } = state
+  const name = qrcodeContent[PARAM_TYPES.WECHAT].public.name
+  const url = `http://open.weixin.qq.com/qr/code/?username=${name}`
+  const body = {
+    url,
+    accesskey: qiniuConfig.accesskey,
+    bucketname: qiniuConfig.bucketname
+  }
+  const response = await RestUtil.post(API_UPLOAD_WECHAT_PAGE, body)
+  const qrcodeUrl = response.body.data.url
+  commit(TOOLS_QRCODE_GENERATE_SUCCESS, qrcodeUrl)
+}
+
 export const generateLiveQrcode = async function ({ commit, state }, { options, type = PARAM_TYPES.TEXT }) {
   switch (type) {
     case PARAM_TYPES.TEXT:
@@ -92,6 +107,9 @@ export const generateLiveQrcode = async function ({ commit, state }, { options, 
       break
     case PARAM_TYPES.FILE:
       await generateLiveFileQrcode({ commit, state }, options)
+      break
+    case PARAM_TYPES.WECHAT:
+      await generateLiveWechatQrcode({ commit, state })
       break
     default:
       break

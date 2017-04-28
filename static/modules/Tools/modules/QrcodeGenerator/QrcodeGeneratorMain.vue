@@ -30,7 +30,10 @@
         <div class="main-content-wrap col-md-10">
           <div class="qrcode-generate-box">
             <div class="qrcode-generate-wrap">
-              <qrcode-generate-form @generate="onGenerateQrcode" :btnText="generateBtnText">
+              <qrcode-generate-form
+                @generate="onGenerateQrcode"
+                :btnText="generateBtnText"
+                :isShowBtn="states.params.type !== CONSTANTS.PARAM_TYPES.WECHAT">
                 <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.TEXT">
                   <text-qrcode-generate
                     :qrcodeContent="qrcodeContent"
@@ -40,7 +43,10 @@
                   </text-qrcode-generate>
                 </template>
                 <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.URL">
-                  <url-qrcode-generate :qrcodeContent="qrcodeContent" @onChangeContent="onChangeContent"></url-qrcode-generate>
+                  <url-qrcode-generate
+                    :qrcodeContent="qrcodeContent"
+                    @onChangeContent="onChangeContent">
+                  </url-qrcode-generate>
                 </template>
                 <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.FILE">
                   <file-qrcode-generate
@@ -58,11 +64,19 @@
                     @onChangeContent="onChangeContent">
                   </image-qrcode-generate>
                 </template>
+                <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.WECHAT">
+                  <wechat-qrcode-generate
+                    :qrcodeContent="qrcodeContent"
+                    @onChangeContent="onChangeContent"
+                    @generate="onGenerateQrcode">
+                  </wechat-qrcode-generate>
+                </template>
               </qrcode-generate-form>
             </div>
             <div class="qrcode-preview-wrap">
               <qrcode-preview :url="qrcodeUrl" @download="onDownloadQrcode"></qrcode-preview>
               <qrcode-tools
+                v-if="states.params.type !== CONSTANTS.PARAM_TYPES.WECHAT"
                 :faultToleranceLevel="faultToleranceLevel"
                 :size="size"
                 :foreground="foreground"
@@ -90,6 +104,7 @@ import TextQrcodeGenerate from './components/TextQrcodeGenerate/TextQrcodeGenera
 import UrlQrcodeGenerate from './components/UrlQrcodeGenerate/UrlQrcodeGenerate'
 import FileQrcodeGenerate from './components/FileQrcodeGenerate/FileQrcodeGenerate'
 import ImageQrcodeGenerate from './components/ImageQrcodeGenerate/ImageQrcodeGenerate'
+import WechatQrcodeGenerate from './components/WechatQrcodeGenerate/WechatQrcodeGenerate'
 import QrcodePreview from './components/QrcodePreview/QrcodePreview'
 import QrcodeTools from './components/QrcodeTools/QrcodeTools'
 import { PARAM_TYPES } from './constants/constants'
@@ -129,6 +144,13 @@ const validateContent = function (vm) {
       value = content
       if (!RegExpUtil.testRequired(value.image.url)) {
         Notification.service({content: '请先上传图片', type: 'error'})
+        isValided = false
+      }
+      break
+    case PARAM_TYPES.WECHAT:
+      value = content
+      if (!RegExpUtil.testRequired(value.public.name)) {
+        Notification.service({content: '请输入二维码内容！', type: 'error'})
         isValided = false
       }
       break
@@ -185,7 +207,7 @@ export default {
     isGenerateLiveQrcode () {
       const { states, isShowEditor } = this
       const { type } = states.params
-      return [PARAM_TYPES.FILE, PARAM_TYPES.IMAGE].includes(type) || isShowEditor
+      return [PARAM_TYPES.FILE, PARAM_TYPES.IMAGE, PARAM_TYPES.WECHAT].includes(type) || isShowEditor
     }
   },
   mounted () {
@@ -284,6 +306,7 @@ export default {
     UrlQrcodeGenerate,
     FileQrcodeGenerate,
     ImageQrcodeGenerate,
+    WechatQrcodeGenerate,
     QrcodePreview,
     QrcodeTools
   }

@@ -28,6 +28,22 @@ export const QRCODE_TOOLS_TABS = [
   }
 ]
 
+export const QRCODE_WECHAT_TAB_TYPES = {
+  PERSONAL: 'personal',
+  PUBLIC: 'public'
+}
+
+export const QRCODE_WECHAT_TYPE_TABS = [
+  {
+    name: '公众号',
+    value: QRCODE_WECHAT_TAB_TYPES.PUBLIC
+  },
+  {
+    name: '个人账户',
+    value: QRCODE_WECHAT_TAB_TYPES.PERSONAL
+  }
+]
+
 export const FAULT_TOLERANCE_LEVELS = [
   {
     value: 3,
