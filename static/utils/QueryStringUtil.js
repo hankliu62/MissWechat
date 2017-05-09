@@ -14,6 +14,17 @@ class QueryStringUtil {
 
     return null;
   }
+
+  static stringify (obj, encode = false) {
+    let query = '?'
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        const value = encode ? encodeURIComponent(obj[key]) : obj[key]
+        query += `${key}=${value}&`
+      }
+    }
+    return query.slice(0, -1)
+  }
 }
 
 export default QueryStringUtil;

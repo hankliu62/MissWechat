@@ -1,0 +1,19 @@
+@import '../../styles/variable';
+
+.hk-radio {
+  cursor: pointer;
+
+  span {
+    vertical-align: middle;
+  }
+
+  .icon-radio {
+    color: @grayLighter;
+  }
+
+  &.selected {
+    .icon-radio {
+      color: @darkGreen;
+    }
+  }
+}

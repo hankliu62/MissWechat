@@ -6,6 +6,7 @@ import {
   DEFAULT_QRCODE_BACKGROUND,
   PARAM_TYPES
 } from '../constants/constants'
+import { LANGUAGES } from '../../../../../constants/languages'
 
 export default {
   nav: {
@@ -24,7 +25,9 @@ export default {
       html: ''
     },
     [PARAM_TYPES.URL]: '',
-    [PARAM_TYPES.VCARD]: '',
+    [PARAM_TYPES.VCARD]: {
+      language: LANGUAGES.ZH_CN
+    },
     [PARAM_TYPES.FILE]: {
       file: {
         key: '',

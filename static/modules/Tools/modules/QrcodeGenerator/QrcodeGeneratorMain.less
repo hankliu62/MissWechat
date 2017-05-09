@@ -242,6 +242,42 @@
       .qrcode-tools {
         margin-top: 20px;
       }
+
+      .vcard-qrcode-wrap {
+        .flexbox();
+
+        .left-wrap {
+          width: 305px;
+
+          .vcard-preview-container {
+            border-radius: 10px;
+          }
+
+          .vcard-language-container {
+            .flexbox();
+
+            .language-label {
+              margin-bottom: 0;
+              font-weight: normal;
+              line-height: 24px;
+              margin-right: 10px;
+            }
+
+            .hk-radio {
+              display: inline-block;
+
+              + .hk-radio {
+                margin-left: 15px;
+              }
+            }
+          }
+        }
+
+        .right-wrap {
+          .flex(1);
+          margin-left: 50px;
+        }
+      }
     }
   }
 }
