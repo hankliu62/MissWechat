@@ -28,68 +28,96 @@
       <div class="row ov main-content">
         <div class="brace left-brace col-md-1"></div>
         <div class="main-content-wrap col-md-10">
-          <div class="qrcode-generate-box">
-            <div class="qrcode-generate-wrap">
-              <qrcode-generate-form
-                @generate="onGenerateQrcode"
-                :btnText="generateBtnText"
-                :isShowBtn="states.params.type !== CONSTANTS.PARAM_TYPES.WECHAT">
-                <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.TEXT">
-                  <text-qrcode-generate
-                    :qrcodeContent="qrcodeContent"
-                    :isShowEditor="isShowEditor"
-                    @onToggleIsShowEditor="onToggleIsShowEditor"
-                    @onChangeContent="onChangeContent">
-                  </text-qrcode-generate>
-                </template>
-                <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.URL">
-                  <url-qrcode-generate
-                    :qrcodeContent="qrcodeContent"
-                    @onChangeContent="onChangeContent">
-                  </url-qrcode-generate>
-                </template>
-                <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.FILE">
-                  <file-qrcode-generate
-                    :qrcodeContent="qrcodeContent"
-                    :isShowEditor="isShowEditor"
-                    @onToggleIsShowEditor="onToggleIsShowEditor"
-                    @onChangeContent="onChangeContent">
-                  </file-qrcode-generate>
-                </template>
-                <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.IMAGE">
-                  <image-qrcode-generate
-                    :qrcodeContent="qrcodeContent"
-                    :isShowEditor="isShowEditor"
-                    @onToggleIsShowEditor="onToggleIsShowEditor"
-                    @onChangeContent="onChangeContent">
-                  </image-qrcode-generate>
-                </template>
-                <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.WECHAT">
-                  <wechat-qrcode-generate
-                    :qrcodeContent="qrcodeContent"
-                    @onChangeContent="onChangeContent"
-                    @generate="onGenerateQrcode">
-                  </wechat-qrcode-generate>
-                </template>
-              </qrcode-generate-form>
+          <template v-if="states.params.type !== CONSTANTS.PARAM_TYPES.VCARD">
+            <div class="qrcode-generate-box">
+              <div class="qrcode-generate-wrap">
+                <qrcode-generate-form
+                  @generate="onGenerateQrcode"
+                  :btnText="generateBtnText"
+                  :isShowBtn="states.params.type !== CONSTANTS.PARAM_TYPES.WECHAT">
+                  <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.TEXT">
+                    <text-qrcode-generate
+                      :qrcodeContent="qrcodeContent"
+                      :isShowEditor="isShowEditor"
+                      @onToggleIsShowEditor="onToggleIsShowEditor"
+                      @onChangeContent="onChangeContent">
+                    </text-qrcode-generate>
+                  </template>
+                  <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.URL">
+                    <url-qrcode-generate
+                      :qrcodeContent="qrcodeContent"
+                      @onChangeContent="onChangeContent">
+                    </url-qrcode-generate>
+                  </template>
+                  <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.FILE">
+                    <file-qrcode-generate
+                      :qrcodeContent="qrcodeContent"
+                      :isShowEditor="isShowEditor"
+                      @onToggleIsShowEditor="onToggleIsShowEditor"
+                      @onChangeContent="onChangeContent">
+                    </file-qrcode-generate>
+                  </template>
+                  <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.IMAGE">
+                    <image-qrcode-generate
+                      :qrcodeContent="qrcodeContent"
+                      :isShowEditor="isShowEditor"
+                      @onToggleIsShowEditor="onToggleIsShowEditor"
+                      @onChangeContent="onChangeContent">
+                    </image-qrcode-generate>
+                  </template>
+                  <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.WECHAT">
+                    <wechat-qrcode-generate
+                      :qrcodeContent="qrcodeContent"
+                      @onChangeContent="onChangeContent"
+                      @generate="onGenerateQrcode">
+                    </wechat-qrcode-generate>
+                  </template>
+                </qrcode-generate-form>
+              </div>
+              <div class="qrcode-preview-wrap">
+                <qrcode-preview :url="qrcodeUrl" @download="onDownloadQrcode"></qrcode-preview>
+                <qrcode-tools
+                  v-if="states.params.type !== CONSTANTS.PARAM_TYPES.WECHAT"
+                  :faultToleranceLevel="faultToleranceLevel"
+                  :size="size"
+                  :foreground="foreground"
+                  :background="background"
+                  :logoUrl="logoUrl"
+                  @onSetLevel="onSetLevel"
+                  @onSetSize="onSetSize"
+                  @onSetForeground="onSetForeground"
+                  @onSetBackground="onSetBackground"
+                  @onSetLogoUrl="onSetLogoUrl">
+                </qrcode-tools>
+              </div>
             </div>
-            <div class="qrcode-preview-wrap">
-              <qrcode-preview :url="qrcodeUrl" @download="onDownloadQrcode"></qrcode-preview>
-              <qrcode-tools
-                v-if="states.params.type !== CONSTANTS.PARAM_TYPES.WECHAT"
-                :faultToleranceLevel="faultToleranceLevel"
-                :size="size"
-                :foreground="foreground"
-                :background="background"
-                :logoUrl="logoUrl"
-                @onSetLevel="onSetLevel"
-                @onSetSize="onSetSize"
-                @onSetForeground="onSetForeground"
-                @onSetBackground="onSetBackground"
-                @onSetLogoUrl="onSetLogoUrl">
-              </qrcode-tools>
+          </template>
+          <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.VCARD">
+            <div class="vcard-qrcode-wrap">
+              <div class="left-wrap">
+                <div class="vcard-preview-container">
+                  <div class="vcard-preview-item vcard-preview-basic">
+                    <div class="bg-wrap"></div>
+                  </div>
+                  <div class="vcard-preview-item vcard-preview-basic"></div>
+                  <div class="vcard-preview-item vcard-preview-basic"></div>
+                  <div class="vcard-preview-item vcard-preview-basic"></div>
+                  <div class="vcard-preview-item vcard-preview-basic"></div>
+                </div>
+                <div class="vcard-language-container">
+                  <label class="language-label">显示语言: </label>
+                  <radio
+                    v-for="option in CONSTANTS.LANGUAGES_OPTIONS"
+                    :label="option.value"
+                    :model="qrcodeContent[CONSTANTS.PARAM_TYPES.VCARD].language"
+                    @onChange="onChangeVCardLanguage">
+                    <span v-text="option.text"></span>
+                  </radio>
+                </div>
+              </div>
+              <div class="right-wrap"></div>
             </div>
-          </div>
+          </template>
         </div>
         <div class="brace right-brace col-md-1"></div>
       </div>
@@ -99,6 +127,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import Radio from '../../../../components/Radio/Radio'
 import QrcodeGenerateForm from './components/QrcodeGenerateForm/QrcodeGenerateForm'
 import TextQrcodeGenerate from './components/TextQrcodeGenerate/TextQrcodeGenerate'
 import UrlQrcodeGenerate from './components/UrlQrcodeGenerate/UrlQrcodeGenerate'
@@ -108,6 +137,7 @@ import WechatQrcodeGenerate from './components/WechatQrcodeGenerate/WechatQrcode
 import QrcodePreview from './components/QrcodePreview/QrcodePreview'
 import QrcodeTools from './components/QrcodeTools/QrcodeTools'
 import { PARAM_TYPES } from './constants/constants'
+import { LANGUAGES_OPTIONS } from '../../../../constants/languages'
 import DownloadUtil from '../../../../utils/DownloadUtil'
 import RegExpUtil from '../../../../utils/RegExpUtil'
 import { Notification } from '../../../../services'
@@ -184,7 +214,8 @@ export default {
     }
 
     this.CONSTANTS = {
-      PARAM_TYPES
+      PARAM_TYPES,
+      LANGUAGES_OPTIONS
     }
 
     return {}
@@ -298,6 +329,13 @@ export default {
     },
     onSetLogoUrl (logoUrl) {
       this.setState({ logoUrl })
+    },
+    onChangeVCardLanguage (value) {
+      const { qrcodeContent } = this
+      const { vcard, othersQrcodeContent } = qrcodeContent
+      const vcardQrcodeContent = { ...vcard }
+      vcardQrcodeContent.language = value
+      this.setState({ qrcodeContent: { ...othersQrcodeContent, vcard: vcardQrcodeContent } })
     }
   },
   components: {
@@ -308,7 +346,8 @@ export default {
     ImageQrcodeGenerate,
     WechatQrcodeGenerate,
     QrcodePreview,
-    QrcodeTools
+    QrcodeTools,
+    Radio
   }
 }
 </script>
