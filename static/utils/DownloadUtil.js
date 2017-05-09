@@ -3,7 +3,7 @@ import RestUtil from './RestUtil'
 import QueryStringUtil from './QueryStringUtil'
 import { API_FILES_DOWNLOAD } from '../constants/apis'
 import config from '../config/config'
-import DetectUserAgentUtil from 'detect-user-agent'
+import DetectUtil from 'detect-user-agent'
 
 function downloadByIframe (url) {
   let iframe = document.getElementById('myIframe');
@@ -39,7 +39,7 @@ class DownloadUtil {
 
   static async download (dataURL, filename = ObjectUtil.generateObjectId()) {
     const saveLink = document.createElementNS('http://www.w3.org/1999/xhtml', 'a')
-    if (DetectUserAgentUtil.browser.safari || DetectUserAgentUtil.browser.firefox) {
+    if (DetectUtil.browser.safari || DetectUtil.browser.firefox) {
       const params = { url: dataURL, filename }
       downloadByIframe(`${config.service_domain}${API_FILES_DOWNLOAD}${QueryStringUtil.stringify(params, true)}`)
     } else if ('download' in saveLink) {
