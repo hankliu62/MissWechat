@@ -1,0 +1,142 @@
+@import '../../../../../../styles/variable';
+@import '../../../../../../styles/mixins/flexbox';
+@import '../../../../../../styles/mixins/center';
+@import '../../../../../../styles/mixins/text-ellipsis';
+
+@vcardMaskBgColor: rgba(76, 175, 80, .82);
+@vcardAvatarShadowColor: #747474;
+
+.vcard-preview-container {
+  font-size: 14px;
+  background-color: #fff;
+  padding-bottom: 20px;
+
+  .preview-header {
+    width: 100%;
+    height: 64px;
+    background-image: url('./images/iphone-header.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+
+    .preview-header-title {
+      color: @grayLightUndertone;
+      width: 100;
+      text-align: center;
+      padding-top: 33px;
+      font-size: 16px;
+    }
+  }
+
+  .vcard-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    background-color: @vcardMaskBgColor;
+    filter: alpha(Opacity=82);
+
+    .mask-content {
+      .absolute-center-with-width(60%);
+      color: @white;
+    }
+  }
+
+  .vcard-header {
+    .flexbox();
+    padding: 45px 5px 25px 20px;
+    background-size: cover;
+    background-position: center;
+    color: @white;
+
+    .vcard-avatar {
+      height: 100px;
+      width: 100px;
+      position: relative;
+      border-radius: 50%;
+      box-shadow: 0 0 4px @vcardAvatarShadowColor;
+
+      .vcard-avatar-bg {
+        .absolute-fill();
+
+        border-radius: 50%;
+        background-color: @black;
+        opacity: .4;
+        filter: alpha(opacity=40);
+      }
+
+      .vcard-avatar-alt {
+        .absolute-center();
+      }
+    }
+
+    .vcard-career {
+      .flex(1);
+
+      padding-left: 20px;
+
+      .vcard-career-name,
+      .vcard-career-appointment,
+      .vcard-career-company {
+        .text-ellipsis();
+        max-width: 230px;
+      }
+
+      .vcard-career-name {
+        font-size: 20px;
+        margin-bottom: 8px;
+        line-height: 35px;
+      }
+
+      .vcard-career-appointment,
+      .vcard-career-company {
+        line-height: 25px;
+        font-size: 14px;
+      }
+
+      .vcard-career-appointment {
+        margin-bottom: 7px;
+      }
+    }
+  }
+
+  .vcard-module-item {
+    position: relative;
+    cursor: pointer;
+    padding-left: 20px;
+
+    &.vcard-module-item-header {
+      padding-left: 0;
+    }
+
+    &.actived {
+      border-right: 3px solid @darkGreen;
+    }
+
+    .vcard-property {
+      .flexbox();
+
+      border-bottom: 1px solid @common-border;
+
+      .vcard-property-label {
+        .text-ellipsis();
+
+        width: 100px;
+        line-height: 40px;
+        color: @grayDarkLighter;
+      }
+
+      .vcard-property-value {
+        .flex(1);
+
+        word-break: break-all;
+        word-wrap: break-word;
+        line-height: 1.4;
+        padding: 12px 0;
+        color: @grayDark;
+      }
+    }
+  }
+}

@@ -95,17 +95,7 @@
           <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.VCARD">
             <div class="vcard-qrcode-wrap">
               <div class="left-wrap">
-                <div class="vcard-preview-container">
-                  <div class="vcard-preview-item vcard-preview-basic">
-                    <div class="bg-wrap">
-                      <upload-vcard-avatar-modal></upload-vcard-avatar-modal>
-                    </div>
-                  </div>
-                  <div class="vcard-preview-item vcard-preview-basic"></div>
-                  <div class="vcard-preview-item vcard-preview-basic"></div>
-                  <div class="vcard-preview-item vcard-preview-basic"></div>
-                  <div class="vcard-preview-item vcard-preview-basic"></div>
-                </div>
+                <vcard-module-preview></vcard-module-preview>
                 <div class="vcard-language-container">
                   <label class="language-label">显示语言: </label>
                   <radio
@@ -117,7 +107,10 @@
                   </radio>
                 </div>
               </div>
-              <div class="right-wrap"></div>
+              <div class="right-wrap">
+                <vcard-module-setting></Vcard-Module-Setting>
+                <!-- <upload-vcard-avatar-modal></upload-vcard-avatar-modal> -->
+              </div>
             </div>
           </template>
         </div>
@@ -139,6 +132,8 @@ import WechatQrcodeGenerate from './components/WechatQrcodeGenerate/WechatQrcode
 import QrcodePreview from './components/QrcodePreview/QrcodePreview'
 import QrcodeTools from './components/QrcodeTools/QrcodeTools'
 import UploadVcardAvatarModal from './components/UploadVCardAvatarModal/UploadVCardAvatarModal'
+import VcardModulePreview from './components/VCardModulePreview/VCardModulePreview'
+import VcardModuleSetting from './components/VCardModuleSetting/VCardModuleSetting'
 import { PARAM_TYPES } from './constants/constants'
 import { LANGUAGES_OPTIONS } from '../../../../constants/languages'
 import DownloadUtil from '../../../../utils/DownloadUtil'
@@ -351,7 +346,9 @@ export default {
     QrcodePreview,
     QrcodeTools,
     Radio,
-    UploadVcardAvatarModal
+    UploadVcardAvatarModal,
+    VcardModulePreview,
+    VcardModuleSetting
   }
 }
 </script>

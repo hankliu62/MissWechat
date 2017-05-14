@@ -9,7 +9,7 @@
       <div slot="content">
         <slot name="tip"></slot>
       </div>
-      <span class="upload-types-tip"><icon-circle :type="type"></icon-circle>{{ content }}</span>
+      <span class="upload-types-tip"><icon-circle :type="type" v-if="!!type"></icon-circle>{{ content }}</span>
     </el-tooltip>
   </div>
 </template>

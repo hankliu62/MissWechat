@@ -1,7 +1,7 @@
 <template>
   <div :class="['hk-radio', { selected: label === model }]" @click="onClick">
     <span
-      :class="['icon icon-radio icon-2x', { 'icon-ok-circle': label === model, 'icon-circle-blank': label !== model}]">
+      :class="['icon icon-radio', { 'icon-ok-circle': label === model, 'icon-circle-blank': label !== model}]">
     </span>
     <slot></slot>
   </div>
