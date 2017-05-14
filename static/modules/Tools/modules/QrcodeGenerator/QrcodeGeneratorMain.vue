@@ -97,7 +97,9 @@
               <div class="left-wrap">
                 <div class="vcard-preview-container">
                   <div class="vcard-preview-item vcard-preview-basic">
-                    <div class="bg-wrap"></div>
+                    <div class="bg-wrap">
+                      <upload-vcard-avatar-modal></upload-vcard-avatar-modal>
+                    </div>
                   </div>
                   <div class="vcard-preview-item vcard-preview-basic"></div>
                   <div class="vcard-preview-item vcard-preview-basic"></div>
@@ -136,6 +138,7 @@ import ImageQrcodeGenerate from './components/ImageQrcodeGenerate/ImageQrcodeGen
 import WechatQrcodeGenerate from './components/WechatQrcodeGenerate/WechatQrcodeGenerate'
 import QrcodePreview from './components/QrcodePreview/QrcodePreview'
 import QrcodeTools from './components/QrcodeTools/QrcodeTools'
+import UploadVcardAvatarModal from './components/UploadVCardAvatarModal/UploadVCardAvatarModal'
 import { PARAM_TYPES } from './constants/constants'
 import { LANGUAGES_OPTIONS } from '../../../../constants/languages'
 import DownloadUtil from '../../../../utils/DownloadUtil'
@@ -347,7 +350,8 @@ export default {
     WechatQrcodeGenerate,
     QrcodePreview,
     QrcodeTools,
-    Radio
+    Radio,
+    UploadVcardAvatarModal
   }
 }
 </script>

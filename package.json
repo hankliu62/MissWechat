@@ -47,6 +47,7 @@
     "colorjoe": "2.0.0",
     "connect-history-api-fallback": "1.3.0",
     "copy-webpack-plugin": "4.0.1",
+    "cropperjs": "1.0.0-rc.1",
     "css-loader": "0.26.0",
     "detect-user-agent": "github:biluo62/detect-user-agent",
     "downloadjs": "1.4.6",
