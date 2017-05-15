@@ -20,12 +20,12 @@ const restoreCropperHolder = async function (vm, url) {
   url = url || vm.image
   const imageData = await ImageUtil.getSize(url)
 
-  if (imageData && imageData.width) {
+  if (imageData && imageData.height) {
     const holder = vm.$refs.holder
-    const holderMaxWidth = +(ElementUtil.getElementStyle(holder, 'maxWidth').replace('px', '')) || 360
+    const holderMaxHeight = +(ElementUtil.getElementStyle(holder, 'maxHeight').replace('px', '')) || 360
     ElementUtil.setElementStyle(holder, {
-      maxWidth: `${holderMaxWidth}px`,
-      maxHeight: `${imageData.height * holderMaxWidth / imageData.width}px`
+      maxWidth: `${imageData.width * holderMaxHeight / imageData.height}px`,
+      maxHeight: `${holderMaxHeight}px`
     })
   }
 }
@@ -37,7 +37,13 @@ const getCropperOptions = function (vm) {
     movable: false,
     rotatable: false,
     zoomable: false,
-    preview: vm.$refs.preview
+    preview: vm.$refs.preview,
+    ready () {
+      vm.$emit('ready', this.cropper)
+    },
+    crop (e) {
+      vm.$emit('crop', this.cropper, e)
+    }
   }
 
   return { ...defaultOptions, ...(vm.cropperOptions || {}) }

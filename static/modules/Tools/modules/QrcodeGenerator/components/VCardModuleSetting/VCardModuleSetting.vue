@@ -7,8 +7,14 @@
         <label class="form-control-label">头像</label>
         <div class="form-control-content">
           <upload titles="Image files" extensions="jpeg,jpg,png,gif" @onUploadedFile="onUploadedAvatar">
-            <div class="btn hk-btn btn-default">上传头像</div>
+            <div class="btn hk-btn btn-default" v-if="!vcard.avatar">上传头像</div>
+            <exhibition-image :url="`${vcard.avatar}?imageView2/5/w/80/h/80`" v-if="vcard.avatar" @onClose="onClearAvatar" />
           </upload>
+          <upload-vcard-avatar-modal
+            :is-show="isShowUploadVCardAvatarModal"
+            :url="uploadVcardAvatarModalImage"
+            :onOk="onOkUploadVCardAvatar"
+            :onClose="onCloseUploadVCardAvatarModal" />
         </div>
       </div>
       <div class="form-group vcard-setting-item">
@@ -58,6 +64,18 @@ import ModuleItemSetting from './ModuleItemSettting'
 import Upload from '../../../../../../components/Upload/Upload'
 import InfoTip from '../../../../../../components/InfoTip/InfoTip'
 import CountInput from '../../../../../../components/CountInput/CountInput'
+import ExhibitionImage from '../../../../../../components/ExhibitionImage/ExhibitionImage'
+import UploadVcardAvatarModal from '../UploadVCardAvatarModal/UploadVCardAvatarModal'
+
+function closeUploadVCardAvatarModal (vm) {
+  vm.isShowUploadVCardAvatarModal = false
+  vm.uploadVcardAvatarModalImage = ''
+}
+
+function openUploadVCardAvatarModal (vm, url) {
+  vm.isShowUploadVCardAvatarModal = true
+  vm.uploadVcardAvatarModalImage = url
+}
 
 export default {
   data () {
@@ -69,7 +87,9 @@ export default {
     }
 
     return {
-      isOpenCoverModal: false,
+      isShowCoverModal: false,
+      isShowUploadVCardAvatarModal: false,
+      uploadVcardAvatarModalImage: '',
       selectedPreviewLayout: 'left'
     }
   },
@@ -87,18 +107,33 @@ export default {
   },
   methods: {
     onUploadedAvatar (url, key) {
-      console.log(url, key)
+      openUploadVCardAvatarModal(this, url)
+    },
+    onOkUploadVCardAvatar (url) {
+      if (!this.vcard) {
+        this.vcard = {}
+      }
+      this.vcard.avatar = url
+      this.onCloseUploadVCardAvatarModal()
+    },
+    onCloseUploadVCardAvatarModal () {
+      closeUploadVCardAvatarModal(this)
+    },
+    onClearAvatar () {
+      this.vcard = { ...this.vcard, avatar: '' }
     },
     onOpenCoverModal () {
-      this.isOpenCoverModal = true
-      console.log(this.isOpenCoverModal)
+      this.isShowCoverModal = true
+      console.log(this.isShowCoverModal)
     }
   },
   components: {
     ModuleItemSetting,
     Upload,
     InfoTip,
-    CountInput
+    CountInput,
+    UploadVcardAvatarModal,
+    ExhibitionImage
   }
 }
 </script>

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { initUploader } from '../../utils/QiniuUtil'
+import QiniuUtil from '../../utils/QiniuUtil'
 import ElementUtil from '../../utils/ElementUtil'
 import { showLoading } from '../../utils/LoadingUtil'
 import ArrayUtil from '../../utils/ArrayUtil'
@@ -92,7 +92,7 @@ export default {
         }
       }
 
-      this.uploader = initUploader({
+      this.uploader = QiniuUtil.initUploader({
         browse_button: this.id,
         multi_selection: false,
         isCreateKey: this.isNewName,
