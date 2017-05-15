@@ -46,10 +46,12 @@
         <label class="form-control-label">展示位置</label>
         <ul class="form-control-content vcard-header-preview-layout">
           <li
-            v-for="item in states.headerPreviewLayout"
-            :class="{ 'layout-item': true, [`layout-${item}`]: true, activated: selectedPreviewLayout === item}">
+            v-for="item in states.headerPreviewLayouts"
+            :class="{ 'layout-item': true, [`layout-${item}`]: true, activated: selectedPreviewLayout === item }"
+            @click="onSelectLayout(item)">
+            <img class="layout-item-image" :src="require(`./images/layout-${item}.png`)" />
             <div class="selected-mask">
-              <div class="selected-icon"></div>
+              <div class="icon-ok">&#10004</div>
             </div>
           </li>
         </ul>
@@ -83,13 +85,14 @@ export default {
       CONSTANTS: {
         MODULE: VCARD_MODULE
       },
-      headerPreviewLayout: ['left', 'middle', 'right']
+      headerPreviewLayouts: ['left', 'middle', 'right']
     }
 
     return {
       isShowCoverModal: false,
       isShowUploadVCardAvatarModal: false,
       uploadVcardAvatarModalImage: '',
+      avatar: '',
       selectedPreviewLayout: 'left'
     }
   },
@@ -124,7 +127,10 @@ export default {
     },
     onOpenCoverModal () {
       this.isShowCoverModal = true
-      console.log(this.isShowCoverModal)
+    },
+    onSelectLayout (layout) {
+      this.selectedPreviewLayout = layout
+      this.vcard.headerLayout = layout
     }
   },
   components: {
