@@ -1,5 +1,7 @@
 @import '../variable';
 
+@modalBodyBgColor: #f8f8f8;
+
 .hk-dialog {
   &.el-dialog {
     top: 50% !important;
@@ -8,6 +10,31 @@
     .el-dialog__header {
       padding: 18px;
       border-bottom: 1px solid @common-border;
+    }
+  }
+}
+
+.hk-modal {
+  &.el-dialog {
+    top: 50% !important;
+    transform: translate(-50%, -50%);
+
+    .el-dialog__header {
+      padding: 18px;
+      border-bottom: 1px solid @common-border;
+
+      .el-dialog__title {
+        color: @darkGreen;
+      }
+    }
+
+    .el-dialog__body {
+      background-color: @modalBodyBgColor;
+      padding: 15px 20px 30px;
+    }
+
+    .el-dialog__footer {
+      border-top: 1px solid @common-border;
     }
   }
 }

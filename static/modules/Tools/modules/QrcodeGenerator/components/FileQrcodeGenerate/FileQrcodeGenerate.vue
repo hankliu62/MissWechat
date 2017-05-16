@@ -19,20 +19,15 @@
       @onChangeHtml="onChangeHtml"
       @onToggleIsShowEditor="onToggleIsShowEditor">
     </toggle-editor>
-    <div class="upload-tips">
-      <el-tooltip
-        class="item"
-        effect="dark"
-        placement="top"
-        popper-class="hk-tooltip-popper">
-        <ul slot="content" class="file-qrcode file-types">
+    <div class="upload-tips" >
+      <info-tip type="question" content="支持文件格式">
+        <ul slot="tip" class="file-qrcode file-types">
           <li class="file-type-item" v-for="(type, key) in CONSTANTS.UPLOAD_FILE_TYPES">
             <span class="file-type-name" v-text="type.title + ': '"></span>
             <span class="file-type-contents" v-text="type.mimes.join(',')"></span>
           </li>
         </ul>
-        <span class="upload-types-tip"><icon-question-circle></icon-question-circle>支持文件格式</span>
-      </el-tooltip>
+      </info-tip>
     </div>
   </div>
 </template>
@@ -41,7 +36,7 @@
 import { PARAM_TYPES, UPLOAD_FILE_TYPES } from '../../constants/constants'
 import ToggleEditor from '../ToggleEditor/ToggleEditor'
 import Upload from '../../../../../../components/Upload/Upload'
-import IconQuestionCircle from '../../../../../../components/IconQuestionCircle/IconQuestionCircle'
+import InfoTip from '../../../../../../components/InfoTip/InfoTip'
 
 const CONSTANTS = {
   DEFAULT_FILE_CONTENT: {
@@ -126,7 +121,7 @@ export default {
       return fileContent.file && fileContent.file.url ? '重新上传' : '上传本地文件'
     }
   },
-  components: { ToggleEditor, Upload, IconQuestionCircle }
+  components: { ToggleEditor, Upload, InfoTip }
 }
 </script>
 

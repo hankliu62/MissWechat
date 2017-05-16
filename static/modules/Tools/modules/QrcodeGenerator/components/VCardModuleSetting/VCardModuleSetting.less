@@ -1,0 +1,124 @@
+@import '../../../../../../styles/variable';
+@import '../../../../../../styles/mixins/flexbox';
+
+@layoutBorderColor: rgba(120, 130, 140, .25);
+
+.vcard-setting-container {
+  font-size: 14px;
+
+  .module-setting {
+    height: 500px;
+    position: relative;
+    padding: 32px 25px;
+    border: 1px solid @common-border;
+    box-shadow: 1px 1px 5px @common-border;
+    background-color: @white;
+
+    .popper-arrow {
+      top: 32px;
+      position: absolute;
+      content: '';
+      width: 0;
+      height: 0;
+      font-size: 0;
+      line-height: 0;
+
+      &.popper-arrow-backend {
+        border-right: 15px solid @common-border;
+        border-bottom: 12px solid transparent;
+        border-top: 12px solid transparent;
+        left: -15px;
+      }
+
+      &.popper-arrow-frontend {
+        border-right: 14px solid @white;
+        border-bottom: 11px solid transparent;
+        border-top: 11px solid transparent;
+        left: -13px;
+      }
+    }
+
+    .close {
+      font-size: 12px;
+      position: absolute;
+      top: 12px;
+      right: 10px;
+    }
+
+    .form-group {
+      .flexbox();
+
+      .form-control-label {
+        .flex(1);
+        margin-bottom: 0;
+        color: @grayLighter;
+        line-height: 35px;
+      }
+
+      .form-control-content {
+        .flex(5);
+      }
+    }
+
+    &.basic-module-setting {
+      top: 64px;
+
+      .form-group {
+        .hk-info-tip {
+          margin-top: 8px;
+        }
+
+        .vcard-header-preview-layout {
+          .flexbox();
+          margin: 0;
+          padding: 0;
+
+          .layout-item {
+            .flex(1);
+            box-shadow: 0 0 3px @layoutBorderColor;
+            position: relative;
+            cursor: pointer;
+            border: 1px solid @layoutBorderColor;
+
+            .selected-mask {
+              display: none;
+              position: absolute;
+              top: 0;
+              right: 0;
+              border-top: 16px solid @darkGreen;
+              border-right: 16px solid @darkGreen;
+              border-left: 16px solid transparent;
+              border-bottom: 16px solid transparent;
+
+              .icon-ok {
+                font-size: 12px;
+                position: absolute;
+                background-color: @darkGreen;
+                color: @white;
+                top: -16px;
+                right: -12px;
+              }
+            }
+
+            &.activated {
+              border-color: @darkGreen;
+              box-shadow: 0 0 1px @darkGreen;
+
+              .selected-mask {
+                display: inline-block;
+              }
+            }
+
+            + .layout-item {
+              margin-left: 20px;
+            }
+
+            .layout-item-image {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+  }
+}

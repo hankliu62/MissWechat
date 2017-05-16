@@ -16,14 +16,9 @@
       @onToggleIsShowEditor="onToggleIsShowEditor">
     </toggle-editor>
     <div class="upload-tips">
-      <el-tooltip
-        class="item"
-        effect="dark"
-        content="jpg,jpeg,gif,png"
-        placement="top"
-        popper-class="hk-tooltip-popper">
-        <span class="upload-types-tip"><icon-question-circle></icon-question-circle>支持图片格式</span>
-      </el-tooltip>
+      <info-tip type="question" content="支持图片格式">
+        <span slot="tip">jpg,jpeg,gif,png</span>
+      </info-tip>
     </div>
   </div>
 </template>
@@ -32,7 +27,7 @@
 import { PARAM_TYPES } from '../../constants/constants'
 import ToggleEditor from '../ToggleEditor/ToggleEditor'
 import Upload from '../../../../../../components/Upload/Upload'
-import IconQuestionCircle from '../../../../../../components/IconQuestionCircle/IconQuestionCircle'
+import InfoTip from '../../../../../../components/InfoTip/InfoTip'
 
 const CONSTANTS = {
   DEFAULT_IMAGE_CONTENT: {
@@ -113,7 +108,7 @@ export default {
       return imageContent.image && imageContent.image.url ? '重新上传' : '上传本地图片'
     }
   },
-  components: { ToggleEditor, Upload, IconQuestionCircle }
+  components: { ToggleEditor, Upload, InfoTip }
 }
 </script>
 

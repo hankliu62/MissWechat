@@ -1,0 +1,22 @@
+@btnCloseColor:  rgba(0, 0, 0, .7);
+@btnCloseBgColor:  rgba(255, 255, 255, .3);
+
+.exhibition-image-card {
+  position: relative;
+  display: inline-block;
+
+  .btn-close {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    text-align: center;
+    z-index: 9;
+    margin-top: 1px;
+    color: @btnCloseColor;
+    background-color: @btnCloseBgColor;
+    cursor: pointer;
+  }
+}

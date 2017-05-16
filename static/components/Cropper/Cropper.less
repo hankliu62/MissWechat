@@ -1,0 +1,42 @@
+@import '../../styles/variable';
+
+@previewContainerBorderColor: rgba(0, 0, 0, .4);
+@previewContainerShadowColor: rgba(0, 0, 0, .2);
+
+.hk-cropper {
+  width: 1000px;
+  display: flex;
+
+  .cropper-holder {
+    max-height: 360px;
+
+    .cropper-hidden {
+      display: none;
+    }
+
+    .ropper-container {
+      position: relative;
+    }
+  }
+
+  .preview-pane {
+    flex: 1;
+    padding-top: 20px;
+    padding-left: 30px;
+
+    .preview-container {
+      display: inline-block;
+      padding: 6px;
+      border: 1px @previewContainerBorderColor solid;
+      background-color: @white;
+      border-radius: 6px;
+      box-shadow: 1px 1px 5px 2px @previewContainerShadowColor;
+
+      .preview {
+        width: 160px;
+        height: 160px;
+        overflow: hidden;
+      }
+    }
+  }
+}

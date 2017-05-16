@@ -1,0 +1,26 @@
+@import '../../styles/variable';
+@import '../../styles/mixins/center';
+
+.count-input {
+  position: relative;
+
+  .hk-input {
+    width: 100%;
+
+    &:focus {
+      & + .count-box {
+        display: inline-block;
+      }
+    }
+  }
+
+  .count-box {
+    display: none;
+
+    .absolute-vertical-center();
+    font-size: 10px;
+    right: 5px;
+    color: @grayDarkLighter;
+    background-color: @white;
+  }
+}
