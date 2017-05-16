@@ -68,6 +68,7 @@ module.exports = {
   },
   eslint: {
     formatter: require('eslint-friendly-formatter'),
+    fix: true,
     rules: {
       'no-new': 0,
       'no-unused-vars': 0

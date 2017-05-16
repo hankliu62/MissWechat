@@ -1,0 +1,20 @@
+@import '../../styles/variable';
+@import '../../styles/mixins/center';
+
+.mask-container {
+  .absolute-fill();
+
+  background-color: @commonMaskBgColor;
+
+  .ok-marker {
+    .absolute-center-with-width(25px);
+    height: 25px;
+    border-radius: 50%;
+    background-color: @darkGreen;
+
+    .icon-ok {
+      color: @white;
+      line-height: 25px;
+    }
+  }
+}

@@ -1,0 +1,56 @@
+@import '../../../../../../styles/variable';
+@import '../../../../../../styles/mixins/flexbox';
+@import '../../../../../../styles/mixins/center';
+
+.upload-cover-modal {
+  .upload-cover-modal-body {
+    .default-covers-list {
+      .default-covers-group {
+        .flexbox();
+
+        + .default-covers-group {
+          margin-top: 15px;
+        }
+
+        .default-covers-item {
+          .flex(1);
+          position: relative;
+          cursor: pointer;
+
+          + .default-covers-item {
+            margin-left: 10px;
+          }
+
+          .cover-image {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    .upload-covers {
+      margin-top: 25px;
+      padding-bottom: 50px;
+
+      .upload-covers-header {
+        margin-bottom: 5px;
+      }
+
+      .file-upload {
+        vertical-align: top;
+      }
+
+      .btn-upload {
+        width: 150px;
+      }
+
+      .upload-covers-item {
+        display: inline-block;
+        position: relative;
+        cursor: pointer;
+
+        margin-left: 20px;
+      }
+    }
+  }
+}

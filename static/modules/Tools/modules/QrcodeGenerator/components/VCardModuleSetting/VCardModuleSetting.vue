@@ -7,7 +7,7 @@
         <label class="form-control-label">头像</label>
         <div class="form-control-content">
           <upload titles="Image files" extensions="jpeg,jpg,png,gif" @onUploadedFile="onUploadedAvatar">
-            <div class="btn hk-btn btn-default" v-if="!vcard.avatar">上传头像</div>
+            <button class="btn hk-btn btn-default" v-if="!vcard.avatar">上传头像</button>
             <exhibition-image :url="`${vcard.avatar}?imageView2/5/w/80/h/80`" v-if="vcard.avatar" @onClose="onClearAvatar" />
           </upload>
           <upload-vcard-avatar-modal
@@ -20,8 +20,14 @@
       <div class="form-group vcard-setting-item">
         <label class="form-control-label">封面图</label>
         <div class="form-control-content">
-          <button class="btn hk-btn btn-default" @click="onOpenCoverModal">选择封面图</button>
+          <button class="btn hk-btn btn-default" @click="onOpenUploadVCardCoverModal">选择封面图</button>
           <info-tip content="图片建议尺寸720*330px，居中展示建议尺寸720*450px" :hidden-tip="true" />
+
+          <upload-vcard-cover-modal
+            :is-show="isShowUploadVCardCoverModal"
+            :url="uploadVcardCoverModalImage"
+            :onOk="onSelectVCardCover"
+            :onClose="onCloseUploadVCardCoverModal" />
         </div>
       </div>
       <div class="form-group vcard-setting-item">
@@ -68,6 +74,7 @@ import InfoTip from '../../../../../../components/InfoTip/InfoTip'
 import CountInput from '../../../../../../components/CountInput/CountInput'
 import ExhibitionImage from '../../../../../../components/ExhibitionImage/ExhibitionImage'
 import UploadVcardAvatarModal from '../UploadVCardAvatarModal/UploadVCardAvatarModal'
+import UploadVcardCoverModal from '../UploadVCardCoverModal/UploadVCardCoverModal'
 
 function closeUploadVCardAvatarModal (vm) {
   vm.isShowUploadVCardAvatarModal = false
@@ -89,8 +96,9 @@ export default {
     }
 
     return {
-      isShowCoverModal: false,
+      isShowUploadVCardCoverModal: false,
       isShowUploadVCardAvatarModal: false,
+      uploadVcardCoverModalImage: '',
       uploadVcardAvatarModalImage: '',
       avatar: '',
       selectedPreviewLayout: 'left'
@@ -125,8 +133,20 @@ export default {
     onClearAvatar () {
       this.vcard = { ...this.vcard, avatar: '' }
     },
-    onOpenCoverModal () {
-      this.isShowCoverModal = true
+    onOpenUploadVCardCoverModal () {
+      this.isShowUploadVCardCoverModal = true
+    },
+    onSelectVCardCover (url) {
+      this.uploadVcardCoverModalImage = url;
+      if (!this.vcard) {
+        this.vcard = {}
+      }
+      this.vcard.cover = url
+
+      this.onCloseUploadVCardCoverModal()
+    },
+    onCloseUploadVCardCoverModal (url) {
+      this.isShowUploadVCardCoverModal = false
     },
     onSelectLayout (layout) {
       this.selectedPreviewLayout = layout
@@ -139,6 +159,7 @@ export default {
     InfoTip,
     CountInput,
     UploadVcardAvatarModal,
+    UploadVcardCoverModal,
     ExhibitionImage
   }
 }
