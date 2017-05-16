@@ -85,3 +85,11 @@ export const UPLOAD_FILE_TYPES = {
     icon: 'http://oiq00n80p.bkt.clouddn.com/icon-videofile.png'
   }
 }
+
+export const VCARD_MODULE = {
+  Basic: 'basic',
+  Contact: 'contact',
+  Account: 'account',
+  Address: 'address',
+  Explanation: 'explanation'
+}

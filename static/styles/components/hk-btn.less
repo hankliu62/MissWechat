@@ -3,7 +3,7 @@
 
 @defaultBtnColor: @white;
 @defaultBtnBorderColor: #19af8c;
-@defaultBtnBgColor: #27AE60;
+@defaultBtnBgColor: @darkGreen;
 @defaultBtnHoverBgColor: #295;
 
 @btnCancelColor: #787878;
@@ -12,12 +12,26 @@
 @btnCancelHoverBgColor: #dbdbdb;
 @btnCancelHoverColor: #555;
 
+@btnDefaultColor: #373a3c;
+@btnDefaultBorderColor: @common-border;
+@btnDefaultBgColor: @white;
+@btnDefaultHoverColor: #373a3c;
+@btnDefaultHoverBorderColor:@common-border;
+@btnDefaultHoverBgColor: #f8f8f8;
+@btnDefaultShadowColor: rgba(221, 221, 221, .6);
+
 .hk-btn {
   &.btn-theme {
+    // fontColor, borderColor, bgColor, hoverFontColor, hoverBorderColor, hoverBgColor
     .btn(@defaultBtnColor, @defaultBtnBorderColor, @defaultBtnBgColor, @defaultBtnColor, @defaultBtnBorderColor, @defaultBtnHoverBgColor);
   }
 
   &.btn-cancel {
     .btn(@btnCancelColor, @btnCancelBorderColor, @btnCancelBgColor, @btnCancelHoverColor, @btnCancelBorderColor, @btnCancelHoverBgColor);
+  }
+
+  &.btn-default {
+    .btn(@btnDefaultColor, @btnDefaultBorderColor, @btnDefaultBgColor, @btnDefaultHoverColor, @btnDefaultHoverBorderColor, @btnDefaultHoverBgColor);
+    box-shadow: 0 0 3px @btnDefaultShadowColor;
   }
 }

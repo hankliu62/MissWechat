@@ -32,8 +32,7 @@
             :is-collapsed="isCollapseWechat"
             @collapsed="onToggleCollapseWechat">
             <div slot="trigger" class="collapse-wechat-header clearfix">
-              <icon-question-circle></icon-question-circle>
-              <span>微信公众号如何获取微信号</span>
+              <info-tip type="question" content="微信公众号如何获取微信号" :hiddenTip="true"></info-tip>
               <i class="icon icon-angle-down icon-collapse-trigger pull-right"></i>
             </div>
             <div slot="content" class="collapse-content">
@@ -50,8 +49,7 @@
             :is-collapsed="isCollapseWechatImage"
             @collapsed="onToggleCollapseWechatImage">
             <div slot="trigger" class="collapse-wechat-header clearfix">
-              <icon-question-circle></icon-question-circle>
-              <span>微信公众号如何获取二维码图片</span>
+              <info-tip type="question" content="微信公众号如何获取二维码图片" :hiddenTip="true"></info-tip>
               <i class="icon icon-angle-down icon-collapse-trigger pull-right"></i>
             </div>
             <div slot="content" class="collapse-content">
@@ -71,8 +69,7 @@
             :is-collapsed="isCollapseScan"
             @collapsed="onToggleCollapseScan">
             <div slot="trigger" class="collapse-wechat-header clearfix">
-              <icon-question-circle></icon-question-circle>
-              <span>如何获取二维码 & 如何进行摄像头扫码</span>
+              <info-tip type="question" content="如何获取二维码 & 如何进行摄像头扫码" :hiddenTip="true"></info-tip>
               <i class="icon icon-angle-down icon-collapse-trigger pull-right"></i>
             </div>
             <div slot="content" class="collapse-content">
@@ -95,7 +92,8 @@
 import { Tabs, TabList, Tab, TabPanel } from '../../../../../../components/Tabs'
 import InputBtnGroup from '../../../../../../components/InputBtnGroup/InputBtnGroup'
 import Collapse from '../../../../../../components/Collapse/Collapse'
-import IconQuestionCircle from '../../../../../../components/IconQuestionCircle/IconQuestionCircle'
+import IconCircle from '../../../../../../components/IconCircle/IconCircle'
+import InfoTip from '../../../../../../components/InfoTip/InfoTip'
 import { QRCODE_WECHAT_TAB_TYPES, QRCODE_WECHAT_TYPE_TABS, PARAM_TYPES } from '../../constants/constants'
 
 const CONSTANTS = {
@@ -172,7 +170,7 @@ export default {
       this.publicWechatName = isExitPublicWechatName ? content[PARAM_TYPES.WECHAT].public.name || '' : ''
     }
   },
-  components: { Tabs, TabList, Tab, TabPanel, InputBtnGroup, Collapse, IconQuestionCircle }
+  components: { Tabs, TabList, Tab, TabPanel, InputBtnGroup, Collapse, IconCircle, InfoTip }
 }
 </script>
 

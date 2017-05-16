@@ -1,0 +1,19 @@
+@btnCloseColor:  rgba(0, 0, 0, .7);
+@btnCloseBgColor:  rgba(0, 0, 0, .15);
+
+.icon-close {
+  &.remove {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+    z-index: 9;
+    color: @btnCloseColor;
+    background-color: @btnCloseBgColor;
+    cursor: pointer;
+  }
+}

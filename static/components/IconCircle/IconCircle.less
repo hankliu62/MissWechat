@@ -1,0 +1,27 @@
+@faColor: #999;
+
+@circle-keys: question, info;
+@circle-contents: '\f059', '\f05a';
+
+.hk-fa {
+  vertical-align: text-top;
+  font: normal normal normal 14px/1 FontAwesome;
+  color: @faColor;
+
+  @circles-count: length(@circle-keys);
+  .create-icon-circle(@circles-count);
+  .create-icon-circle(@n, @i: 1) when (@i =< @n){
+    @key: extract(@circle-keys, @i);
+    @contenet: extract(@circle-contents, @i);
+
+    &.fa-@{key}-circle {
+      margin-right: 5px;
+
+      &:before {
+        content: @contenet;
+      }
+    }
+
+    .create-icon-circle(@n, (@i + 1));
+  }
+}
