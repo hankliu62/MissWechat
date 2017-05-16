@@ -4,6 +4,27 @@
 
 .upload-cover-modal {
   .upload-cover-modal-body {
+    .default-covers {
+      .default-covers-header {
+        margin-bottom: 20px;
+        margin-top: 10px;
+
+        .covers-header-label {
+          font-weight: normal;
+          margin-bottom: 0;
+        }
+
+        .hk-radio {
+          display: inline-block;
+          margin-left: 30px;
+
+          + .hk-radio {
+            margin-left: 10px;
+          }
+        }
+      }
+    }
+
     .default-covers-list {
       .default-covers-group {
         .flexbox();
@@ -25,6 +46,11 @@
             width: 100%;
           }
         }
+
+        .default-covers-pure {
+          width: 91px;
+          height: 91px;
+        }
       }
     }
 
@@ -33,7 +59,12 @@
       padding-bottom: 50px;
 
       .upload-covers-header {
-        margin-bottom: 5px;
+        margin-bottom: 12px;
+
+        .covers-header-label {
+          font-weight: normal;
+          margin-bottom: 0;
+        }
       }
 
       .file-upload {
@@ -50,6 +81,24 @@
         cursor: pointer;
 
         margin-left: 20px;
+      }
+
+      &.upload-covers-type-pure {
+        .upload-covers-header {
+          display: inline-block;
+          margin-right: 15px;
+          margin-bottom: 0;
+          line-height: 25px;
+
+          .covers-header-label {
+            cursor: pointer;
+          }
+        }
+
+        .hk-color-picker {
+          display: inline-block;
+          vertical-align: middle;
+        }
       }
     }
   }

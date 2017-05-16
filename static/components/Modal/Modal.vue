@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="title" :custom-class="`hk-dialog hk-modal ${customClass}`" v-model="isShow" :size="size" @close="onClose">
+  <el-dialog :title="title" :custom-class="`hk-dialog hk-modal ${customClass}`" v-model="isOpen" :size="size" @close="onClose">
     <slot name="body"></slot>
     <div slot="footer" class="dialog-footer" v-if="defaultFooter">
       <el-button class="btn hk-btn btn-cancel" @click="onCancelHandler">取消</el-button>
@@ -11,7 +11,9 @@
 <script>
 export default {
   data () {
-    return {}
+    return {
+      isOpen: this.isShow
+    }
   },
   props: {
     isShow: {
@@ -50,6 +52,16 @@ export default {
     onCancelHandler () {
       const cancelHandler = this.onCancel || this.onClose
       cancelHandler()
+    }
+  },
+  watch: {
+    isOpen (val) {
+      if (!val) {
+        this.onClose()
+      }
+    },
+    isShow (val) {
+      this.isOpen = val
     }
   }
 }
