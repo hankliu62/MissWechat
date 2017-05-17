@@ -1,7 +1,7 @@
 <template>
   <div :class="`module-setting ${module}-module-setting`">
     <slot></slot>
-    <i class="icon icon-close close"></i>
+    <i class="icon icon-close close" @click="onClose"></i>
     <i class="popper-arrow popper-arrow-backend"></i>
     <i class="popper-arrow popper-arrow-frontend"></i>
   </div>
@@ -14,6 +14,11 @@ export default {
   },
   props: {
     module: String
+  },
+  methods: {
+    onClose () {
+      this.$emit('close')
+    }
   }
 }
 </script>

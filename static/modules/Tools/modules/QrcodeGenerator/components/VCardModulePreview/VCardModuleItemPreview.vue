@@ -1,5 +1,9 @@
 <template>
-  <div :class="{ 'vcard-module-item': true, actived: isActived, [extraClass || '']: true }" @mouseenter="onMouseOverModule" @mouseleave="onMouseOutModule">
+  <div
+    :class="{ 'vcard-module-item': true, actived: isActived, [extraClass || '']: true }"
+    @mouseenter="onMouseOverModule"
+    @mouseleave="onMouseOutModule"
+    @click="onClickModule">
     <slot></slot>
     <vcard-module-item-mask :is-show="isShowMask" :content="maskContent">
       <slot name="maskContent" v-if="!maskContent"></slot>
@@ -19,7 +23,8 @@ export default {
   props: {
     maskContent: String,
     isActived: Boolean,
-    extraClass: String
+    extraClass: String,
+    moduleKey: String
   },
   methods: {
     onMouseOverModule () {
@@ -27,6 +32,9 @@ export default {
     },
     onMouseOutModule () {
       this.isShowMask = false
+    },
+    onClickModule () {
+      this.$emit('selected', this.moduleKey)
     }
   },
   components: {

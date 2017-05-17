@@ -95,7 +95,10 @@
           <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.VCARD">
             <div class="vcard-qrcode-wrap">
               <div class="left-wrap">
-                <vcard-module-preview></vcard-module-preview>
+                <vcard-module-preview
+                  :vcard-data="qrcodeContent[CONSTANTS.PARAM_TYPES.VCARD].data"
+                  :selected-module="qrcodeContent[CONSTANTS.PARAM_TYPES.VCARD].selectedModule"
+                  @onSelecteModule="onSelecteVCardModule" />
                 <div class="vcard-language-container">
                   <label class="language-label">显示语言: </label>
                   <radio
@@ -108,7 +111,10 @@
                 </div>
               </div>
               <div class="right-wrap">
-                <vcard-module-setting></Vcard-Module-Setting>
+                <vcard-module-setting
+                  :vcard-data="qrcodeContent[CONSTANTS.PARAM_TYPES.VCARD].data"
+                  :selected-module="qrcodeContent[CONSTANTS.PARAM_TYPES.VCARD].selectedModule"
+                  @onSelecteModule="onSelecteVCardModule" />
                 <!-- <upload-vcard-avatar-modal></upload-vcard-avatar-modal> -->
               </div>
             </div>
@@ -131,7 +137,6 @@ import ImageQrcodeGenerate from './components/ImageQrcodeGenerate/ImageQrcodeGen
 import WechatQrcodeGenerate from './components/WechatQrcodeGenerate/WechatQrcodeGenerate'
 import QrcodePreview from './components/QrcodePreview/QrcodePreview'
 import QrcodeTools from './components/QrcodeTools/QrcodeTools'
-import UploadVcardAvatarModal from './components/UploadVCardAvatarModal/UploadVCardAvatarModal'
 import VcardModulePreview from './components/VCardModulePreview/VCardModulePreview'
 import VcardModuleSetting from './components/VCardModuleSetting/VCardModuleSetting'
 import { PARAM_TYPES } from './constants/constants'
@@ -203,6 +208,14 @@ const getQrcodeOptions = function (vm) {
   }
 
   return options
+}
+
+const updateVCardState = function (vm, key, value) {
+  const { qrcodeContent } = vm
+  const { vcard, othersQrcodeContent } = qrcodeContent
+  const vcardQrcodeContent = { ...vcard }
+  vcardQrcodeContent[key] = value
+  vm.setState({ qrcodeContent: { ...othersQrcodeContent, vcard: vcardQrcodeContent } })
 }
 
 export default {
@@ -329,11 +342,10 @@ export default {
       this.setState({ logoUrl })
     },
     onChangeVCardLanguage (value) {
-      const { qrcodeContent } = this
-      const { vcard, othersQrcodeContent } = qrcodeContent
-      const vcardQrcodeContent = { ...vcard }
-      vcardQrcodeContent.language = value
-      this.setState({ qrcodeContent: { ...othersQrcodeContent, vcard: vcardQrcodeContent } })
+      updateVCardState(this, 'language', value)
+    },
+    onSelecteVCardModule (value) {
+      updateVCardState(this, 'selectedModule', value)
     }
   },
   components: {
@@ -346,7 +358,6 @@ export default {
     QrcodePreview,
     QrcodeTools,
     Radio,
-    UploadVcardAvatarModal,
     VcardModulePreview,
     VcardModuleSetting
   }

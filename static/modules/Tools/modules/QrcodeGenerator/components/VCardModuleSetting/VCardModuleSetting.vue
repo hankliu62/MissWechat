@@ -2,7 +2,8 @@
   <div class="vcard-setting-container">
     <module-item-setting
       :module="states.CONSTANTS.MODULE.Basic"
-      v-if="states.CONSTANTS.MODULE.Basic === selectedModule">
+      v-if="states.CONSTANTS.MODULE.Basic === selectedModule"
+      @close="onSelecteModule('')">
       <div class="form-group vcard-setting-item">
         <label class="form-control-label">头像</label>
         <div class="form-control-content">
@@ -12,7 +13,7 @@
           </upload>
           <upload-vcard-avatar-modal
             :is-show="isShowUploadVCardAvatarModal"
-            :url="uploadVcardAvatarModalImage"
+            :url="uploadVCardAvatarModalImage"
             :onOk="onOkUploadVCardAvatar"
             :onClose="onCloseUploadVCardAvatarModal" />
         </div>
@@ -23,13 +24,13 @@
           <button
             class="btn hk-btn btn-default"
             @click="onOpenUploadVCardCoverModal"
-            v-if="!selectedVCardCover || !selectedVCardCover.value">选择封面图</button>
+            v-if="!vcard.cover || !vcard.cover.value">选择封面图</button>
 
-          <template v-if="selectedVCardCover && selectedVCardCover.value && selectedVCardCover.type === states.CONSTANTS.IMAGE_TYPE">
-            <exhibition-image :url="`${vcard.avatar}?imageView2/1/w/120/h/72`" @onClose="onClearVCardCover" />
+          <template v-if="vcard.cover && vcard.cover.value && vcard.cover.type === states.CONSTANTS.IMAGE_TYPE">
+            <exhibition-image :url="`${vcard.cover.value}?imageView2/1/w/120/h/72`" @onClose="onClearVCardCover" />
           </template>
-          <template v-if="selectedVCardCover && selectedVCardCover.value && selectedVCardCover.type === states.CONSTANTS.PURE_TYPE">
-            <div class="vcard-cover-display" :style="{backgroundColor: selectedVCardCover.value}">
+          <template v-if="vcard.cover && vcard.cover.value && vcard.cover.type === states.CONSTANTS.PURE_TYPE">
+            <div class="vcard-cover-display" :style="{backgroundColor: vcard.cover.value}">
               <mask-remove @onRemove="onClearVCardCover" />
             </div>
           </template>
@@ -38,7 +39,7 @@
 
           <upload-vcard-cover-modal
             :is-show="isShowUploadVCardCoverModal"
-            :selectedCover="selectedVCardCover"
+            :selectedCover="vcard.cover"
             :onOk="onSelectVCardCover"
             :onClose="onCloseUploadVCardCoverModal" />
         </div>
@@ -46,19 +47,29 @@
       <div class="form-group vcard-setting-item">
         <label class="form-control-label">姓名</label>
         <div class="form-control-content">
-          <count-input max-length="50" />
+          <count-input
+            max-length="50"
+            placeholder="必填"
+            :model="vcard.name ? (vcard.name.value || '') : ''"
+            @change="onChangeName" />
         </div>
       </div>
       <div class="form-group vcard-setting-item">
         <label class="form-control-label">职位</label>
         <div class="form-control-content">
-          <count-input max-length="100" />
+          <count-input
+            max-length="100"
+            :model="vcard.appointment ? (vcard.appointment.value || '') : ''"
+            @change="onChangeAppointment" />
         </div>
       </div>
       <div class="form-group vcard-setting-item">
         <label class="form-control-label">公司</label>
         <div class="form-control-content">
-          <count-input max-length="50" />
+          <count-input
+            max-length="50"
+            :model="vcard.company ? (vcard.company.value || '') : ''"
+            @change="onChangeCompany" />
         </div>
       </div>
       <div class="form-group vcard-setting-item">
@@ -89,15 +100,30 @@ import MaskRemove from '../../../../../../components/MaskRemove/MaskRemove'
 import ExhibitionImage from '../../../../../../components/ExhibitionImage/ExhibitionImage'
 import UploadVcardAvatarModal from '../UploadVCardAvatarModal/UploadVCardAvatarModal'
 import UploadVcardCoverModal from '../UploadVCardCoverModal/UploadVCardCoverModal'
+import * as ObjectUtil from '../../../../../../utils/ObjectUtil'
 
 function closeUploadVCardAvatarModal (vm) {
   vm.isShowUploadVCardAvatarModal = false
-  vm.uploadVcardAvatarModalImage = ''
+  vm.uploadVCardAvatarModalImage = ''
 }
 
 function openUploadVCardAvatarModal (vm, url) {
   vm.isShowUploadVCardAvatarModal = true
-  vm.uploadVcardAvatarModalImage = url
+  vm.uploadVCardAvatarModalImage = url
+}
+
+function updateObjectProperty (vm, value, ...keys) {
+  if (!vm.vcard) {
+    vm.vcard = {}
+  }
+
+  if (!keys || keys.length === 0) {
+    return
+  }
+
+  const firstChildKey = keys[0]
+  const firstChildValue = ObjectUtil.set(vm.vcard[firstChildKey] || {}, value, ...keys.slice(1))
+  vm.vcard = { ...vm.vcard, [firstChildKey]: firstChildValue }
 }
 
 export default {
@@ -112,16 +138,15 @@ export default {
     }
 
     return {
+      vcard: this.vcardData,
       isShowUploadVCardCoverModal: false,
       isShowUploadVCardAvatarModal: false,
-      selectedVCardCover: {},
-      uploadVcardAvatarModalImage: '',
-      avatar: '',
+      uploadVCardAvatarModalImage: '',
       selectedPreviewLayout: 'left'
     }
   },
   props: {
-    vcard: {
+    vcardData: {
       type: Object,
       default: function () {
         return {}
@@ -129,36 +154,34 @@ export default {
     },
     selectedModule: {
       type: String,
-      default: 'basic'
+      default: ''
     }
   },
   methods: {
+    updateVCardProperty (value, ...keys) {
+      updateObjectProperty(this, value, ...keys)
+    },
     onUploadedAvatar (url, key) {
       openUploadVCardAvatarModal(this, url)
     },
     onOkUploadVCardAvatar (url) {
-      if (!this.vcard) {
-        this.vcard = {}
-      }
-      this.vcard.avatar = url
+      this.updateVCardProperty(url, 'avatar')
+      this.onTriggerSession()
       this.onCloseUploadVCardAvatarModal()
     },
     onCloseUploadVCardAvatarModal () {
       closeUploadVCardAvatarModal(this)
     },
     onClearAvatar () {
-      this.vcard = { ...this.vcard, avatar: '' }
+      this.updateVCardProperty('', 'avatar')
+      this.onTriggerSession()
     },
     onOpenUploadVCardCoverModal () {
       this.isShowUploadVCardCoverModal = true
     },
     onSelectVCardCover (value, type) {
-      this.selectedVCardCover = { value, type };
-      if (!this.vcard) {
-        this.vcard = {}
-      }
-      this.vcard.cover = { value, type }
-
+      this.updateVCardProperty({ value, type }, 'cover')
+      this.onTriggerSession()
       this.onCloseUploadVCardCoverModal()
     },
     onCloseUploadVCardCoverModal (url) {
@@ -166,11 +189,39 @@ export default {
     },
     onSelectLayout (layout) {
       this.selectedPreviewLayout = layout
-      this.vcard.headerLayout = layout
+      this.updateVCardProperty(layout, 'headerLayout')
+      this.onTriggerSession()
     },
     onClearVCardCover () {
-      this.selectedVCardCover = {};
-      this.vcard = { ...this.vcard, cover: {} }
+      this.updateVCardProperty({}, 'cover')
+      this.onTriggerSession()
+    },
+    onChangeName (value) {
+      this.updateVCardProperty(value, 'name', 'value')
+      this.onTriggerSession()
+    },
+    onChangeAppointment (value) {
+      this.updateVCardProperty(value, 'appointment', 'value')
+      this.onTriggerSession()
+    },
+    onChangeCompany (value) {
+      this.updateVCardProperty(value, 'company', 'value')
+      this.onTriggerSession()
+    },
+    onTriggerSession () {
+      this.$emit('onUpdateVCard', this.vcard)
+    },
+    onSelecteModule (module) {
+      this.$emit('onSelecteModule', module)
+    }
+  },
+  watch: {
+    vcardData (val) {
+      val = val || {}
+      this.vcard = { ...val }
+      if (this.vcard.headerLayout) {
+        this.this.selectedPreviewLayout = this.vcard.headerLayout
+      }
     }
   },
   components: {

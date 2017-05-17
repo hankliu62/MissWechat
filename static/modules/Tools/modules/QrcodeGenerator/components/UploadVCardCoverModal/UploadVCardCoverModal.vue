@@ -146,11 +146,12 @@ export default {
         PURE_TYPE
       }
     }
+    const selectedCover = this.selectedCover || {}
 
     return {
       // 当前选中的cover， 需要返回到父组件中的变量
-      selectingCover: this.selectedCover.value || '',
-      selectedCoverType: this.selectedCover.type || this.states.CONSTANTS.DEFAULT_COVER_TYPES[0].value,
+      selectingCover: selectedCover.value || '',
+      selectedCoverType: selectedCover.type || this.states.CONSTANTS.DEFAULT_COVER_TYPES[0].value,
       selectedPickerPureColor: '',
       checkedCustomColor: false,
       uploadCover: ''
@@ -204,7 +205,10 @@ export default {
     selectedCover (val) {
       if (val) {
         this.selectingCover = val.value
-        this.selectedCoverType = val.type
+
+        if (val.type) {
+          this.selectedCoverType = val.type
+        }
       }
     }
   },

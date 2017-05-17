@@ -4,7 +4,8 @@ import {
   DEFAULT_QRCODE_SIZE,
   DEFAULT_QRCODE_FOREGROUND,
   DEFAULT_QRCODE_BACKGROUND,
-  PARAM_TYPES
+  PARAM_TYPES,
+  VCARD_COVER_IMAGE_TYPE
 } from '../constants/constants'
 import { LANGUAGES } from '../../../../../constants/languages'
 
@@ -26,7 +27,28 @@ export default {
     },
     [PARAM_TYPES.URL]: '',
     [PARAM_TYPES.VCARD]: {
-      language: LANGUAGES.ZH_CN
+      language: LANGUAGES.ZH_CN,
+      selectedModule: '',
+      data: {
+        avatar: '',
+        cover: {
+          value: 'http://oiq00n80p.bkt.clouddn.com/bg1.jpg',
+          type: VCARD_COVER_IMAGE_TYPE
+        },
+        selectedPreviewLayout: 'left',
+        name: {
+          text: '姓名',
+          value: ''
+        },
+        appointment: {
+          text: '职位',
+          value: ''
+        },
+        company: {
+          text: '姓名',
+          value: '公司'
+        }
+      }
     },
     [PARAM_TYPES.FILE]: {
       file: {
