@@ -1,6 +1,6 @@
 <template>
   <div class="count-input">
-    <input class="hk-input" v-model="value" @change="onChange" />
+    <input class="hk-input" :maxLength="maxLength" v-model="value" @change="onChange" />
     <span class="count-box" v-text="`${value.length}/${maxLength}`" v-if="!!maxLength"></span>
   </div>
 </template>
@@ -18,7 +18,6 @@ export default {
   },
   methods: {
     onChange (e) {
-      console.log(e.value)
       this.$emit('onChange', e.value)
     }
   },

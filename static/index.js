@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import { sync } from 'vuex-router-sync' // 将 vue-router 纳入到 vuex 的管理
@@ -10,7 +11,6 @@ import 'element-ui/lib/theme-default/index.css'
 import routeConfig from './routes/routes'
 import store from './vuex/store'
 import App from './modules/App/App'
-import 'babel-polyfill'
 
 // Vue.use(VueResource)
 // 1. 使用模块化机制编程: vue-router

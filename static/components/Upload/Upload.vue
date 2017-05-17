@@ -110,5 +110,10 @@ export default {
 </script>
 
 <style scoped lang="less">
-@import 'Upload.less';
+@import 'Upload';
+</style>
+
+
+<style lang="less">
+@import 'UploadModule';
 </style>

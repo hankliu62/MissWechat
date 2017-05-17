@@ -93,3 +93,6 @@ export const VCARD_MODULE = {
   Address: 'address',
   Explanation: 'explanation'
 }
+
+export const VCARD_COVER_IMAGE_TYPE = 'image'
+export const VCARD_COVER_PURE_TYPE = 'pure'

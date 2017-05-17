@@ -20,12 +20,25 @@
       <div class="form-group vcard-setting-item">
         <label class="form-control-label">封面图</label>
         <div class="form-control-content">
-          <button class="btn hk-btn btn-default" @click="onOpenUploadVCardCoverModal">选择封面图</button>
+          <button
+            class="btn hk-btn btn-default"
+            @click="onOpenUploadVCardCoverModal"
+            v-if="!selectedVCardCover || !selectedVCardCover.value">选择封面图</button>
+
+          <template v-if="selectedVCardCover && selectedVCardCover.value && selectedVCardCover.type === states.CONSTANTS.IMAGE_TYPE">
+            <exhibition-image :url="`${vcard.avatar}?imageView2/1/w/120/h/72`" @onClose="onClearVCardCover" />
+          </template>
+          <template v-if="selectedVCardCover && selectedVCardCover.value && selectedVCardCover.type === states.CONSTANTS.PURE_TYPE">
+            <div class="vcard-cover-display" :style="{backgroundColor: selectedVCardCover.value}">
+              <mask-remove @onRemove="onClearVCardCover" />
+            </div>
+          </template>
+
           <info-tip content="图片建议尺寸720*330px，居中展示建议尺寸720*450px" :hidden-tip="true" />
 
           <upload-vcard-cover-modal
             :is-show="isShowUploadVCardCoverModal"
-            :url="uploadVcardCoverModalImage"
+            :selectedCover="selectedVCardCover"
             :onOk="onSelectVCardCover"
             :onClose="onCloseUploadVCardCoverModal" />
         </div>
@@ -67,11 +80,12 @@
 </template>
 
 <script>
-import { VCARD_MODULE } from '../../constants/constants'
+import { VCARD_MODULE, VCARD_COVER_IMAGE_TYPE, VCARD_COVER_PURE_TYPE } from '../../constants/constants'
 import ModuleItemSetting from './ModuleItemSettting'
 import Upload from '../../../../../../components/Upload/Upload'
 import InfoTip from '../../../../../../components/InfoTip/InfoTip'
 import CountInput from '../../../../../../components/CountInput/CountInput'
+import MaskRemove from '../../../../../../components/MaskRemove/MaskRemove'
 import ExhibitionImage from '../../../../../../components/ExhibitionImage/ExhibitionImage'
 import UploadVcardAvatarModal from '../UploadVCardAvatarModal/UploadVCardAvatarModal'
 import UploadVcardCoverModal from '../UploadVCardCoverModal/UploadVCardCoverModal'
@@ -90,7 +104,9 @@ export default {
   data () {
     this.states = {
       CONSTANTS: {
-        MODULE: VCARD_MODULE
+        MODULE: VCARD_MODULE,
+        IMAGE_TYPE: VCARD_COVER_IMAGE_TYPE,
+        PURE_TYPE: VCARD_COVER_PURE_TYPE
       },
       headerPreviewLayouts: ['left', 'middle', 'right']
     }
@@ -98,7 +114,7 @@ export default {
     return {
       isShowUploadVCardCoverModal: false,
       isShowUploadVCardAvatarModal: false,
-      uploadVcardCoverModalImage: '',
+      selectedVCardCover: {},
       uploadVcardAvatarModalImage: '',
       avatar: '',
       selectedPreviewLayout: 'left'
@@ -136,12 +152,12 @@ export default {
     onOpenUploadVCardCoverModal () {
       this.isShowUploadVCardCoverModal = true
     },
-    onSelectVCardCover (url) {
-      this.uploadVcardCoverModalImage = url;
+    onSelectVCardCover (value, type) {
+      this.selectedVCardCover = { value, type };
       if (!this.vcard) {
         this.vcard = {}
       }
-      this.vcard.cover = url
+      this.vcard.cover = { value, type }
 
       this.onCloseUploadVCardCoverModal()
     },
@@ -151,16 +167,21 @@ export default {
     onSelectLayout (layout) {
       this.selectedPreviewLayout = layout
       this.vcard.headerLayout = layout
+    },
+    onClearVCardCover () {
+      this.selectedVCardCover = {};
+      this.vcard = { ...this.vcard, cover: {} }
     }
   },
   components: {
-    ModuleItemSetting,
     Upload,
     InfoTip,
     CountInput,
-    UploadVcardAvatarModal,
+    MaskRemove,
+    ExhibitionImage,
+    ModuleItemSetting,
     UploadVcardCoverModal,
-    ExhibitionImage
+    UploadVcardAvatarModal
   }
 }
 </script>
