@@ -7,7 +7,6 @@
   font-size: 14px;
 
   .module-setting {
-    height: 500px;
     position: relative;
     padding: 32px 25px;
     border: 1px solid @common-border;
@@ -115,6 +114,27 @@
 
             .layout-item-image {
               width: 100%;
+            }
+          }
+        }
+
+        .exhibition-image-card {
+          cursor: pointer;
+        }
+
+        .vcard-cover-display {
+          position: relative;
+          width: 91px;
+          height: 91px;
+          cursor: pointer;
+
+          .remove {
+            display: none;
+          }
+
+          &:hover {
+            .remove {
+              display: inline-block;
             }
           }
         }

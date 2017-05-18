@@ -1,11 +1,13 @@
 <template>
-  <div class="exhibition-image-card" v-if="url">
+  <div class="exhibition-image-card" v-if="url" @click="onClick">
     <img class="exhibition-image" :src="url" />
-    <i class="icon icon-close btn-close" @click.stop.prevent.self="onClose"></i>
+    <mask-remove @onRemove="onClose" />
   </div>
 </template>
 
 <script>
+import MaskRemove from '../MaskRemove/MaskRemove'
+
 export default {
   data () {
     return {}
@@ -16,7 +18,13 @@ export default {
   methods: {
     onClose () {
       this.$emit('onClose')
+    },
+    onClick () {
+      this.$emit('onClick')
     }
+  },
+  components: {
+    MaskRemove
   }
 }
 </script>
