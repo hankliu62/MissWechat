@@ -13,7 +13,7 @@
           <radio
             v-for="option in states.CONSTANTS.DEFAULT_COVER_TYPES"
             :label="option.value"
-            :model="selectedDefaultCoverType"
+            :model="selectedCoverType"
             @onChange="onChangeVCardCoverPaneType">
             <span v-text="option.text"></span>
           </radio>
@@ -22,7 +22,7 @@
           <ul
             class="default-covers-group"
             v-for="covers in states.CONSTANTS.DEFAULT_IMAGE_COVERS"
-            v-if="selectedDefaultCoverType === states.CONSTANTS.IMAGE_TYPE">
+            v-if="selectedCoverType === states.CONSTANTS.IMAGE_TYPE">
             <li
               class="default-covers-item default-covers-image"
               v-for="cover in covers"
@@ -34,7 +34,7 @@
           <ul
             class="default-covers-group"
             v-for="covers in states.CONSTANTS.DEFAULT_PURE_COVERS"
-            v-if="selectedDefaultCoverType === states.CONSTANTS.PURE_TYPE">
+            v-if="selectedCoverType === states.CONSTANTS.PURE_TYPE">
             <li
               class="default-covers-item default-covers-pure"
               v-for="cover in covers"
@@ -46,31 +46,31 @@
         </div>
       </div>
       <!-- 图片背景 -->
-      <template v-if="selectedDefaultCoverType === states.CONSTANTS.IMAGE_TYPE">
+      <template v-if="selectedCoverType === states.CONSTANTS.IMAGE_TYPE">
         <div class="upload-covers">
           <div class="upload-covers-header">
             <label class="covers-header-label">自定义背景</label>
           </div>
-          <upload titles="Image files" extensions="jpeg,jpg,png,gif" @onUploadedFile="onUploadedCover">
+          <upload titles="Image files" extensions="jpeg,jpg,png,gif" @onUploadedFile="onUploadedImageCover">
             <button class="btn hk-btn btn-default btn-upload">本地上传</button>
           </upload>
           <div class="upload-covers-item" v-if="uploadCover" @click="onSelectCover(uploadCover)">
             <img class="cover-image" :src="`${uploadCover}?imageView2/1/w/120/h/72`" />
             <mask-ok v-if="selectingCover === uploadCover" />
-            <mask-remove />
+            <mask-remove @onRemove="onRemoveUploadCover" />
           </div>
         </div>
       </template>
 
       <!-- 纯色背景 -->
-      <template v-if="selectedDefaultCoverType === states.CONSTANTS.PURE_TYPE">
+      <template v-if="selectedCoverType === states.CONSTANTS.PURE_TYPE">
         <div class="upload-covers upload-covers-type-pure">
           <div class="upload-covers-header">
             <checkbox v-model="checkedCustomColor">
               <label class="covers-header-label">自定义颜色</label>
             </checkbox>
           </div>
-          <color-picker :value="selectedBgColor" @submit="onChooseBgColor" />
+          <color-picker :value="selectedPickerPureColor" @submit="onChoosePickerPureColor" />
         </div>
       </template>
     </div>
@@ -87,10 +87,11 @@ import MaskRemove from '../../../../../../components/MaskRemove/MaskRemove'
 import ColorPicker from '../../../../../../components/ColorPicker/ColorPicker'
 import QiniuUtil from '../../../../../../utils/QiniuUtil'
 import QrcodeUtil from '../../../../../../utils/QrcodeUtil'
+import { VCARD_COVER_IMAGE_TYPE, VCARD_COVER_PURE_TYPE } from '../../constants/constants'
 
 function initComponentStatus (vm) {
   vm.selectingCover = ''
-  vm.selectedDefaultCoverType = vm.states.CONSTANTS.DEFAULT_COVER_TYPES[0].value
+  vm.selectedCoverType = vm.states.CONSTANTS.DEFAULT_COVER_TYPES[0].value
   vm.selectedBgColor = ''
   vm.checkedCustomColor = false
   vm.uploadCover = ''
@@ -98,25 +99,25 @@ function initComponentStatus (vm) {
 
 export default {
   data () {
-    const IMAGE_TYPE = 'image'
-    const PURE_TYPE = 'pure'
+    const IMAGE_TYPE = VCARD_COVER_IMAGE_TYPE
+    const PURE_TYPE = VCARD_COVER_PURE_TYPE
 
     this.states = {
       CONSTANTS: {
         DEFAULT_IMAGE_COVERS: [
           [
-            'http://oiq00n80p.bkt.clouddn.com/bg1.jpg',
-            'http://oiq00n80p.bkt.clouddn.com/bg2.jpg',
-            'http://oiq00n80p.bkt.clouddn.com/bg3.jpg',
-            'http://oiq00n80p.bkt.clouddn.com/bg4.jpg',
-            'http://oiq00n80p.bkt.clouddn.com/bg5.jpg'
+            'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg23.jpg',
+            'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg7.jpg',
+            'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg11.jpg',
+            'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg16.jpg',
+            'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg4.jpg'
           ],
           [
-            'http://oiq00n80p.bkt.clouddn.com/bg6.jpg',
-            'http://oiq00n80p.bkt.clouddn.com/bg7.jpg',
-            'http://oiq00n80p.bkt.clouddn.com/bg8.jpg',
-            'http://oiq00n80p.bkt.clouddn.com/bg9.jpg',
-            'http://oiq00n80p.bkt.clouddn.com/bg10.jpg'
+            'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg29.jpg',
+            'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg31.jpg',
+            'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg9.jpg',
+            'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg28.jpg',
+            'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg26.jpg'
           ]
         ],
         DEFAULT_PURE_COVERS: [
@@ -145,18 +146,20 @@ export default {
         PURE_TYPE
       }
     }
+    const selectedCover = this.selectedCover || {}
 
     return {
-      selectingCover: '',
-      selectedDefaultCoverType: this.states.CONSTANTS.DEFAULT_COVER_TYPES[0].value,
-      selectedBgColor: '',
+      // 当前选中的cover， 需要返回到父组件中的变量
+      selectingCover: selectedCover.value || '',
+      selectedCoverType: selectedCover.type || this.states.CONSTANTS.DEFAULT_COVER_TYPES[0].value,
+      selectedPickerPureColor: '',
       checkedCustomColor: false,
       uploadCover: ''
     }
   },
   props: {
     isShow: Boolean,
-    selectedCover: String,
+    selectedCover: {},
     onOk: {
       type: Function,
       default () {}
@@ -165,31 +168,47 @@ export default {
   },
   methods: {
     onSureCover () {
-      this.onOk(this.selectingCover)
+      this.onOk(this.selectingCover, this.selectedCoverType)
     },
-    onSelectCover (url) {
+    onSelectCover (cover) {
       this.checkedCustomColor = false
-      this.selectingCover = url
+      this.selectingCover = cover
     },
-    onUploadedCover (url) {
+    onUploadedImageCover (url) {
       this.uploadCover = url
     },
     onChangeVCardCoverPaneType (value) {
-      this.selectedDefaultCoverType = value
+      this.selectedCoverType = value
     },
-    onChooseBgColor (color) {
-      this.selectedBgColor = color
+    onChoosePickerPureColor (color) {
+      this.selectedPickerPureColor = color
+      this.selectingCover = color
+      this.checkedCustomColor = true
+    },
+    onRemoveUploadCover () {
+      this.selectingCover = ''
+      this.uploadCover = ''
     }
   },
   watch: {
     checkedCustomColor (val) {
+      // 选中自定义颜色时，设置selectingCover
       if (val) {
-        this.uploadCover = this.selectedBgColor
+        this.selectingCover = this.selectedPickerPureColor
       }
     },
     isShow (val) {
       if (val) {
         initComponentStatus(this)
+      }
+    },
+    selectedCover (val) {
+      if (val) {
+        this.selectingCover = val.value
+
+        if (val.type) {
+          this.selectedCoverType = val.type
+        }
       }
     }
   },

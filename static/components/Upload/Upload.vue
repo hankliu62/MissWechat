@@ -48,7 +48,13 @@ export default {
   mounted () {
     if (this.$slots.default) {
       this.isInited = true
-      const slotDOM = this.$slots.default[0].elm;
+      let slotDOM = null
+      for (const dom of this.$slots.default) {
+        if (dom.elm && dom.elm.nodeType === 1) {
+          slotDOM = dom.elm
+          break
+        }
+      }
       const width = ElementUtil.getElementStyle(slotDOM, 'width')
       const height = ElementUtil.getElementStyle(slotDOM, 'height')
 
@@ -110,5 +116,10 @@ export default {
 </script>
 
 <style scoped lang="less">
-@import 'Upload.less';
+@import 'Upload';
+</style>
+
+
+<style lang="less">
+@import 'UploadModule';
 </style>

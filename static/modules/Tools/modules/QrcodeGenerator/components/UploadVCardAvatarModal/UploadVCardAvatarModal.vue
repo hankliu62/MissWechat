@@ -8,7 +8,7 @@
     :onClose="onClose">
     <div slot="body" class="upload-avatar-modal-body" v-if="isShow">
       <info-tip content="如图片上传异常，请选择其他浏览器，如IE、谷歌浏览器" type="info" :hidden-tip="true" />
-      <cropper :image="url" @ready="initCropper" />
+      <cropper :image="url" @ready="initCropper" :max-width="420" />
     </div>
   </modal>
 </template>

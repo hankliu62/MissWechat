@@ -45,7 +45,6 @@
   }
 
   .vcard-header {
-    .flexbox();
     padding: 45px 5px 25px 20px;
     background-size: cover;
     background-position: center;
@@ -62,9 +61,15 @@
         .absolute-fill();
 
         border-radius: 50%;
-        background-color: @black;
-        opacity: .4;
-        filter: alpha(opacity=40);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: 100%;
+
+        &.image-empty {
+          background-color: @black;
+          opacity: .4;
+          filter: alpha(opacity=40);
+        }
       }
 
       .vcard-avatar-alt {
@@ -73,17 +78,6 @@
     }
 
     .vcard-career {
-      .flex(1);
-
-      padding-left: 20px;
-
-      .vcard-career-name,
-      .vcard-career-appointment,
-      .vcard-career-company {
-        .text-ellipsis();
-        max-width: 230px;
-      }
-
       .vcard-career-name {
         font-size: 20px;
         margin-bottom: 8px;
@@ -98,6 +92,59 @@
 
       .vcard-career-appointment {
         margin-bottom: 7px;
+      }
+    }
+
+    &.vcard-header-left {
+      .flexbox();
+
+      .vcard-career {
+        .flex(1);
+
+        padding-left: 20px;
+
+        .vcard-career-name,
+        .vcard-career-appointment,
+        .vcard-career-company {
+          .text-ellipsis();
+          max-width: 230px;
+        }
+      }
+    }
+
+    &.vcard-header-middle {
+      .vcard-avatar {
+        margin: 0 auto;
+      }
+
+      .vcard-career {
+        .vcard-career-name,
+        .vcard-career-appointment,
+        .vcard-career-company {
+          .text-ellipsis();
+          width: 100%;
+          text-align: center;
+        }
+      }
+    }
+
+    &.vcard-header-right {
+      .flexbox();
+      flex-direction: row-reverse;
+      padding: 45px 20px 25px 5px;
+
+      .vcard-career {
+        .flex(1);
+
+        padding-right: 20px;
+
+        .vcard-career-name,
+        .vcard-career-appointment,
+        .vcard-career-company {
+          .text-ellipsis();
+          max-width: 230px;
+          text-align: right;
+        }
       }
     }
   }
@@ -133,7 +180,7 @@
 
         word-break: break-all;
         word-wrap: break-word;
-        line-height: 1.4;
+        line-height: 16px;
         padding: 12px 0;
         color: @grayDark;
       }

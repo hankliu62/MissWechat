@@ -23,9 +23,19 @@ const restoreCropperHolder = async function (vm, url) {
   if (imageData && imageData.height) {
     const holder = vm.$refs.holder
     const holderMaxHeight = +(ElementUtil.getElementStyle(holder, 'maxHeight').replace('px', '')) || 360
+    const size = {
+      maxWidth: imageData.width * holderMaxHeight / imageData.height,
+      maxHeight: holderMaxHeight
+    }
+
+    if (vm.maxWidth && size.maxWidth > vm.maxWidth) {
+      size.maxHeight = vm.maxWidth * size.maxHeight / size.maxWidth
+      size.maxWidth = vm.maxWidth
+    }
+
     ElementUtil.setElementStyle(holder, {
-      maxWidth: `${imageData.width * holderMaxHeight / imageData.height}px`,
-      maxHeight: `${holderMaxHeight}px`
+      maxWidth: `${size.maxWidth}px`,
+      maxHeight: `${size.maxHeight}px`
     })
   }
 }
@@ -73,7 +83,8 @@ export default {
       default: function () {
         return {}
       }
-    }
+    },
+    maxWidth: Number
   },
   async mounted () {
     await restoreCropperHolder(this)
