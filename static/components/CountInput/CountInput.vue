@@ -26,6 +26,9 @@ export default {
     model (value) {
       this.value = value
     }
+  },
+  mounted () {
+    this.value = this.model
   }
 }
 </script>

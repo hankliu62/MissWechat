@@ -9,7 +9,7 @@
       :is-actived="states.CONSTANTS.MODULE.Basic === selectedModule"
       :module-key="states.CONSTANTS.MODULE.Basic"
       @selected="onSelecteModuleItem">
-      <div :class="`vcard-header vcard-header-${vcardData.selectedPreviewLayout}`" :style="coverStyle">
+      <div :class="`vcard-header vcard-header-${vcardData.headerLayout}`" :style="coverStyle">
         <div class="vcard-avatar">
           <div
             :class="{'vcard-avatar-bg': true, 'image-empty': !vcardData.avatar}"
@@ -29,10 +29,10 @@
       :is-actived="states.CONSTANTS.MODULE.Contact === selectedModule"
       :module-key="states.CONSTANTS.MODULE.Contact"
       @selected="onSelecteModuleItem">
-      <vcard-property property-key="固定电话" property-value="123213213213" extra-class="vcard-tel"></vcard-property>
-      <vcard-property property-key="移动电话" property-value="213213213213213" extra-class="vcard-phone"></vcard-property>
-      <vcard-property property-key="传真" property-value="213213213213213213213213213213213213213" extra-class="vcard-fax"></vcard-property>
-      <vcard-property property-key="电子邮件" property-value="213213213213213213213213213213213213213213213213213213213213213@qq.com" extra-class="vcard-email"></vcard-property>
+      <vcard-property property-key="固定电话" :property-value="vcardData.tel.value" extra-class="vcard-tel"></vcard-property>
+      <vcard-property property-key="移动电话" :property-value="vcardData.phone.value" extra-class="vcard-phone"></vcard-property>
+      <vcard-property property-key="传真" :property-value="vcardData.fax.value" extra-class="vcard-fax"></vcard-property>
+      <vcard-property property-key="电子邮件" :property-value="vcardData.email.value" extra-class="vcard-email"></vcard-property>
     </vcard-module-item-preview>
 
     <vcard-module-item-preview
@@ -40,10 +40,10 @@
       :is-actived="states.CONSTANTS.MODULE.Account === selectedModule"
       :module-key="states.CONSTANTS.MODULE.Account"
       @selected="onSelecteModuleItem">
-      <vcard-property property-key="主页网址" property-value="123213213213" extra-class="vcard-website"></vcard-property>
-      <vcard-property property-key="微博" property-value="213213213213213" extra-class="vcard-weibo"></vcard-property>
-      <vcard-property property-key="QQ" property-value="213213213213213213213213213213213213213" extra-class="vcard-qq"></vcard-property>
-      <vcard-property property-key="微信" property-value="miss_cc220" extra-class="vcard-wechat"></vcard-property>
+      <vcard-property property-key="微信" :property-value="vcardData.wechat.value" extra-class="vcard-wechat"></vcard-property>
+      <vcard-property property-key="主页网址" :property-value="vcardData.website.value" extra-class="vcard-website"></vcard-property>
+      <vcard-property property-key="微博" :property-value="vcardData.weibo.value" extra-class="vcard-weibo"></vcard-property>
+      <vcard-property property-key="QQ" :property-value="vcardData.qq.value" extra-class="vcard-qq"></vcard-property>
     </vcard-module-item-preview>
 
     <vcard-module-item-preview
@@ -51,7 +51,7 @@
       :is-actived="states.CONSTANTS.MODULE.Address === selectedModule"
       :module-key="states.CONSTANTS.MODULE.Address"
       @selected="onSelecteModuleItem">
-      <vcard-property property-key="地址" property-value="123213213213" extra-class="vcard-address"></vcard-property>
+      <vcard-property property-key="地址" :property-value="vcardData.address.value" extra-class="vcard-address"></vcard-property>
     </vcard-module-item-preview>
 
     <vcard-module-item-preview
@@ -59,7 +59,7 @@
       :is-actived="states.CONSTANTS.MODULE.Explanation === selectedModule"
       :module-key="states.CONSTANTS.MODULE.Explanation"
       @selected="onSelecteModuleItem">
-      <vcard-property property-key="个人说明" property-value="123213213213" extra-class="vcard-explanation"></vcard-property>
+      <vcard-property property-key="个人说明" :property-value="vcardData.explanation.value" extra-class="vcard-explanation"></vcard-property>
     </vcard-module-item-preview>
   </div>
 </template>

@@ -40,19 +40,20 @@ export default {
           value: 'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg23.jpg',
           type: VCARD_COVER_IMAGE_TYPE
         },
-        selectedPreviewLayout: VCARD_PREVIEW_LAYOUT_LEFT,
-        name: {
-          text: '姓名',
-          value: ''
-        },
-        appointment: {
-          text: '职位',
-          value: ''
-        },
-        company: {
-          text: '公司',
-          value: ''
-        }
+        headerLayout: VCARD_PREVIEW_LAYOUT_LEFT,
+        name: { text: '姓名', value: '' },
+        appointment: { text: '职位', value: '' },
+        company: { text: '公司', value: '' },
+        tel: { text: '固定电话', value: '' },
+        phone: { text: '移动电话', value: '' },
+        fax: { text: '传真', value: '' },
+        email: { text: '电子邮箱', value: '' },
+        wechat: { text: '微信号', value: '' },
+        website: { text: '主页网址', value: '' },
+        weibo: { text: '微博', value: '' },
+        qq: { text: 'QQ', value: '' },
+        address: {text: '地址', value: ''},
+        explanation: {text: '地址', value: ''}
       }
     },
     [PARAM_TYPES.FILE]: {

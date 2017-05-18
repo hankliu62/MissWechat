@@ -1,5 +1,6 @@
 <template>
   <div class="vcard-setting-container">
+    <!-- 基本信息 -->
     <module-item-setting
       :module="states.CONSTANTS.MODULE.Basic"
       v-if="states.CONSTANTS.MODULE.Basic === selectedModule"
@@ -54,7 +55,7 @@
             max-length="50"
             placeholder="必填"
             :model="vcard.name ? (vcard.name.value || '') : ''"
-            @change="onChangeName" />
+            @change="(value) => this.onChangeVCardProperty('name', value)" />
         </div>
       </div>
       <div class="form-group vcard-setting-item">
@@ -63,7 +64,7 @@
           <count-input
             max-length="100"
             :model="vcard.appointment ? (vcard.appointment.value || '') : ''"
-            @change="onChangeAppointment" />
+            @change="(value) => this.onChangeVCardProperty('appointment', value)" />
         </div>
       </div>
       <div class="form-group vcard-setting-item">
@@ -72,7 +73,7 @@
           <count-input
             max-length="50"
             :model="vcard.company ? (vcard.company.value || '') : ''"
-            @change="onChangeCompany" />
+            @change="(value) => this.onChangeVCardProperty('company', value)" />
         </div>
       </div>
       <div class="form-group vcard-setting-item">
@@ -88,6 +89,124 @@
             </div>
           </li>
         </ul>
+      </div>
+    </module-item-setting>
+
+    <!-- 联系信息 -->
+    <module-item-setting
+      :module="states.CONSTANTS.MODULE.Contact"
+      v-if="states.CONSTANTS.MODULE.Contact === selectedModule"
+      @close="onSelecteModule('')">
+      <div class="form-group vcard-setting-item">
+        <label class="form-control-label">固定电话</label>
+        <div class="form-control-content">
+          <count-input
+            max-length="20"
+            :model="vcard.tel ? (vcard.tel.value || '') : ''"
+            @change="(value) => this.onChangeVCardProperty('tel', value)" />
+        </div>
+      </div>
+      <div class="form-group vcard-setting-item">
+        <label class="form-control-label">移动电话</label>
+        <div class="form-control-content">
+          <count-input
+            max-length="20"
+            :model="vcard.phone ? (vcard.phone.value || '') : ''"
+            @change="(value) => this.onChangeVCardProperty('phone', value)" />
+        </div>
+      </div>
+      <div class="form-group vcard-setting-item">
+        <label class="form-control-label">传真</label>
+        <div class="form-control-content">
+          <count-input
+            max-length="20"
+            :model="vcard.fax ? (vcard.fax.value || '') : ''"
+            @change="(value) => this.onChangeVCardProperty('fax', value)" />
+        </div>
+      </div>
+      <div class="form-group vcard-setting-item">
+        <label class="form-control-label">电子邮箱</label>
+        <div class="form-control-content">
+          <count-input
+            max-length="50"
+            :model="vcard.email ? (vcard.email.value || '') : ''"
+            @change="(value) => this.onChangeVCardProperty('email', value)" />
+        </div>
+      </div>
+    </module-item-setting>
+
+    <!-- 社交信息 -->
+    <module-item-setting
+      :module="states.CONSTANTS.MODULE.Account"
+      v-if="states.CONSTANTS.MODULE.Account === selectedModule"
+      @close="onSelecteModule('')">
+      <div class="form-group vcard-setting-item">
+        <label class="form-control-label">微信号</label>
+        <div class="form-control-content">
+          <count-input
+            max-length="50"
+            :model="vcard.wechat ? (vcard.wechat.value || '') : ''"
+            @change="(value) => this.onChangeVCardProperty('wechat', value)" />
+        </div>
+      </div>
+      <div class="form-group vcard-setting-item">
+        <label class="form-control-label">主页网址</label>
+        <div class="form-control-content">
+          <count-input
+            max-length="200"
+            :model="vcard.website ? (vcard.website.value || '') : ''"
+            @change="(value) => this.onChangeVCardProperty('website', value)" />
+        </div>
+      </div>
+      <div class="form-group vcard-setting-item">
+        <label class="form-control-label">微博</label>
+        <div class="form-control-content">
+          <count-input
+            max-length="200"
+            :model="vcard.weibo ? (vcard.weibo.value || '') : ''"
+            @change="(value) => this.onChangeVCardProperty('weibo', value)" />
+        </div>
+      </div>
+      <div class="form-group vcard-setting-item">
+        <label class="form-control-label">QQ</label>
+        <div class="form-control-content">
+          <count-input
+            max-length="50"
+            :model="vcard.qq ? (vcard.qq.value || '') : ''"
+            @change="(value) => this.onChangeVCardProperty('qq', value)" />
+        </div>
+      </div>
+    </module-item-setting>
+
+    <!-- 社交信息 -->
+    <module-item-setting
+      :module="states.CONSTANTS.MODULE.Address"
+      v-if="states.CONSTANTS.MODULE.Address === selectedModule"
+      @close="onSelecteModule('')">
+      <div class="form-group vcard-setting-item">
+        <label class="form-control-label">地址</label>
+        <div class="form-control-content">
+          <count-input
+            max-length="50"
+            :model="vcard.address ? (vcard.address.value || '') : ''"
+            @change="(value) => this.onChangeVCardProperty('address', value)" />
+        </div>
+      </div>
+    </module-item-setting>
+
+    <!-- 社交信息 -->
+    <module-item-setting
+      :module="states.CONSTANTS.MODULE.Explanation"
+      v-if="states.CONSTANTS.MODULE.Explanation === selectedModule"
+      @close="onSelecteModule('')">
+      <div class="form-group vcard-setting-item">
+        <label class="form-control-label">个人说明</label>
+        <div class="form-control-content">
+          <count-input
+            max-length="50"
+            :model="vcard.explanation ? (vcard.explanation.value || '') : ''"
+            @change="(value) => this.onChangeVCardProperty('explanation', value)" />
+        </div>
       </div>
     </module-item-setting>
   </div>
@@ -208,16 +327,8 @@ export default {
       this.updateVCardProperty({}, 'cover')
       this.onTriggerSession()
     },
-    onChangeName (value) {
-      this.updateVCardProperty(value, 'name', 'value')
-      this.onTriggerSession()
-    },
-    onChangeAppointment (value) {
-      this.updateVCardProperty(value, 'appointment', 'value')
-      this.onTriggerSession()
-    },
-    onChangeCompany (value) {
-      this.updateVCardProperty(value, 'company', 'value')
+    onChangeVCardProperty (key, value) {
+      this.updateVCardProperty(value, key, 'value')
       this.onTriggerSession()
     },
     onTriggerSession () {
