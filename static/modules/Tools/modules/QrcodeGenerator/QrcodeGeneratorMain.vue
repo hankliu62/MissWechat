@@ -114,7 +114,8 @@
                 <vcard-module-setting
                   :vcard-data="qrcodeContent[CONSTANTS.PARAM_TYPES.VCARD].data"
                   :selected-module="qrcodeContent[CONSTANTS.PARAM_TYPES.VCARD].selectedModule"
-                  @onSelecteModule="onSelecteVCardModule" />
+                  @onSelecteModule="onSelecteVCardModule"
+                  @onUpdateVCard="onUpdateVCard" />
                 <!-- <upload-vcard-avatar-modal></upload-vcard-avatar-modal> -->
               </div>
             </div>
@@ -346,6 +347,9 @@ export default {
     },
     onSelecteVCardModule (value) {
       updateVCardState(this, 'selectedModule', value)
+    },
+    onUpdateVCard (vcard) {
+      updateVCardState(this, 'data', vcard)
     }
   },
   components: {

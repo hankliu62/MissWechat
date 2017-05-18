@@ -13,7 +13,7 @@
           </upload>
           <upload-vcard-avatar-modal
             :is-show="isShowUploadVCardAvatarModal"
-            :url="uploadVCardAvatarModalImage"
+            :url="`${uploadVCardAvatarModalImage}?imageView2/4/w/360`"
             :onOk="onOkUploadVCardAvatar"
             :onClose="onCloseUploadVCardAvatarModal" />
         </div>
@@ -27,10 +27,13 @@
             v-if="!vcard.cover || !vcard.cover.value">选择封面图</button>
 
           <template v-if="vcard.cover && vcard.cover.value && vcard.cover.type === states.CONSTANTS.IMAGE_TYPE">
-            <exhibition-image :url="`${vcard.cover.value}?imageView2/1/w/120/h/72`" @onClose="onClearVCardCover" />
+            <exhibition-image :url="`${vcard.cover.value}?imageView2/1/w/120/h/72`" @onClose="onClearVCardCover" @onClick="onOpenUploadVCardCoverModal" />
           </template>
           <template v-if="vcard.cover && vcard.cover.value && vcard.cover.type === states.CONSTANTS.PURE_TYPE">
-            <div class="vcard-cover-display" :style="{backgroundColor: vcard.cover.value}">
+            <div
+              class="vcard-cover-display"
+              :style="{backgroundColor: vcard.cover.value}"
+              @click="onOpenUploadVCardCoverModal">
               <mask-remove @onRemove="onClearVCardCover" />
             </div>
           </template>
@@ -91,7 +94,15 @@
 </template>
 
 <script>
-import { VCARD_MODULE, VCARD_COVER_IMAGE_TYPE, VCARD_COVER_PURE_TYPE } from '../../constants/constants'
+import {
+  VCARD_MODULE,
+  VCARD_COVER_IMAGE_TYPE,
+  VCARD_COVER_PURE_TYPE,
+  VCARD_PREVIEW_LAYOUTS,
+  VCARD_PREVIEW_LAYOUT_LEFT,
+  VCARD_PREVIEW_LAYOUT_MIDDLE,
+  VCARD_PREVIEW_LAYOUT_RIGHT
+} from '../../constants/constants'
 import ModuleItemSetting from './ModuleItemSettting'
 import Upload from '../../../../../../components/Upload/Upload'
 import InfoTip from '../../../../../../components/InfoTip/InfoTip'
@@ -134,15 +145,15 @@ export default {
         IMAGE_TYPE: VCARD_COVER_IMAGE_TYPE,
         PURE_TYPE: VCARD_COVER_PURE_TYPE
       },
-      headerPreviewLayouts: ['left', 'middle', 'right']
+      headerPreviewLayouts: VCARD_PREVIEW_LAYOUTS
     }
 
     return {
-      vcard: this.vcardData,
+      vcard: ObjectUtil.cloneDeep(this.vcardData),
       isShowUploadVCardCoverModal: false,
       isShowUploadVCardAvatarModal: false,
       uploadVCardAvatarModalImage: '',
-      selectedPreviewLayout: 'left'
+      selectedPreviewLayout: VCARD_PREVIEW_LAYOUT_LEFT
     }
   },
   props: {
@@ -181,6 +192,7 @@ export default {
     },
     onSelectVCardCover (value, type) {
       this.updateVCardProperty({ value, type }, 'cover')
+      this.updateVCardProperty({ value, type }, 'lastCover')
       this.onTriggerSession()
       this.onCloseUploadVCardCoverModal()
     },
@@ -218,9 +230,9 @@ export default {
   watch: {
     vcardData (val) {
       val = val || {}
-      this.vcard = { ...val }
+      this.vcard = ObjectUtil.cloneDeep(val)
       if (this.vcard.headerLayout) {
-        this.this.selectedPreviewLayout = this.vcard.headerLayout
+        this.selectedPreviewLayout = this.vcard.headerLayout
       }
     }
   },

@@ -96,3 +96,13 @@ export const VCARD_MODULE = {
 
 export const VCARD_COVER_IMAGE_TYPE = 'image'
 export const VCARD_COVER_PURE_TYPE = 'pure'
+
+export const VCARD_PREVIEW_LAYOUT_LEFT = 'left'
+export const VCARD_PREVIEW_LAYOUT_MIDDLE = 'middle'
+export const VCARD_PREVIEW_LAYOUT_RIGHT = 'right'
+
+export const VCARD_PREVIEW_LAYOUTS = [
+  VCARD_PREVIEW_LAYOUT_LEFT,
+  VCARD_PREVIEW_LAYOUT_MIDDLE,
+  VCARD_PREVIEW_LAYOUT_RIGHT
+]

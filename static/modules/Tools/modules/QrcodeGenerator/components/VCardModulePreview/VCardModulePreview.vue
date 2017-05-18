@@ -9,15 +9,17 @@
       :is-actived="states.CONSTANTS.MODULE.Basic === selectedModule"
       :module-key="states.CONSTANTS.MODULE.Basic"
       @selected="onSelecteModuleItem">
-      <div class="vcard-header" :style="coverStyle">
+      <div :class="`vcard-header vcard-header-${vcardData.selectedPreviewLayout}`" :style="coverStyle">
         <div class="vcard-avatar">
-          <div class="vcard-avatar-bg" :style="{backgroundImage: `url('${vcardData.avatar}')`}"></div>
+          <div
+            :class="{'vcard-avatar-bg': true, 'image-empty': !vcardData.avatar}"
+            :style="{backgroundImage: `url('${vcardData.avatar}')`}" />
           <div class="vcard-avatar-alt" v-if="!vcardData.avatar">头像</div>
         </div>
         <div class="vcard-career">
           <div class="vcard-career-name" v-text="vcardData.name.value || '姓名'"></div>
           <div class="vcard-career-appointment" v-text="vcardData.appointment.value || '职位'"></div>
-          <div class="vcard-career-company" v-text="vcardData.appointment.company || '公司'"></div>
+          <div class="vcard-career-company" v-text="vcardData.company.value || '公司'"></div>
         </div>
       </div>
     </vcard-module-item-preview>
@@ -66,6 +68,7 @@
 import VcardProperty from './VCardProperty'
 import VcardModuleItemPreview from './VCardModuleItemPreview'
 import { VCARD_MODULE, VCARD_COVER_IMAGE_TYPE, VCARD_COVER_PURE_TYPE } from '../../constants/constants'
+import * as ObjectUtil from '../../../../../../utils/ObjectUtil'
 
 export default {
   data () {
@@ -97,17 +100,24 @@ export default {
   },
   computed: {
     coverStyle () {
-      if (!this.vcardData || !this.vcardData.cover || !this.vcardData.cover.value) {
-        return { backgroundImage: `url(${this.states.CONSTANTS.DEFAULT_HEADER_BG})` }
+      if (this.vcardData) {
+        let cover = {}
+        if (this.vcardData.cover && this.vcardData.cover.value) {
+          cover = ObjectUtil.cloneDeep(this.vcardData.cover)
+        } else {
+          cover = ObjectUtil.cloneDeep(this.vcardData.lastCover)
+        }
+
+        if (cover.type === VCARD_COVER_PURE_TYPE) {
+          return { backgroundColor: cover.value }
+        }
+
+        if (cover.type === VCARD_COVER_IMAGE_TYPE) {
+          return { backgroundImage: `url(${cover.value}?imageView2/1/w/370/h/170)` }
+        }
       }
 
-      if (this.vcardData.cover.type === VCARD_COVER_PURE_TYPE) {
-        return { backgroundColor: this.vcardData.cover.value }
-      }
-
-      if (this.vcardData.cover.type === VCARD_COVER_IMAGE_TYPE) {
-        return { backgroundImage: `url(${this.vcardData.cover.value}?imageView2/1/w/370/h/170)` }
-      }
+      return {}
     }
   },
   components: {

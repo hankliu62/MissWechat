@@ -106,18 +106,18 @@ export default {
       CONSTANTS: {
         DEFAULT_IMAGE_COVERS: [
           [
-            'http://oiq00n80p.bkt.clouddn.com/bg1.jpg',
-            'http://oiq00n80p.bkt.clouddn.com/bg2.jpg',
-            'http://oiq00n80p.bkt.clouddn.com/bg3.jpg',
-            'http://oiq00n80p.bkt.clouddn.com/bg4.jpg',
-            'http://oiq00n80p.bkt.clouddn.com/bg5.jpg'
+            'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg23.jpg',
+            'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg7.jpg',
+            'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg11.jpg',
+            'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg16.jpg',
+            'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg4.jpg'
           ],
           [
-            'http://oiq00n80p.bkt.clouddn.com/bg6.jpg',
-            'http://oiq00n80p.bkt.clouddn.com/bg7.jpg',
-            'http://oiq00n80p.bkt.clouddn.com/bg8.jpg',
-            'http://oiq00n80p.bkt.clouddn.com/bg9.jpg',
-            'http://oiq00n80p.bkt.clouddn.com/bg10.jpg'
+            'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg29.jpg',
+            'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg31.jpg',
+            'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg9.jpg',
+            'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg28.jpg',
+            'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg26.jpg'
           ]
         ],
         DEFAULT_PURE_COVERS: [

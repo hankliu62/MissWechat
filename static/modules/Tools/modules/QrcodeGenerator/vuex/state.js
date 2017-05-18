@@ -5,7 +5,8 @@ import {
   DEFAULT_QRCODE_FOREGROUND,
   DEFAULT_QRCODE_BACKGROUND,
   PARAM_TYPES,
-  VCARD_COVER_IMAGE_TYPE
+  VCARD_COVER_IMAGE_TYPE,
+  VCARD_PREVIEW_LAYOUT_LEFT
 } from '../constants/constants'
 import { LANGUAGES } from '../../../../../constants/languages'
 
@@ -32,10 +33,14 @@ export default {
       data: {
         avatar: '',
         cover: {
-          value: 'http://oiq00n80p.bkt.clouddn.com/bg1.jpg',
+          value: 'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg23.jpg',
           type: VCARD_COVER_IMAGE_TYPE
         },
-        selectedPreviewLayout: 'left',
+        lastCover: {
+          value: 'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg23.jpg',
+          type: VCARD_COVER_IMAGE_TYPE
+        },
+        selectedPreviewLayout: VCARD_PREVIEW_LAYOUT_LEFT,
         name: {
           text: '姓名',
           value: ''
@@ -45,8 +50,8 @@ export default {
           value: ''
         },
         company: {
-          text: '姓名',
-          value: '公司'
+          text: '公司',
+          value: ''
         }
       }
     },

@@ -1,5 +1,5 @@
 <template>
-  <div class="exhibition-image-card" v-if="url">
+  <div class="exhibition-image-card" v-if="url" @click="onClick">
     <img class="exhibition-image" :src="url" />
     <mask-remove @onRemove="onClose" />
   </div>
@@ -18,6 +18,9 @@ export default {
   methods: {
     onClose () {
       this.$emit('onClose')
+    },
+    onClick () {
+      this.$emit('onClick')
     }
   },
   components: {
