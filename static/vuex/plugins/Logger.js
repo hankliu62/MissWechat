@@ -1,4 +1,4 @@
-import { cloneDeep } from '../../utils/ObjectUtil'
+import ObjectUtil from '../../utils/ObjectUtil'
 import { formatDate } from '../../utils/DateUtil'
 export default function createLogger ({
   collapsed = true,
@@ -6,12 +6,12 @@ export default function createLogger ({
   mutationTransformer = mut => mut
 } = {}) {
   return function (store) {
-    let prevState = cloneDeep(store.state)
+    let prevState = ObjectUtil.cloneDeep(store.state)
     store.subscribe(function (mutation, state) {
       if (typeof console === 'undefined') {
         return
       }
-      const nextState = cloneDeep(state)
+      const nextState = ObjectUtil.cloneDeep(state)
       const time = new Date()
       const formattedTime = ` @ ${formatDate(time, 'HH:mm:ss.SSS')}`
       const formattedMutation = mutationTransformer(mutation)

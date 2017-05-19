@@ -30,6 +30,7 @@ export default {
     [PARAM_TYPES.VCARD]: {
       language: LANGUAGES.ZH_CN,
       selectedModule: '',
+      selectedModuleTop: 0,
       data: {
         avatar: '',
         cover: {

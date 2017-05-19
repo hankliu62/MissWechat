@@ -1,5 +1,5 @@
 <template>
-  <div :class="`module-setting ${module}-module-setting`">
+  <div :class="`module-setting ${module}-module-setting`" :style="{top: `${top}px`}">
     <slot></slot>
     <i class="icon icon-close close" @click="onClose"></i>
     <i class="popper-arrow popper-arrow-backend"></i>
@@ -13,7 +13,8 @@ export default {
     return {}
   },
   props: {
-    module: String
+    module: String,
+    top: Number
   },
   methods: {
     onClose () {

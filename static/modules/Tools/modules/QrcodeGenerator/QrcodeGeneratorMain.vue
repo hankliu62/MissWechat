@@ -114,6 +114,7 @@
                 <vcard-module-setting
                   :vcard-data="qrcodeContent[CONSTANTS.PARAM_TYPES.VCARD].data"
                   :selected-module="qrcodeContent[CONSTANTS.PARAM_TYPES.VCARD].selectedModule"
+                  :selected-module-top="qrcodeContent[CONSTANTS.PARAM_TYPES.VCARD].selectedModuleTop"
                   @onSelecteModule="onSelecteVCardModule"
                   @onUpdateVCard="onUpdateVCard" />
                 <!-- <upload-vcard-avatar-modal></upload-vcard-avatar-modal> -->
@@ -144,6 +145,7 @@ import { PARAM_TYPES } from './constants/constants'
 import { LANGUAGES_OPTIONS } from '../../../../constants/languages'
 import DownloadUtil from '../../../../utils/DownloadUtil'
 import RegExpUtil from '../../../../utils/RegExpUtil'
+import ObjectUtil from '../../../../utils/ObjectUtil'
 import { Notification } from '../../../../services'
 
 const validateContent = function (vm) {
@@ -215,7 +217,22 @@ const updateVCardState = function (vm, key, value) {
   const { qrcodeContent } = vm
   const { vcard, othersQrcodeContent } = qrcodeContent
   const vcardQrcodeContent = { ...vcard }
-  vcardQrcodeContent[key] = value
+  if (ObjectUtil.isArray(key)) {
+    for (const [index, item] of key.entries()) {
+      if (ObjectUtil.isArray(value)) {
+        const valueLength = value.length
+        if (index < valueLength) {
+          vcardQrcodeContent[item] = value[index]
+        } else {
+          vcardQrcodeContent[item] = value[valueLength - 1]
+        }
+      } else {
+        vcardQrcodeContent[item] = value
+      }
+    }
+  } else {
+    vcardQrcodeContent[key] = value
+  }
   vm.setState({ qrcodeContent: { ...othersQrcodeContent, vcard: vcardQrcodeContent } })
 }
 
@@ -345,8 +362,8 @@ export default {
     onChangeVCardLanguage (value) {
       updateVCardState(this, 'language', value)
     },
-    onSelecteVCardModule (value) {
-      updateVCardState(this, 'selectedModule', value)
+    onSelecteVCardModule (value, top = 0) {
+      updateVCardState(this, ['selectedModule', 'selectedModuleTop'], [value, top])
     },
     onUpdateVCard (vcard) {
       updateVCardState(this, 'data', vcard)

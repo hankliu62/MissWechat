@@ -1,6 +1,6 @@
 import config from '../config/config'
 import qiniuConfig from '../config/qiniu'
-import { generateObjectId } from './ObjectUtil'
+import ObjectUtil from './ObjectUtil'
 import RestUtil from './RestUtil'
 import StringUtil from './StringUtil'
 import store from '../vuex/store'
@@ -132,7 +132,7 @@ class QiniuUtil {
         Key: function (up, file) {
           // 若想在前端对每个文件的key进行个性化处理，可以配置该函数
           // 该配置必须要在 unique_names: false , save_key: false 时才生效
-          return up.isCreateKey ? `${generateObjectId()}${file.name.slice(file.name.lastIndexOf('.'))}` : file.name
+          return up.isCreateKey ? `${ObjectUtil.generateObjectId()}${file.name.slice(file.name.lastIndexOf('.'))}` : file.name
         }
       }
     };
@@ -150,7 +150,7 @@ class QiniuUtil {
 
   static async uploadBase64Image (data) {
     const qiniuConfig = store.state.commonMain.qiniu
-    const url = `http://upload.qiniu.com/putb64/-1/key/${StringUtil.base64Encode(generateObjectId())}/mimeType/${StringUtil.base64Encode('image/png')}`
+    const url = `http://upload.qiniu.com/putb64/-1/key/${StringUtil.base64Encode(ObjectUtil.generateObjectId())}/mimeType/${StringUtil.base64Encode('image/png')}`
     const options = {
       params: {
         isExternalUrl: true

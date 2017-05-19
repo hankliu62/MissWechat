@@ -2,6 +2,7 @@
   <div class="vcard-setting-container">
     <!-- 基本信息 -->
     <module-item-setting
+      :top="selectedModuleTop"
       :module="states.CONSTANTS.MODULE.Basic"
       v-if="states.CONSTANTS.MODULE.Basic === selectedModule"
       @close="onSelecteModule('')">
@@ -94,6 +95,7 @@
 
     <!-- 联系信息 -->
     <module-item-setting
+      :top="selectedModuleTop"
       :module="states.CONSTANTS.MODULE.Contact"
       v-if="states.CONSTANTS.MODULE.Contact === selectedModule"
       @close="onSelecteModule('')">
@@ -137,6 +139,7 @@
 
     <!-- 社交信息 -->
     <module-item-setting
+      :top="selectedModuleTop"
       :module="states.CONSTANTS.MODULE.Account"
       v-if="states.CONSTANTS.MODULE.Account === selectedModule"
       @close="onSelecteModule('')">
@@ -180,6 +183,7 @@
 
     <!-- 社交信息 -->
     <module-item-setting
+      :top="selectedModuleTop"
       :module="states.CONSTANTS.MODULE.Address"
       v-if="states.CONSTANTS.MODULE.Address === selectedModule"
       @close="onSelecteModule('')">
@@ -196,6 +200,7 @@
 
     <!-- 社交信息 -->
     <module-item-setting
+      :top="selectedModuleTop"
       :module="states.CONSTANTS.MODULE.Explanation"
       v-if="states.CONSTANTS.MODULE.Explanation === selectedModule"
       @close="onSelecteModule('')">
@@ -230,7 +235,7 @@ import MaskRemove from '../../../../../../components/MaskRemove/MaskRemove'
 import ExhibitionImage from '../../../../../../components/ExhibitionImage/ExhibitionImage'
 import UploadVcardAvatarModal from '../UploadVCardAvatarModal/UploadVCardAvatarModal'
 import UploadVcardCoverModal from '../UploadVCardCoverModal/UploadVCardCoverModal'
-import * as ObjectUtil from '../../../../../../utils/ObjectUtil'
+import ObjectUtil from '../../../../../../utils/ObjectUtil'
 
 function closeUploadVCardAvatarModal (vm) {
   vm.isShowUploadVCardAvatarModal = false
@@ -285,6 +290,10 @@ export default {
     selectedModule: {
       type: String,
       default: ''
+    },
+    selectedModuleTop: {
+      type: Number,
+      default: 0
     }
   },
   methods: {

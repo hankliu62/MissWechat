@@ -4,7 +4,7 @@ import StatusCodes from '../constants/status-codes'
 import config from '../config/config'
 import store from '../vuex/store'
 import { showLoading } from '../utils/LoadingUtil'
-import * as ObjectUtil from '../utils/ObjectUtil'
+import ObjectUtil from '../utils/ObjectUtil'
 import { SHOW_TOAST, HIDE_TOAST } from '../constants/types'
 import { Notification } from '../services'
 

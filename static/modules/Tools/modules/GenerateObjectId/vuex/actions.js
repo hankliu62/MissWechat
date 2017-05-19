@@ -4,7 +4,7 @@ import {
   TOOLS_GENERATE_MAIN_SET
 } from '../constants/types'
 import { PARAM_TYPES } from '../constants/constants'
-import { generateObjectId } from '../../../../../utils/ObjectUtil'
+import ObjectUtil from '../../../../../utils/ObjectUtil'
 
 export const setGeneratorState = ({ commit }, payload) => {
   commit(TOOLS_GENERATE_MAIN_SET, { payload })
@@ -25,7 +25,7 @@ export const createObjectIds = ({ commit }, { param, number = 1, type }) => {
             if (!param) {
               throw new Error('param type should be date time (in seconds)')
             }
-            objectId = generateObjectId(param)
+            objectId = ObjectUtil.generateObjectId(param)
             param += 1
             break
           case PARAM_TYPES.HEX:
@@ -33,20 +33,20 @@ export const createObjectIds = ({ commit }, { param, number = 1, type }) => {
             if (!param) {
               throw new Error('Param type should be a 24 character hex string')
             }
-            objectId = generateObjectId(param)
+            objectId = ObjectUtil.generateObjectId(param)
             param += 1
             break
           case PARAM_TYPES.ARRAY:
           case PARAM_TYPES.BUFFER:
           case PARAM_TYPES.STRING:
           case PARAM_TYPES.EMPTY:
-            objectId = generateObjectId(param)
+            objectId = ObjectUtil.generateObjectId(param)
             break
         }
 
         objectIds.push(objectId)
       } else {
-        objectIds.push(generateObjectId())
+        objectIds.push(ObjectUtil.generateObjectId())
       }
     }
     commit(TOOLS_GENERATE_OBJECTIDS_SUCCESS, { objectIds })
