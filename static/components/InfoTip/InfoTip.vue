@@ -1,5 +1,5 @@
 <template>
-  <div class="hk-info-tip">
+  <div class="hk-info-tip" @click.self="onClick">
     <el-tooltip
       class="item"
       effect="dark"
@@ -31,6 +31,11 @@ export default {
     },
     type: {
       type: String
+    }
+  },
+  methods: {
+    onClick () {
+      this.$emit('onClick')
     }
   },
   components: {

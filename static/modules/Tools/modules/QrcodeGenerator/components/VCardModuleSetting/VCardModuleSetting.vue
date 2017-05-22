@@ -194,6 +194,11 @@
             max-length="50"
             :model="vcard.address ? (vcard.address.value || '') : ''"
             @change="(value) => this.onChangeVCardProperty('address', value)" />
+          <info-tip
+            type="map-marker"
+            content="标注地址"
+            :hidden-tip="true"
+            onClick="onOpenMarkAddressModal" />
         </div>
       </div>
     </module-item-setting>
@@ -207,10 +212,12 @@
       <div class="form-group vcard-setting-item">
         <label class="form-control-label">个人说明</label>
         <div class="form-control-content">
-          <count-input
+          <autosize-textarea
             max-length="50"
             :model="vcard.explanation ? (vcard.explanation.value || '') : ''"
-            @change="(value) => this.onChangeVCardProperty('explanation', value)" />
+            @change="(value) => this.onChangeVCardProperty('explanation', value)"
+            :textStyle="{maxHeight: '102px'}"
+            :maxLength="200" />
         </div>
       </div>
     </module-item-setting>
@@ -233,6 +240,7 @@ import InfoTip from '../../../../../../components/InfoTip/InfoTip'
 import CountInput from '../../../../../../components/CountInput/CountInput'
 import MaskRemove from '../../../../../../components/MaskRemove/MaskRemove'
 import ExhibitionImage from '../../../../../../components/ExhibitionImage/ExhibitionImage'
+import AutosizeTextarea from '../../../../../../components/AutosizeTextarea/AutosizeTextarea'
 import UploadVcardAvatarModal from '../UploadVCardAvatarModal/UploadVCardAvatarModal'
 import UploadVcardCoverModal from '../UploadVCardCoverModal/UploadVCardCoverModal'
 import ObjectUtil from '../../../../../../utils/ObjectUtil'
@@ -276,6 +284,7 @@ export default {
       vcard: ObjectUtil.cloneDeep(this.vcardData),
       isShowUploadVCardCoverModal: false,
       isShowUploadVCardAvatarModal: false,
+      isShowMarkAddressModal: false,
       uploadVCardAvatarModalImage: '',
       selectedPreviewLayout: VCARD_PREVIEW_LAYOUT_LEFT
     }
@@ -318,14 +327,20 @@ export default {
     onOpenUploadVCardCoverModal () {
       this.isShowUploadVCardCoverModal = true
     },
+    onCloseUploadVCardCoverModal (url) {
+      this.isShowUploadVCardCoverModal = false
+    },
+    onOpenMarkAddressModal () {
+      this.isShowMarkAddressModal = true
+    },
+    onCloseMarkAddressModal () {
+      this.isShowMarkAddressModal = false
+    },
     onSelectVCardCover (value, type) {
       this.updateVCardProperty({ value, type }, 'cover')
       this.updateVCardProperty({ value, type }, 'lastCover')
       this.onTriggerSession()
       this.onCloseUploadVCardCoverModal()
-    },
-    onCloseUploadVCardCoverModal (url) {
-      this.isShowUploadVCardCoverModal = false
     },
     onSelectLayout (layout) {
       this.selectedPreviewLayout = layout
@@ -362,6 +377,7 @@ export default {
     CountInput,
     MaskRemove,
     ExhibitionImage,
+    AutosizeTextarea,
     ModuleItemSetting,
     UploadVcardCoverModal,
     UploadVcardAvatarModal

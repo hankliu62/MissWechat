@@ -2,6 +2,8 @@
 @import '../../../../../../styles/mixins/flexbox';
 
 @layoutBorderColor: rgba(120, 130, 140, .25);
+@mapMarkColor: #27AE60;
+@mapMarkHoverColor: #295;
 
 .vcard-setting-container {
   font-size: 14px;
@@ -136,6 +138,27 @@
             .remove {
               display: inline-block;
             }
+          }
+        }
+      }
+    }
+
+    &.address-module-setting {
+      .hk-info-tip {
+        margin-top: 5px;
+        display: inline-block;
+        cursor: pointer;
+        color: @mapMarkColor;
+
+        .hk-fa {
+          color: @mapMarkColor;
+        }
+
+        &:hover {
+          color: @mapMarkHoverColor;
+
+          .hk-fa {
+            color: @mapMarkHoverColor;
           }
         }
       }
