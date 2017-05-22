@@ -1,5 +1,5 @@
 <template>
-  <div class="hk-info-tip" @click.self="onClick">
+  <div class="hk-info-tip" @click="onClick">
     <el-tooltip
       class="item"
       effect="dark"

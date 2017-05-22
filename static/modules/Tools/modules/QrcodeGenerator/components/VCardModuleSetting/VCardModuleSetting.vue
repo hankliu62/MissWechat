@@ -194,11 +194,18 @@
             max-length="50"
             :model="vcard.address ? (vcard.address.value || '') : ''"
             @change="(value) => this.onChangeVCardProperty('address', value)" />
-          <info-tip
-            type="map-marker"
-            content="标注地址"
-            :hidden-tip="true"
-            onClick="onOpenMarkAddressModal" />
+          <div class="btn-marker-address">
+            <info-tip
+              type="map-marker"
+              content="标注地址"
+              :hidden-tip="true"
+              @onClick="onOpenMarkAddressModal" />
+          </div>
+
+            <mark-address-modal
+              :is-show="isShowMarkAddressModal"
+              :onOk="onMarkVCardAddress"
+              :onClose="onCloseMarkAddressModal" />
         </div>
       </div>
     </module-item-setting>
@@ -243,6 +250,7 @@ import ExhibitionImage from '../../../../../../components/ExhibitionImage/Exhibi
 import AutosizeTextarea from '../../../../../../components/AutosizeTextarea/AutosizeTextarea'
 import UploadVcardAvatarModal from '../UploadVCardAvatarModal/UploadVCardAvatarModal'
 import UploadVcardCoverModal from '../UploadVCardCoverModal/UploadVCardCoverModal'
+import MarkAddressModal from '../MarkAddressModal/MarkAddressModal'
 import ObjectUtil from '../../../../../../utils/ObjectUtil'
 
 function closeUploadVCardAvatarModal (vm) {
@@ -330,17 +338,21 @@ export default {
     onCloseUploadVCardCoverModal (url) {
       this.isShowUploadVCardCoverModal = false
     },
+    onSelectVCardCover (value, type) {
+      this.updateVCardProperty({ value, type }, 'cover')
+      this.updateVCardProperty({ value, type }, 'lastCover')
+      this.onTriggerSession()
+      this.onCloseUploadVCardCoverModal()
+    },
     onOpenMarkAddressModal () {
       this.isShowMarkAddressModal = true
     },
     onCloseMarkAddressModal () {
       this.isShowMarkAddressModal = false
     },
-    onSelectVCardCover (value, type) {
-      this.updateVCardProperty({ value, type }, 'cover')
-      this.updateVCardProperty({ value, type }, 'lastCover')
-      this.onTriggerSession()
-      this.onCloseUploadVCardCoverModal()
+    onMarkVCardAddress (position) {
+      console.log(position, '-----------------------')
+      this.onCloseMarkAddressModal()
     },
     onSelectLayout (layout) {
       this.selectedPreviewLayout = layout
@@ -379,6 +391,7 @@ export default {
     ExhibitionImage,
     AutosizeTextarea,
     ModuleItemSetting,
+    MarkAddressModal,
     UploadVcardCoverModal,
     UploadVcardAvatarModal
   }
