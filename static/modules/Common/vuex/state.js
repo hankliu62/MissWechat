@@ -12,5 +12,6 @@ export default {
   qiniu: {
     domain: '',
     uploadToken: ''
-  }
+  },
+  regions: null
 }

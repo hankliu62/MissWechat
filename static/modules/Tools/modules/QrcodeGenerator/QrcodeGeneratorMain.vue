@@ -259,7 +259,9 @@ export default {
       background: (state) => state.qrcodeGeneratorMain.background,
       logoUrl: (state) => state.qrcodeGeneratorMain.logoUrl,
       isShowEditor: (state) => state.qrcodeGeneratorMain.isShowEditor,
-      qrcodeContent: (state) => state.qrcodeGeneratorMain.qrcodeContent
+      qrcodeContent: (state) => state.qrcodeGeneratorMain.qrcodeContent,
+      regions: (state) => state.commonMain.regions,
+      qiniu: (state) => state.commonMain.qiniu
     }),
     generateBtnText () {
       return this.isGenerateLiveQrcode ? '生成活码' : '生成二维码'
@@ -271,7 +273,14 @@ export default {
     }
   },
   mounted () {
-    this.fetchQiniuUptoken()
+    if (!this.regions) {
+      this.fetchRegions()
+    }
+
+    if (!this.qiniu || !this.qiniu.uploadToken) {
+      this.fetchQiniuUptoken()
+    }
+
     const ResponsiveNav = require('responsive-nav')
     var navigation = ResponsiveNav('navs', {
       customToggle: '.nav-toggle',
@@ -281,7 +290,7 @@ export default {
   },
   methods: {
     setState: mapActions(['setQrcodeGeneratorState'])['setQrcodeGeneratorState'],
-    ...mapActions(['fetchQiniuUptoken', 'generateTextQrcode', 'generateLiveQrcode']),
+    ...mapActions(['fetchQiniuUptoken', 'generateTextQrcode', 'generateLiveQrcode', 'fetchRegions']),
     onGenerateQrcode () {
       if (!validateContent(this)) {
         return
