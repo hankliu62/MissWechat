@@ -13,5 +13,9 @@ export default {
     domain: '',
     uploadToken: ''
   },
-  regions: null
+  regions: {
+    local: null,
+    international: null
+  }
+
 }

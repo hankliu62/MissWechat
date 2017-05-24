@@ -273,8 +273,12 @@ export default {
     }
   },
   mounted () {
-    if (!this.regions) {
+    if (!this.regions.local) {
       this.fetchRegions()
+    }
+
+    if (!this.regions.international) {
+      this.fetchInternationalRegions()
     }
 
     if (!this.qiniu || !this.qiniu.uploadToken) {
@@ -290,7 +294,13 @@ export default {
   },
   methods: {
     setState: mapActions(['setQrcodeGeneratorState'])['setQrcodeGeneratorState'],
-    ...mapActions(['fetchQiniuUptoken', 'generateTextQrcode', 'generateLiveQrcode', 'fetchRegions']),
+    ...mapActions([
+      'fetchQiniuUptoken',
+      'generateTextQrcode',
+      'generateLiveQrcode',
+      'fetchRegions',
+      'fetchInternationalRegions'
+    ]),
     onGenerateQrcode () {
       if (!validateContent(this)) {
         return
