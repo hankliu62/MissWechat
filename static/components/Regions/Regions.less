@@ -1,0 +1,14 @@
+@import '../../styles/variable';
+@import '../../styles/mixins/flexbox';
+
+.hk-regions {
+  .flexbox();
+
+  .regions-item {
+    .flex(1);
+
+    + .regions-item {
+      margin-left: 20px;
+    }
+  }
+}

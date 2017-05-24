@@ -28,10 +28,12 @@ export default {
     state.toast.count = --state.toast.count
     state.toast.content = ''
   },
-  [FETCH_FETCH_LOCAL_REGIONS] (state, regions) {
-    state.regions.local = regions
+  [FETCH_FETCH_LOCAL_REGIONS] (state, localregions) {
+    const regions = state.regions
+    state.regions = { ...regions, local: localregions }
   },
   [FETCH_FETCH_INTERNATIONAL_REGIONS] (state, iregions) {
-    state.regions.international = iregions
+    const regions = state.regions
+    state.regions = { ...regions, international: iregions }
   }
 }

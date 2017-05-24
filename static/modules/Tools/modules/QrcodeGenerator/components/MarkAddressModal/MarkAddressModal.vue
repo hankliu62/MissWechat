@@ -8,6 +8,7 @@
     :onClose="onClose">
     <div slot="body" class="mark-address-modal-header">
       <h3 class="mark-address-body-header">
+        <regions type="local" />
         <input-btn-group
           :model="searchKey"
           btn-text="搜索定位"
@@ -23,6 +24,7 @@
 <script>
 import Modal from '../../../../../../components/Modal/Modal'
 import IMap from '../../../../../../components/IMap/IMap'
+import Regions from '../../../../../../components/Regions/Regions'
 import InfoTip from '../../../../../../components/InfoTip/InfoTip'
 import InputBtnGroup from '../../../../../../components/InputBtnGroup/InputBtnGroup'
 
@@ -68,6 +70,7 @@ export default {
   components: {
     InputBtnGroup,
     InfoTip,
+    Regions,
     Modal,
     IMap
   }
