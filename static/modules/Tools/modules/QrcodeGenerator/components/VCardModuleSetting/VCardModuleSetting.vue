@@ -5,7 +5,8 @@
       :top="selectedModuleTop"
       :module="states.CONSTANTS.MODULE.Basic"
       v-if="states.CONSTANTS.MODULE.Basic === selectedModule"
-      @close="onSelecteModule('')">
+      @close="onCloseModuleSetting"
+      @submit="onSubmitModuleSetting">
       <div class="form-group vcard-setting-item">
         <label class="form-control-label">头像</label>
         <div class="form-control-content">
@@ -98,7 +99,8 @@
       :top="selectedModuleTop"
       :module="states.CONSTANTS.MODULE.Contact"
       v-if="states.CONSTANTS.MODULE.Contact === selectedModule"
-      @close="onSelecteModule('')">
+      @close="onCloseModuleSetting"
+      @submit="onSubmitModuleSetting">
       <div class="form-group vcard-setting-item">
         <label class="form-control-label">固定电话</label>
         <div class="form-control-content">
@@ -142,7 +144,8 @@
       :top="selectedModuleTop"
       :module="states.CONSTANTS.MODULE.Account"
       v-if="states.CONSTANTS.MODULE.Account === selectedModule"
-      @close="onSelecteModule('')">
+      @close="onCloseModuleSetting"
+      @submit="onSubmitModuleSetting">
       <div class="form-group vcard-setting-item">
         <label class="form-control-label">微信号</label>
         <div class="form-control-content">
@@ -181,16 +184,17 @@
       </div>
     </module-item-setting>
 
-    <!-- 社交信息 -->
+    <!-- 地址 -->
     <module-item-setting
       :top="selectedModuleTop"
       :module="states.CONSTANTS.MODULE.Address"
       v-if="states.CONSTANTS.MODULE.Address === selectedModule"
-      @close="onSelecteModule('')">
+      @close="onCloseModuleSetting"
+      @submit="onSubmitModuleSetting">
       <div class="form-group vcard-setting-item">
         <label class="form-control-label">地址</label>
         <div class="form-control-content">
-          <regions type="local" @change="onChangeVCardAddressRegions" />
+          <regions type="local" @change="onChangeVCardAddressRegions" v-model="vcard.address ? (vcard.address.value || {}) : {}" />
 
           <count-input
             max-length="50"
@@ -213,12 +217,13 @@
       </div>
     </module-item-setting>
 
-    <!-- 社交信息 -->
+    <!-- 个人说明 -->
     <module-item-setting
       :top="selectedModuleTop"
       :module="states.CONSTANTS.MODULE.Explanation"
       v-if="states.CONSTANTS.MODULE.Explanation === selectedModule"
-      @close="onSelecteModule('')">
+      @close="onCloseModuleSetting"
+      @submit="onSubmitModuleSetting">
       <div class="form-group vcard-setting-item">
         <label class="form-control-label">个人说明</label>
         <div class="form-control-content">
@@ -326,7 +331,6 @@ export default {
     },
     onOkUploadVCardAvatar (url) {
       this.updateVCardProperty(url, 'avatar')
-      this.onTriggerSession()
       this.onCloseUploadVCardAvatarModal()
     },
     onCloseUploadVCardAvatarModal () {
@@ -334,7 +338,6 @@ export default {
     },
     onClearAvatar () {
       this.updateVCardProperty('', 'avatar')
-      this.onTriggerSession()
     },
     onOpenUploadVCardCoverModal () {
       this.isShowUploadVCardCoverModal = true
@@ -345,7 +348,6 @@ export default {
     onSelectVCardCover (value, type) {
       this.updateVCardProperty({ value, type }, 'cover')
       this.updateVCardProperty({ value, type }, 'lastCover')
-      this.onTriggerSession()
       this.onCloseUploadVCardCoverModal()
     },
     onOpenMarkAddressModal () {
@@ -354,24 +356,30 @@ export default {
     onCloseMarkAddressModal () {
       this.isShowMarkAddressModal = false
     },
-    onMarkVCardAddress (position) {
+    onMarkVCardAddress (position, address) {
+      this.updateVCardProperty(position, 'address', 'point')
+      this.updateVCardProperty(address, 'address', 'value')
       this.onCloseMarkAddressModal()
     },
     onSelectLayout (layout) {
       this.selectedPreviewLayout = layout
       this.updateVCardProperty(layout, 'headerLayout')
-      this.onTriggerSession()
     },
     onClearVCardCover () {
       this.updateVCardProperty({}, 'cover')
-      this.onTriggerSession()
     },
     onChangeVCardProperty (key, value) {
       this.updateVCardProperty(value, key, 'value')
-      this.onTriggerSession()
     },
     onTriggerSession () {
       this.$emit('onUpdateVCard', this.vcard)
+    },
+    onSubmitModuleSetting () {
+      this.onTriggerSession()
+      this.onCloseModuleSetting()
+    },
+    onCloseModuleSetting () {
+      this.onSelecteModule('')
     },
     onSelecteModule (module) {
       this.$emit('onSelecteModule', module)

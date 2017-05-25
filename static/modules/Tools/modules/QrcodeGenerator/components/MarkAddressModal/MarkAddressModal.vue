@@ -8,9 +8,9 @@
     :onClose="onClose">
     <div slot="body" class="mark-address-modal-header">
       <h3 class="mark-address-body-header">
-        <regions type="local" @change="onChangeRegions" />
+        <regions type="local" @change="onChangeRegions" v-model="stateAddress" />
         <input-btn-group
-          :model="town"
+          v-model="stateAddress.town"
           btn-text="搜索定位"
           @onChangeModel="onChange"
           @onClickBtn="onSearch" />
@@ -30,17 +30,26 @@ import InputBtnGroup from '../../../../../../components/InputBtnGroup/InputBtnGr
 import { Notification } from '../../../../../../services'
 
 function getAddress (vm) {
-  return `${vm.province}${vm.city}${vm.county}${vm.town}`
+  return `${vm.stateAddress.province}${vm.stateAddress.city}${vm.stateAddress.county}${vm.stateAddress.town}`
+}
+
+function restoreStateData (vm) {
+  vm.destroyedMap()
+  vm.stateAddress = {province: '', city: '', county: '', town: ''}
+  vm.point = null
 }
 
 export default {
   data () {
     return {
-      province: '',
-      city: '',
-      county: '',
-      town: '',
-      map: null
+      stateAddress: {
+        province: '',
+        city: '',
+        county: '',
+        town: ''
+      },
+      map: null,
+      point: null
     }
   },
   props: {
@@ -55,33 +64,43 @@ export default {
     }
   },
   mounted () {
-    this.province = this.address.province
-    this.city = this.address.city
-    this.county = this.address.county
-    this.town = this.address.town
+    this.stateAddress = { ...this.address }
   },
   methods: {
     onOkMark () {
-      if (this.onOk) {
-        this.onOk(this.map.getCenter())
+      if (this.point) {
+        if (this.onOk) {
+          const point = this.map.getCenter()
+          const address = { ...this.stateAddress }
+          this.onOk(point, address)
+        }
+        return
       }
+
+      Notification.service({content: '请搜索定位地址', type: 'error'})
     },
     onChange (value) {
-      this.town = value
+      this.stateAddress.town = value
     },
     onSearch () {
       if (this.map) {
-        if (this.province && this.city && this.county && this.town) {
-          this.map.customService.geocoder(getAddress(this), this.city)
+        if (this.stateAddress.province && this.stateAddress.city && this.stateAddress.county && this.stateAddress.town) {
+          const that = this
+          this.map.customService.geocoder(getAddress(this), this.stateAddress.city).then(function (point) {
+            that.point = point
+          }, function (info) {
+            Notification.service({content: info, type: 'info'})
+          })
         } else {
           Notification.service({content: '请选择区域和输入地址信息', type: 'error'})
         }
       }
     },
     onChangeRegions ([province, city, county]) {
-      this.province = province
-      this.city = city
-      this.county = county
+      this.stateAddress.province = province
+      this.stateAddress.city = city
+      this.stateAddress.county = county
+      this.point = null
     },
     mountedMap (mapOptions) {
       if (mapOptions.map) {
@@ -96,12 +115,12 @@ export default {
   watch: {
     isShow (val) {
       if (val) {
-        this.province = this.address.province
-        this.city = this.address.city
-        this.county = this.address.county
-        this.town = this.address.town
+        this.stateAddress = { ...this.address }
       }
     }
+  },
+  destroyed () {
+    restoreStateData(this)
   },
   components: {
     InputBtnGroup,

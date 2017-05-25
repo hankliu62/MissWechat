@@ -45,6 +45,7 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 import Selector from '../Selector/Selector'
+import ArrayUtil from '../../utils/ArrayUtil'
 
 function restoreRegions (vm, provinces = []) {
   vm.selectProvince = ''
@@ -53,6 +54,34 @@ function restoreRegions (vm, provinces = []) {
   vm.provinceItems = provinces
   vm.cityItems = []
   vm.countyItems = []
+}
+
+function reloadRegions (vm, address) {
+  if (address) {
+    if ('province' in address) {
+      vm.selectProvince = address.province
+      const [province, index] = ArrayUtil.find(vm.regions[vm.type], vm.selectProvince, 'name')
+
+      if (province) {
+        vm.cityItems = [...(province.c || [])]
+        if ('city' in address) {
+          vm.selectCity = address.city
+          vm.countyItems = []
+          vm.selectCounty = ''
+          const [city, index] = ArrayUtil.find(vm.cityItems, vm.selectCity, 'name')
+
+          if (city) {
+            vm.countyItems = city.c || []
+            if ('county' in address) {
+              vm.selectCounty = address.county
+            }
+          }
+        }
+      }
+    }
+  } else {
+    restoreRegions(vm, vm.regions[vm.type])
+  }
 }
 
 export default {
@@ -73,17 +102,18 @@ export default {
     type: {
       type: String,
       default: 'local'
-    }
+    },
+    value: {}
   },
   computed: {
     ...mapState({
       regions: (state) => state.commonMain.regions
     })
   },
-  mounted () {
+  async mounted () {
     if (this.type === 'local') {
       if (!this.regions.local || !this.regions.local.length) {
-        this.fetchRegions()
+        await this.fetchRegions()
       } else {
         this.provinceItems = this.regions.local
       }
@@ -95,7 +125,7 @@ export default {
 
     if (this.type === 'international') {
       if (!this.regions.international || !this.regions.international.length) {
-        this.fetchInternationalRegions()
+        await this.fetchInternationalRegions()
       } else {
         this.provinceItems = this.regions.international
       }
@@ -104,6 +134,8 @@ export default {
       this.cityPlaceholder = '省份/直辖市'
       this.countyPlaceholder = '市'
     }
+
+    reloadRegions(this, this.value)
   },
   methods: {
     ...mapActions([
@@ -147,7 +179,13 @@ export default {
   watch: {
     regions (val) {
       restoreRegions(this, val[this.type])
+    },
+    value (address) {
+      reloadRegions(this, address)
     }
+  },
+  destroyed () {
+    restoreRegions(this, [])
   },
   components: {
     Selector

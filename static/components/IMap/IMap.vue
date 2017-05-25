@@ -57,19 +57,24 @@ export default {
       this.$emit('onDragendMarker', type, target, pixel, point)
     },
     onGeocoder (address, city) {
-      const geocoder = getGeocoderInstance()
-      const map = getMapInstance(this)
-      const marker = getMarkerInstance(this)
+      const that = this
+      return new Promise(function (resolve, reject) {
+        const geocoder = getGeocoderInstance()
+        const map = getMapInstance(that)
+        const marker = getMarkerInstance(that)
 
-      geocoder.getPoint(address, function (point) {
-        if (point) {
-          map.reset()
-          map.centerAndZoom(point, 14)
-          marker.setPosition(point)
-        } else {
-          console.warn('您选择地址没有解析到结果!')
-        }
-      }, city)
+        geocoder.getPoint(address, function (point) {
+          if (point) {
+            map.reset()
+            map.centerAndZoom(point, 14)
+            marker.setPosition(point)
+            resolve(point)
+          } else {
+            console.warn('您选择地址没有解析到结果!')
+            reject('您选择地址没有解析到结果!')
+          }
+        }, city)
+      })
     }
   },
   async mounted () {
