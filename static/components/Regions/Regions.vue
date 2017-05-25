@@ -8,10 +8,10 @@
         value-field="name"
         :disabled="provinceItems.length === 0"
         :placeholder="provincePlaceholder"
+        :items="provinceItems"
         v-model="selectProvince"
         @change="onSelectProvince">
       </selector>
-
     </div>
     <div class="regions-item regions-city">
       <selector
@@ -21,6 +21,7 @@
         value-field="name"
         :disabled="cityItems.length === 0"
         :placeholder="cityPlaceholder"
+        :items="cityItems"
         v-model="selectCity"
         @change="onSelectCity">
       </selector>
@@ -33,6 +34,7 @@
         value-field="name"
         :disabled="countyItems.length === 0"
         :placeholder="countyPlaceholder"
+        :items="countyItems"
         v-model="selectCounty"
         @change="onSelectCounty">
       </selector>
@@ -109,7 +111,7 @@ export default {
       'fetchInternationalRegions'
     ]),
     onSelectProvince (value) {
-      this.selectProvince = value
+      this.selectProvince = value.name
       for (const province of this.provinceItems) {
         if (province.name === this.selectProvince) {
           this.cityItems = province.c
@@ -124,7 +126,7 @@ export default {
       this.$emit('change', [this.selectProvince, this.selectCity, this.selectCounty], 'f')
     },
     onSelectCity (value) {
-      this.selectCity = value
+      this.selectCity = value.name
 
       for (const city of this.cityItems) {
         if (city.name === this.selectCity) {
@@ -138,7 +140,7 @@ export default {
       this.$emit('change', [this.selectProvince, this.selectCity, this.selectCounty], 's')
     },
     onSelectCounty (value) {
-      this.selectCounty = value
+      this.selectCounty = value.name
       this.$emit('change', [this.selectProvince, this.selectCity, this.selectCounty], 't')
     }
   },

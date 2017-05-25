@@ -13,7 +13,7 @@
           v-for="item in items"
           v-text="item[labelField]"
           :data-value="item[valueField]"
-          @click="onSelect(item)"></li>
+          @click.stop.prevent="onSelect(item)"></li>
       </ul>
     </div>
   </div>
@@ -73,6 +73,8 @@ export default {
     } else {
       this.currentLabel = ''
     }
+
+    document.addEventListener('click', this.onClickDocument, false)
   },
   watch: {
     value (val) {
@@ -91,7 +93,15 @@ export default {
     },
     onTriggerDropdown () {
       this.isShowDropdown = !this.isShowDropdown
+    },
+    onClickDocument (event) {
+      if (!this.$el.contains(event.target)) {
+        this.isShowDropdown = false
+      }
     }
+  },
+  destroyed () {
+    document.removeEventListener('click', this.onClickDocument, false)
   }
 }
 </script>

@@ -55,7 +55,7 @@
       :is-actived="states.CONSTANTS.MODULE.Address === selectedModule"
       :module-key="states.CONSTANTS.MODULE.Address"
       @selected="onSelecteModuleItem">
-      <vcard-property property-key="地址" :property-value="vcardData.address.value" extra-class="vcard-address"></vcard-property>
+      <vcard-property property-key="地址" :property-value="addressValue" extra-class="vcard-address"></vcard-property>
     </vcard-module-item-preview>
 
     <vcard-module-item-preview
@@ -132,6 +132,13 @@ export default {
       }
 
       return {}
+    },
+    addressValue () {
+      const province = this.vcardData.address.value.province
+      const city = this.vcardData.address.value.city
+      const county = this.vcardData.address.value.county
+      const town = this.vcardData.address.value.town
+      return `${province}${city}${county}${town}`
     }
   },
   components: {

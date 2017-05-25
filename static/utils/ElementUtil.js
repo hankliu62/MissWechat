@@ -61,6 +61,7 @@ class ElementUtil {
     }
   }
 
+  // 设置元素的样式
   static setElementStyle (element, styleObject = {}) {
     for (const key in styleObject) {
       if (styleObject.hasOwnProperty(key)) {
@@ -69,6 +70,7 @@ class ElementUtil {
     }
   }
 
+  // 获得元素的某个样式
   static getElementStyle (element, styleKey) {
     if (element[styleKey]) {
       return element.style[styleKey]
@@ -84,6 +86,19 @@ class ElementUtil {
     }
 
     return null
+  }
+
+  // 判断parent包含child
+  static isChildOf (child, parent) {
+    if (child.parentNode === parent) {
+      return true;
+    }
+
+    if (child.parentNode === null) {
+      return false;
+    }
+
+    return ElementUtil.isChildOf(child.parentNode, parent);
   }
 }
 

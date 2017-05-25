@@ -8,24 +8,22 @@
 function getMapInstance (vm) {
   if (!vm.map) {
     const map = new BMap.Map('mapContainer')
-    const zoom = 14
-
     const point = new BMap.Point(116.404, 39.915)
 
-    map.centerAndZoom(point, zoom)
-
+    map.centerAndZoom(point, 14)
     map.enableScrollWheelZoom()
     map.enableDragging()
 
-    const scaleControl = new BMap.ScaleControl({
-      anchor: window.BMAP_ANCHOR_TOP_LEFT
-    })
+    // const scaleControl = new BMap.ScaleControl({
+    //   anchor: window.BMAP_ANCHOR_TOP_LEFT
+    // })
     const navigationControl = new BMap.NavigationControl()
 
-    map.addControl(scaleControl)
+    // TODO： 研究加了以后，为什么设置地图center地图viewpoint不会定位到point所在的位置
+    // map.addControl(scaleControl)
     map.addControl(navigationControl)
 
-    return map
+    vm.map = map
   }
 
   return vm.map
@@ -65,8 +63,8 @@ export default {
 
       geocoder.getPoint(address, function (point) {
         if (point) {
-          map.setCenter(point)
-          map.panTo(point)
+          map.reset()
+          map.centerAndZoom(point, 14)
           marker.setPosition(point)
         } else {
           console.warn('您选择地址没有解析到结果!')
@@ -81,7 +79,7 @@ export default {
     this.marker = marker
     marker.setPosition(map.getCenter())
 
-    this.$emit('mounted', { map })
+    this.$emit('mounted', { map, customService: { geocoder: this.onGeocoder.bind(this) } })
   },
   destroyed () {
     if (this.map) {

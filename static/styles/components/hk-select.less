@@ -3,11 +3,12 @@
 
 @selectHeight: 30px;
 @selectDropdownItemColor: #999;
-@selectDropdownBorderColor: #d3dce6;
+@selectDropdownBorderColor: @common-border;
 @selectDropdownShadowTopColor: rgba(0,0,0,.12);
 @selectDropdownShadowLeftColor: rgba(0,0,0,.04);
 @selectInputColor: #1f2d3d;
-@selectInputBorderColor: #bfcbd9;
+@selectInputBorderColor: @common-border;
+@selectInputDisabledBgColor: #eee;
 @iconCaretBorderColor: #e2e2e2;
 
 .hk-select {
@@ -55,6 +56,8 @@
 
 .hk-select-custom {
   position: relative;
+  font-size: 14px;
+  font-weight: normal;
 
   .select-input {
     position: relative;
@@ -69,7 +72,6 @@
     line-height: @selectHeight - 2 * 3px;
     outline: none;
     padding: 3px 10px;
-    transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     width: 100%;
     user-select: none;
     cursor: pointer;
@@ -128,7 +130,10 @@
 
   &.disabled {
     .select-input {
+      border-color: @selectInputDisabledBgColor;
+      background-color: @selectInputDisabledBgColor;
       cursor: not-allowed;
+      pointer-events: none;
     }
   }
 

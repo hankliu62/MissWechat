@@ -190,10 +190,12 @@
       <div class="form-group vcard-setting-item">
         <label class="form-control-label">地址</label>
         <div class="form-control-content">
+          <regions type="local" @change="onChangeVCardAddressRegions" />
+
           <count-input
             max-length="50"
-            :model="vcard.address ? (vcard.address.value || '') : ''"
-            @change="(value) => this.onChangeVCardProperty('address', value)" />
+            :model="vcard.address ? (vcard.address.value.town || '') : ''"
+            @change="onChangeVCardAddressTown" />
           <div class="btn-marker-address">
             <info-tip
               type="map-marker"
@@ -204,6 +206,7 @@
 
             <mark-address-modal
               :is-show="isShowMarkAddressModal"
+              :address="vcard.address.value"
               :onOk="onMarkVCardAddress"
               :onClose="onCloseMarkAddressModal" />
         </div>
@@ -243,6 +246,7 @@ import {
 } from '../../constants/constants'
 import ModuleItemSetting from './ModuleItemSettting'
 import Upload from '../../../../../../components/Upload/Upload'
+import Regions from '../../../../../../components/Regions/Regions'
 import InfoTip from '../../../../../../components/InfoTip/InfoTip'
 import CountInput from '../../../../../../components/CountInput/CountInput'
 import MaskRemove from '../../../../../../components/MaskRemove/MaskRemove'
@@ -351,7 +355,6 @@ export default {
       this.isShowMarkAddressModal = false
     },
     onMarkVCardAddress (position) {
-      console.log(position, '-----------------------')
       this.onCloseMarkAddressModal()
     },
     onSelectLayout (layout) {
@@ -372,6 +375,16 @@ export default {
     },
     onSelecteModule (module) {
       this.$emit('onSelecteModule', module)
+    },
+    onChangeVCardAddressRegions ([province, city, county]) {
+      const defaultAddress = { value: {town: ''} }
+      const value = { ...(this.vcard.address || defaultAddress).value, province, city, county }
+      this.onChangeVCardProperty('address', value)
+    },
+    onChangeVCardAddressTown (town) {
+      const defaultAddress = { value: {province: '', city: '', county: ''} }
+      const value = { ...(this.vcard.address || defaultAddress).value, town }
+      this.onChangeVCardProperty('address', value)
     }
   },
   watch: {
@@ -385,6 +398,7 @@ export default {
   },
   components: {
     Upload,
+    Regions,
     InfoTip,
     CountInput,
     MaskRemove,
