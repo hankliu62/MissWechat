@@ -30,6 +30,7 @@ export default {
     [PARAM_TYPES.VCARD]: {
       language: LANGUAGES.ZH_CN,
       selectedModule: '',
+      selectedModuleTop: 0,
       data: {
         avatar: '',
         cover: {
@@ -52,7 +53,19 @@ export default {
         website: { text: '主页网址', value: '' },
         weibo: { text: '微博', value: '' },
         qq: { text: 'QQ', value: '' },
-        address: {text: '地址', value: ''},
+        address: {
+          text: '地址',
+          value: {
+            province: '',
+            city: '',
+            county: '',
+            town: ''
+          },
+          point: {
+            lng: 0,
+            lat: 0
+          }
+        },
         explanation: {text: '地址', value: ''}
       }
     },

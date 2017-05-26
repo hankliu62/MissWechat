@@ -6,6 +6,7 @@
     <vcard-module-item-preview
       mask-content="基本信息"
       extra-class="vcard-module-item-header"
+      :ref="states.CONSTANTS.MODULE.Basic"
       :is-actived="states.CONSTANTS.MODULE.Basic === selectedModule"
       :module-key="states.CONSTANTS.MODULE.Basic"
       @selected="onSelecteModuleItem">
@@ -26,6 +27,7 @@
 
     <vcard-module-item-preview
       mask-content="联系信息"
+      :ref="states.CONSTANTS.MODULE.Contact"
       :is-actived="states.CONSTANTS.MODULE.Contact === selectedModule"
       :module-key="states.CONSTANTS.MODULE.Contact"
       @selected="onSelecteModuleItem">
@@ -37,6 +39,7 @@
 
     <vcard-module-item-preview
       mask-content="社交账号"
+      :ref="states.CONSTANTS.MODULE.Account"
       :is-actived="states.CONSTANTS.MODULE.Account === selectedModule"
       :module-key="states.CONSTANTS.MODULE.Account"
       @selected="onSelecteModuleItem">
@@ -48,14 +51,16 @@
 
     <vcard-module-item-preview
       mask-content="地址"
+      :ref="states.CONSTANTS.MODULE.Address"
       :is-actived="states.CONSTANTS.MODULE.Address === selectedModule"
       :module-key="states.CONSTANTS.MODULE.Address"
       @selected="onSelecteModuleItem">
-      <vcard-property property-key="地址" :property-value="vcardData.address.value" extra-class="vcard-address"></vcard-property>
+      <vcard-property property-key="地址" :property-value="addressValue" extra-class="vcard-address"></vcard-property>
     </vcard-module-item-preview>
 
     <vcard-module-item-preview
       mask-content="个人说明"
+      :ref="states.CONSTANTS.MODULE.Explanation"
       :is-actived="states.CONSTANTS.MODULE.Explanation === selectedModule"
       :module-key="states.CONSTANTS.MODULE.Explanation"
       @selected="onSelecteModuleItem">
@@ -68,7 +73,8 @@
 import VcardProperty from './VCardProperty'
 import VcardModuleItemPreview from './VCardModuleItemPreview'
 import { VCARD_MODULE, VCARD_COVER_IMAGE_TYPE, VCARD_COVER_PURE_TYPE } from '../../constants/constants'
-import * as ObjectUtil from '../../../../../../utils/ObjectUtil'
+import ObjectUtil from '../../../../../../utils/ObjectUtil'
+import ElementUtil from '../../../../../../utils/ElementUtil'
 
 export default {
   data () {
@@ -95,7 +101,15 @@ export default {
   },
   methods: {
     onSelecteModuleItem (item) {
-      this.$emit('onSelecteModule', item)
+      const vueDom = this.$refs[item]
+      let top = 0
+      if (vueDom && vueDom.$el) {
+        const position = ElementUtil.getElementAbsolutePosition(vueDom.$el)
+        if (position && position.top) {
+          top = position.top - 480
+        }
+      }
+      this.$emit('onSelecteModule', item, top)
     }
   },
   computed: {
@@ -118,6 +132,13 @@ export default {
       }
 
       return {}
+    },
+    addressValue () {
+      const province = this.vcardData.address.value.province
+      const city = this.vcardData.address.value.city
+      const county = this.vcardData.address.value.county
+      const town = this.vcardData.address.value.town
+      return `${province}${city}${county}${town}`
     }
   },
   components: {

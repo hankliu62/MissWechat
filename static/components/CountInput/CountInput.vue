@@ -1,7 +1,7 @@
 <template>
   <div class="count-input">
     <input class="hk-input" :maxLength="maxLength" v-model="value" @input="onChange" :placeholder="placeholder" />
-    <span class="count-box" v-text="`${value.length}/${maxLength}`" v-if="!!maxLength"></span>
+    <span class="count-box" v-text="`${currentLength}/${maxLength}`" v-if="!!maxLength"></span>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
     }
   },
   props: {
-    maxLength: String,
+    maxLength: [String, Number],
     placeholder: String,
     model: String
   },
@@ -29,6 +29,11 @@ export default {
   },
   mounted () {
     this.value = this.model
+  },
+  computed: {
+    currentLength () {
+      return this.value.length
+    }
   }
 }
 </script>

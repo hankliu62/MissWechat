@@ -20,6 +20,7 @@ module.exports = {
     'localStorage': true,
     'location': true,
     'Image': true,
-    'Simditor': true
+    'Simditor': true,
+    'BMap': true
   }
 };

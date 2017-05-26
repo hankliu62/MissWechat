@@ -2,9 +2,11 @@
   <div class="vcard-setting-container">
     <!-- 基本信息 -->
     <module-item-setting
+      :top="selectedModuleTop"
       :module="states.CONSTANTS.MODULE.Basic"
       v-if="states.CONSTANTS.MODULE.Basic === selectedModule"
-      @close="onSelecteModule('')">
+      @close="onCloseModuleSetting"
+      @submit="onSubmitModuleSetting">
       <div class="form-group vcard-setting-item">
         <label class="form-control-label">头像</label>
         <div class="form-control-content">
@@ -94,9 +96,11 @@
 
     <!-- 联系信息 -->
     <module-item-setting
+      :top="selectedModuleTop"
       :module="states.CONSTANTS.MODULE.Contact"
       v-if="states.CONSTANTS.MODULE.Contact === selectedModule"
-      @close="onSelecteModule('')">
+      @close="onCloseModuleSetting"
+      @submit="onSubmitModuleSetting">
       <div class="form-group vcard-setting-item">
         <label class="form-control-label">固定电话</label>
         <div class="form-control-content">
@@ -137,9 +141,11 @@
 
     <!-- 社交信息 -->
     <module-item-setting
+      :top="selectedModuleTop"
       :module="states.CONSTANTS.MODULE.Account"
       v-if="states.CONSTANTS.MODULE.Account === selectedModule"
-      @close="onSelecteModule('')">
+      @close="onCloseModuleSetting"
+      @submit="onSubmitModuleSetting">
       <div class="form-group vcard-setting-item">
         <label class="form-control-label">微信号</label>
         <div class="form-control-content">
@@ -178,34 +184,55 @@
       </div>
     </module-item-setting>
 
-    <!-- 社交信息 -->
+    <!-- 地址 -->
     <module-item-setting
+      :top="selectedModuleTop"
       :module="states.CONSTANTS.MODULE.Address"
       v-if="states.CONSTANTS.MODULE.Address === selectedModule"
-      @close="onSelecteModule('')">
+      @close="onCloseModuleSetting"
+      @submit="onSubmitModuleSetting">
       <div class="form-group vcard-setting-item">
         <label class="form-control-label">地址</label>
         <div class="form-control-content">
+          <regions type="local" @change="onChangeVCardAddressRegions" v-model="vcard.address ? (vcard.address.value || {}) : {}" />
+
           <count-input
             max-length="50"
-            :model="vcard.address ? (vcard.address.value || '') : ''"
-            @change="(value) => this.onChangeVCardProperty('address', value)" />
+            :model="vcard.address ? (vcard.address.value.town || '') : ''"
+            @change="onChangeVCardAddressTown" />
+          <div class="btn-marker-address">
+            <info-tip
+              type="map-marker"
+              content="标注地址"
+              :hidden-tip="true"
+              @onClick="onOpenMarkAddressModal" />
+          </div>
+
+            <mark-address-modal
+              :is-show="isShowMarkAddressModal"
+              :address="vcard.address.value"
+              :onOk="onMarkVCardAddress"
+              :onClose="onCloseMarkAddressModal" />
         </div>
       </div>
     </module-item-setting>
 
-    <!-- 社交信息 -->
+    <!-- 个人说明 -->
     <module-item-setting
+      :top="selectedModuleTop"
       :module="states.CONSTANTS.MODULE.Explanation"
       v-if="states.CONSTANTS.MODULE.Explanation === selectedModule"
-      @close="onSelecteModule('')">
+      @close="onCloseModuleSetting"
+      @submit="onSubmitModuleSetting">
       <div class="form-group vcard-setting-item">
         <label class="form-control-label">个人说明</label>
         <div class="form-control-content">
-          <count-input
+          <autosize-textarea
             max-length="50"
             :model="vcard.explanation ? (vcard.explanation.value || '') : ''"
-            @change="(value) => this.onChangeVCardProperty('explanation', value)" />
+            @change="(value) => this.onChangeVCardProperty('explanation', value)"
+            :textStyle="{maxHeight: '102px'}"
+            :maxLength="200" />
         </div>
       </div>
     </module-item-setting>
@@ -224,13 +251,16 @@ import {
 } from '../../constants/constants'
 import ModuleItemSetting from './ModuleItemSettting'
 import Upload from '../../../../../../components/Upload/Upload'
+import Regions from '../../../../../../components/Regions/Regions'
 import InfoTip from '../../../../../../components/InfoTip/InfoTip'
 import CountInput from '../../../../../../components/CountInput/CountInput'
 import MaskRemove from '../../../../../../components/MaskRemove/MaskRemove'
 import ExhibitionImage from '../../../../../../components/ExhibitionImage/ExhibitionImage'
+import AutosizeTextarea from '../../../../../../components/AutosizeTextarea/AutosizeTextarea'
 import UploadVcardAvatarModal from '../UploadVCardAvatarModal/UploadVCardAvatarModal'
 import UploadVcardCoverModal from '../UploadVCardCoverModal/UploadVCardCoverModal'
-import * as ObjectUtil from '../../../../../../utils/ObjectUtil'
+import MarkAddressModal from '../MarkAddressModal/MarkAddressModal'
+import ObjectUtil from '../../../../../../utils/ObjectUtil'
 
 function closeUploadVCardAvatarModal (vm) {
   vm.isShowUploadVCardAvatarModal = false
@@ -271,6 +301,7 @@ export default {
       vcard: ObjectUtil.cloneDeep(this.vcardData),
       isShowUploadVCardCoverModal: false,
       isShowUploadVCardAvatarModal: false,
+      isShowMarkAddressModal: false,
       uploadVCardAvatarModalImage: '',
       selectedPreviewLayout: VCARD_PREVIEW_LAYOUT_LEFT
     }
@@ -285,6 +316,10 @@ export default {
     selectedModule: {
       type: String,
       default: ''
+    },
+    selectedModuleTop: {
+      type: Number,
+      default: 0
     }
   },
   methods: {
@@ -296,7 +331,6 @@ export default {
     },
     onOkUploadVCardAvatar (url) {
       this.updateVCardProperty(url, 'avatar')
-      this.onTriggerSession()
       this.onCloseUploadVCardAvatarModal()
     },
     onCloseUploadVCardAvatarModal () {
@@ -304,38 +338,61 @@ export default {
     },
     onClearAvatar () {
       this.updateVCardProperty('', 'avatar')
-      this.onTriggerSession()
     },
     onOpenUploadVCardCoverModal () {
       this.isShowUploadVCardCoverModal = true
     },
+    onCloseUploadVCardCoverModal (url) {
+      this.isShowUploadVCardCoverModal = false
+    },
     onSelectVCardCover (value, type) {
       this.updateVCardProperty({ value, type }, 'cover')
       this.updateVCardProperty({ value, type }, 'lastCover')
-      this.onTriggerSession()
       this.onCloseUploadVCardCoverModal()
     },
-    onCloseUploadVCardCoverModal (url) {
-      this.isShowUploadVCardCoverModal = false
+    onOpenMarkAddressModal () {
+      this.isShowMarkAddressModal = true
+    },
+    onCloseMarkAddressModal () {
+      this.isShowMarkAddressModal = false
+    },
+    onMarkVCardAddress (position, address) {
+      this.updateVCardProperty(position, 'address', 'point')
+      this.updateVCardProperty(address, 'address', 'value')
+      this.onCloseMarkAddressModal()
     },
     onSelectLayout (layout) {
       this.selectedPreviewLayout = layout
       this.updateVCardProperty(layout, 'headerLayout')
-      this.onTriggerSession()
     },
     onClearVCardCover () {
       this.updateVCardProperty({}, 'cover')
-      this.onTriggerSession()
     },
     onChangeVCardProperty (key, value) {
       this.updateVCardProperty(value, key, 'value')
-      this.onTriggerSession()
     },
     onTriggerSession () {
       this.$emit('onUpdateVCard', this.vcard)
     },
+    onSubmitModuleSetting () {
+      this.onTriggerSession()
+      this.onCloseModuleSetting()
+    },
+    onCloseModuleSetting () {
+      this.onSelecteModule('')
+    },
     onSelecteModule (module) {
       this.$emit('onSelecteModule', module)
+    },
+    onChangeVCardAddressRegions ([province, city, county]) {
+      const defaultAddress = { value: {town: ''} }
+      const value = { ...(this.vcard.address || defaultAddress).value, province, city, county }
+      this.onChangeVCardProperty('address', value)
+    },
+    onChangeVCardAddressTown (town) {
+      const defaultAddress = { value: {province: '', city: '', county: ''} }
+      const value = { ...(this.vcard.address || defaultAddress).value, town }
+      this.onChangeVCardProperty('address', value)
     }
   },
   watch: {
@@ -349,11 +406,14 @@ export default {
   },
   components: {
     Upload,
+    Regions,
     InfoTip,
     CountInput,
     MaskRemove,
     ExhibitionImage,
+    AutosizeTextarea,
     ModuleItemSetting,
+    MarkAddressModal,
     UploadVcardCoverModal,
     UploadVcardAvatarModal
   }
