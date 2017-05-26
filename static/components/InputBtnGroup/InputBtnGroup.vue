@@ -12,7 +12,7 @@
       v-model="model"
       v-if="!disabled"
       @input="onChange" />
-    <div class="btn hk-btn btn-theme" v-text="btnText" @click="onClickBtn"></div>
+    <button class="btn hk-btn btn-theme sm" v-text="btnText" @click="onClickBtn" />
   </div>
 </template>
 

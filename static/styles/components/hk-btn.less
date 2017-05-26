@@ -21,8 +21,6 @@
 @btnDefaultShadowColor: rgba(221, 221, 221, .6);
 
 .hk-btn {
-  padding: 4px 12px;
-
   &.btn-theme {
     // fontColor, borderColor, bgColor, hoverFontColor, hoverBorderColor, hoverBgColor
     .btn(@defaultBtnColor, @defaultBtnBorderColor, @defaultBtnBgColor, @defaultBtnColor, @defaultBtnBorderColor, @defaultBtnHoverBgColor);
@@ -35,5 +33,9 @@
   &.btn-default {
     .btn(@btnDefaultColor, @btnDefaultBorderColor, @btnDefaultBgColor, @btnDefaultHoverColor, @btnDefaultHoverBorderColor, @btnDefaultHoverBgColor);
     box-shadow: 0 0 3px @btnDefaultShadowColor;
+  }
+
+  &.sm {
+    padding: 4px 12px;
   }
 }

@@ -66,7 +66,7 @@ export default {
             lat: 0
           }
         },
-        explanation: {text: '地址', value: ''}
+        explanation: {text: '个人说明', value: ''}
       }
     },
     [PARAM_TYPES.FILE]: {

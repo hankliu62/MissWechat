@@ -1,12 +1,15 @@
 <template>
-  <div :class="{'hk-select hk-select-custom': true, [cclass || '']: true, 'disabled': disabled, 'open-dropdown': isShowDropdown}">
+  <div :class="{[`hk-select hk-select-custom ${cclass || ''}`]: true, 'disabled': disabled, 'open-dropdown': isShowDropdown}">
     <div
       :class="{'select-input': true, 'empty-value': this.value === null || this.value === undefined}"
       @click="onTriggerDropdown">
       <div class="select-input-content" v-text="currentLabel || placeholder"></div>
       <i class="icon-caret"></i>
     </div>
-    <div :class="{'select-dropdown': true, [popperClass || '']: true, 'hidden': !isShowDropdown}">
+    <div
+      ref="dropdown"
+      :class="{'direction-up': direction === 'up', 'hidden': !isShowDropdown,
+        [`select-dropdown ${popperClass || ''}`]: true}">
       <ul class="select-dropdown-list">
         <li
           class="select-dropdown-item"
@@ -20,6 +23,8 @@
 </template>
 
 <script>
+import ElementUtil from '../../utils/ElementUtil'
+
 function getCurrentItem (vm, value) {
   if (vm.items && vm.items.length) {
     for (const item of vm.items) {
@@ -39,7 +44,8 @@ export default {
   data () {
     return {
       isShowDropdown: false,
-      currentLabel: ''
+      currentLabel: '',
+      direction: 'up'
     }
   },
   props: {
@@ -75,6 +81,25 @@ export default {
     }
 
     document.addEventListener('click', this.onClickDocument, false)
+  },
+  updated () {
+    if (this.isShowDropdown) {
+      const bodyHeight = ElementUtil.getBodySize().height
+      const dropdownHeigth = ElementUtil.getElementSize(this.$refs.dropdown).height
+      const top = ElementUtil.getElementRelativePosition(this.$refs.dropdown).top
+      let otherHeight = 0
+      const footer = document.getElementsByClassName('hk-footer')
+      if (footer && footer.length) {
+        const footerHeigth = ElementUtil.getElementSize(footer[0]).height
+        otherHeight += footerHeigth
+      }
+
+      if (dropdownHeigth + top + otherHeight > bodyHeight) {
+        this.direction = 'up'
+      } else {
+        this.direction = 'down'
+      }
+    }
   },
   watch: {
     value (val) {

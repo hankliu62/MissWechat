@@ -120,6 +120,9 @@
                 <!-- <upload-vcard-avatar-modal></upload-vcard-avatar-modal> -->
               </div>
             </div>
+            <div class="vcard-qrcode-footer clearfix">
+              <button class="btn hk-btn btn-theme pull-right" v-text="'生成二维码'" />
+            </div>
           </template>
         </div>
         <div class="brace right-brace col-md-1"></div>
