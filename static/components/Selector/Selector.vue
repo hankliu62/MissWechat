@@ -3,7 +3,18 @@
     <div
       :class="{'select-input': true, 'empty-value': this.value === null || this.value === undefined}"
       @click="onTriggerDropdown">
-      <div class="select-input-content" v-text="currentLabel || placeholder"></div>
+      <div class="select-input-content">
+        <div class="select-input-content-text" v-text="currentLabel || placeholder"></div>
+        <el-tooltip
+          v-if="currentLabel"
+          class="currentLabel"
+          effect="dark"
+          placement="top"
+          popper-class="hk-tooltip-popper"
+          :content="currentLabel">
+          <div v-text="currentLabel"></div>
+        </el-tooltip>
+      </div>
       <i class="icon-caret"></i>
     </div>
     <div
@@ -14,9 +25,18 @@
         <li
           class="select-dropdown-item"
           v-for="item in items"
-          v-text="item[labelField]"
           :data-value="item[valueField]"
-          @click.stop.prevent="onSelect(item)"></li>
+          @click.stop.prevent="onSelect(item)">
+          <div class="content-item" v-text="item[labelField]"></div>
+          <el-tooltip
+            class="item"
+            effect="dark"
+            placement="top"
+            popper-class="hk-tooltip-popper"
+            :content="item[labelField]">
+            <div class="content-item-template" v-text="item[labelField]"></div>
+          </el-tooltip>
+          </li>
       </ul>
     </div>
   </div>

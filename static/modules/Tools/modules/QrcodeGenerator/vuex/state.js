@@ -6,9 +6,11 @@ import {
   DEFAULT_QRCODE_BACKGROUND,
   PARAM_TYPES,
   VCARD_COVER_IMAGE_TYPE,
-  VCARD_PREVIEW_LAYOUT_LEFT
+  VCARD_PREVIEW_LAYOUT_LEFT,
+  DEFAULT_CARD_QRCODE_CONTENT
 } from '../constants/constants'
 import { LANGUAGES } from '../../../../../constants/languages'
+import ObjectUtil from '../../../../../utils/ObjectUtil'
 
 export default {
   nav: {
@@ -27,48 +29,7 @@ export default {
       html: ''
     },
     [PARAM_TYPES.URL]: '',
-    [PARAM_TYPES.VCARD]: {
-      language: LANGUAGES.ZH_CN,
-      selectedModule: '',
-      selectedModuleTop: 0,
-      data: {
-        avatar: '',
-        cover: {
-          value: 'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg23.jpg',
-          type: VCARD_COVER_IMAGE_TYPE
-        },
-        lastCover: {
-          value: 'http://oiq00n80p.bkt.clouddn.com/vcard_cover_bg23.jpg',
-          type: VCARD_COVER_IMAGE_TYPE
-        },
-        headerLayout: VCARD_PREVIEW_LAYOUT_LEFT,
-        name: { text: '姓名', value: '' },
-        appointment: { text: '职位', value: '' },
-        company: { text: '公司', value: '' },
-        tel: { text: '固定电话', value: '' },
-        phone: { text: '移动电话', value: '' },
-        fax: { text: '传真', value: '' },
-        email: { text: '电子邮箱', value: '' },
-        wechat: { text: '微信号', value: '' },
-        website: { text: '主页网址', value: '' },
-        weibo: { text: '微博', value: '' },
-        qq: { text: 'QQ', value: '' },
-        address: {
-          text: '地址',
-          value: {
-            province: '',
-            city: '',
-            county: '',
-            town: ''
-          },
-          point: {
-            lng: 0,
-            lat: 0
-          }
-        },
-        explanation: {text: '个人说明', value: ''}
-      }
-    },
+    [PARAM_TYPES.VCARD]: ObjectUtil.cloneDeep(DEFAULT_CARD_QRCODE_CONTENT),
     [PARAM_TYPES.FILE]: {
       file: {
         key: '',

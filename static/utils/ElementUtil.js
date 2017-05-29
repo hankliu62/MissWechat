@@ -100,6 +100,38 @@ class ElementUtil {
 
     return ElementUtil.isChildOf(child.parentNode, parent);
   }
+
+  static addClassName (elemnet, name) {
+    const className = elemnet.className;
+    if (className.indexOf(name) === -1) {
+      elemnet.className = `${className} ${name}`
+    }
+  }
+
+  static removeClassName (elemnet, name) {
+    const className = elemnet.className;
+    if (className.indexOf(name) !== -1) {
+      const reg = new RegExp(name, 'g')
+      elemnet.className = className.replace(reg, '').replace(/(^\s*)|(\s*$)/g, '')
+    }
+  }
+
+  static changeModalVisibilityChenckBodyOverflow (element, isVisibility = true) {
+    const body = document.getElementsByClassName('html-body')
+    if (body && body.length) {
+      if (isVisibility) {
+        ElementUtil.addClassName(body[0], 'overflow-hidden')
+      } else {
+        const modals = [...(document.getElementsByClassName('el-dialog__wrapper') || []), ...(document.getElementsByClassName('hk-preview') || [])]
+        const hasOpenModal = modals.some(function (item) {
+          return element === item ? false : ElementUtil.getElementStyle(item, 'display') !== 'none'
+        })
+        if (!hasOpenModal) {
+          ElementUtil.removeClassName(body[0], 'overflow-hidden')
+        }
+      }
+    }
+  }
 }
 
 export default ElementUtil

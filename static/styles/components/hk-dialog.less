@@ -1,6 +1,11 @@
 @import '../variable';
+@import '../mixins/center';
 
 @modalBodyBgColor: #f8f8f8;
+@modalMaskBgColor: rgba(33, 27, 26, .3);
+@previewIframeShadowColor: rgba(0, 0, 0, .5);
+@modalCloseBtnColor: rgba(255, 255, 255, .8);
+@modalCloseBtnHoverColor: rgba(255, 255, 255, .5);
 
 .hk-dialog {
   &.el-dialog {
@@ -35,6 +40,57 @@
 
     .el-dialog__footer {
       border-top: 1px solid @common-border;
+    }
+  }
+}
+
+.el-dialog__wrapper {
+  background-color: @modalMaskBgColor;
+}
+
+.hk-preview {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  overflow: auto;
+  margin: 0;
+  background-color: @modalMaskBgColor;
+  z-index: 2999;
+
+  .preview-content {
+    width: 375px;
+    height: 667px;
+    margin: 0 auto;
+
+    .close {
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: translate(120%, 0);
+      font-size: 20px;
+      color: @modalCloseBtnColor;
+
+      &:hover {
+        color: @modalCloseBtnHoverColor;
+      }
+    }
+
+    .preview-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      box-shadow: 0 5px 15px @previewIframeShadowColor;
+    }
+  }
+
+}
+
+@media (min-height: 667px) {
+  .hk-preview {
+    .preview-content {
+      .absolute-center()
     }
   }
 }

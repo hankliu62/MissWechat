@@ -11,7 +11,7 @@
       :placeholder="placeholder"
       v-model="model"
       v-if="!disabled"
-      @input="onChange" />
+      @change="onChange" />
     <button class="btn hk-btn btn-theme sm" v-text="btnText" @click="onClickBtn" />
   </div>
 </template>

@@ -138,7 +138,13 @@ export default {
       const city = this.vcardData.address.value.city
       const county = this.vcardData.address.value.county
       const town = this.vcardData.address.value.town
-      return `${province}${city}${county}${town}`
+
+      const addresses = []
+      !!province && addresses.push(province)
+      !!city && addresses.push(city)
+      !!province && addresses.push(county)
+      !!town && addresses.push(town)
+      return addresses.join(', ')
     }
   },
   components: {

@@ -1,5 +1,6 @@
 @import '../variable';
 @import '../mixins/center';
+@import '../mixins/text-ellipsis';
 
 @selectHeight: 30px;
 @selectDropdownItemColor: #999;
@@ -71,10 +72,22 @@
     height: @selectHeight;
     line-height: @selectHeight - 2 * 3px;
     outline: none;
-    padding: 3px 10px;
+    padding: 3px 20px 3px 10px;
     width: 100%;
     user-select: none;
     cursor: pointer;
+
+    .select-input-content-text {
+      .text-ellipsis();
+    }
+
+    .el-tooltip {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      color: transparent;
+    }
 
     .icon-caret {
       .absolute-vertical-center();
@@ -114,6 +127,20 @@
         padding: 5px 10px;
         color: @selectDropdownItemColor;
         cursor: pointer;
+        position: relative;
+
+        .content-item {
+          width: 100%;
+          .text-ellipsis();
+        }
+
+        .el-tooltip {
+          position: absolute;
+          top: 0;
+          right: 0;
+          left: 0;
+          color: transparent;
+        }
 
         &.selected {
           color: @selectDropdownItemColor;

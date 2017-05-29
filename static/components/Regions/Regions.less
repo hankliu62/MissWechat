@@ -2,13 +2,12 @@
 @import '../../styles/mixins/flexbox';
 
 .hk-regions {
-  .flexbox();
-
   .regions-item {
-    .flex(1);
+    display: inline-block;
+    width: 32%;
 
     + .regions-item {
-      margin-left: 20px;
+      margin-left: 1%;
     }
   }
 }
