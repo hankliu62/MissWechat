@@ -61,6 +61,7 @@ class ElementUtil {
     }
   }
 
+  // 设置元素的样式
   static setElementStyle (element, styleObject = {}) {
     for (const key in styleObject) {
       if (styleObject.hasOwnProperty(key)) {
@@ -69,6 +70,7 @@ class ElementUtil {
     }
   }
 
+  // 获得元素的某个样式
   static getElementStyle (element, styleKey) {
     if (element[styleKey]) {
       return element.style[styleKey]
@@ -84,6 +86,51 @@ class ElementUtil {
     }
 
     return null
+  }
+
+  // 判断parent包含child
+  static isChildOf (child, parent) {
+    if (child.parentNode === parent) {
+      return true;
+    }
+
+    if (child.parentNode === null) {
+      return false;
+    }
+
+    return ElementUtil.isChildOf(child.parentNode, parent);
+  }
+
+  static addClassName (elemnet, name) {
+    const className = elemnet.className;
+    if (className.indexOf(name) === -1) {
+      elemnet.className = `${className} ${name}`
+    }
+  }
+
+  static removeClassName (elemnet, name) {
+    const className = elemnet.className;
+    if (className.indexOf(name) !== -1) {
+      const reg = new RegExp(name, 'g')
+      elemnet.className = className.replace(reg, '').replace(/(^\s*)|(\s*$)/g, '')
+    }
+  }
+
+  static changeModalVisibilityChenckBodyOverflow (element, isVisibility = true) {
+    const body = document.getElementsByClassName('html-body')
+    if (body && body.length) {
+      if (isVisibility) {
+        ElementUtil.addClassName(body[0], 'overflow-hidden')
+      } else {
+        const modals = [...(document.getElementsByClassName('el-dialog__wrapper') || []), ...(document.getElementsByClassName('hk-preview') || [])]
+        const hasOpenModal = modals.some(function (item) {
+          return element === item ? false : ElementUtil.getElementStyle(item, 'display') !== 'none'
+        })
+        if (!hasOpenModal) {
+          ElementUtil.removeClassName(body[0], 'overflow-hidden')
+        }
+      }
+    }
   }
 }
 

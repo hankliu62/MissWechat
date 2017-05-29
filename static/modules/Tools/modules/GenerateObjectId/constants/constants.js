@@ -1,4 +1,4 @@
-import { generateObjectId } from '../../../../../utils/ObjectUtil'
+import ObjectUtil from '../../../../../utils/ObjectUtil'
 
 export const PARAM_TYPES = {
   TIME: 'time',
@@ -80,7 +80,7 @@ export const METADATAS = {
       '<span>1</span>',
       '<span><br/></span>',
       '<span>result: </span>',
-      `<span>${generateObjectId(1482154744)}</span>`
+      `<span>${ObjectUtil.generateObjectId(1482154744)}</span>`
     ]
   },
   [PARAM_TYPES.HEX]: {
@@ -92,7 +92,7 @@ export const METADATAS = {
       '<span>1</span>',
       '<span><br/></span>',
       '<span>result: </span>',
-      `<span>${generateObjectId(353434393561643934633933343732316564653736643930)}</span>`
+      `<span>${ObjectUtil.generateObjectId(353434393561643934633933343732316564653736643930)}</span>`
     ]
   },
   [PARAM_TYPES.STRING]: {
@@ -104,7 +104,7 @@ export const METADATAS = {
       '<span>1</span>',
       '<span><br/></span>',
       '<span>result: </span>',
-      `<span>${generateObjectId('54495ad94c934721ede76d90')}</span>`
+      `<span>${ObjectUtil.generateObjectId('54495ad94c934721ede76d90')}</span>`
     ]
   },
   [PARAM_TYPES.ARRAY]: {
@@ -116,7 +116,7 @@ export const METADATAS = {
       '<span>1</span>',
       '<span><br/></span>',
       '<span>result: </span>',
-      `<span>${generateObjectId([ 2, 4, 8, 15, 16, 23, 42, 62, 108, 78, 54, 20 ])}</span>`
+      `<span>${ObjectUtil.generateObjectId([ 2, 4, 8, 15, 16, 23, 42, 62, 108, 78, 54, 20 ])}</span>`
     ]
   },
   [PARAM_TYPES.BUFFER]: {
@@ -128,7 +128,7 @@ export const METADATAS = {
       '<span>1</span>',
       '<span><br/></span>',
       '<span>result: </span>',
-      `<span>${generateObjectId(new Buffer([ 20, 54, 78, 108, 62, 42, 23, 16, 15, 8, 4, 2 ]))}</span>`
+      `<span>${ObjectUtil.generateObjectId(new Buffer([ 20, 54, 78, 108, 62, 42, 23, 16, 15, 8, 4, 2 ]))}</span>`
     ]
   },
   [PARAM_TYPES.EMPTY]: {
@@ -137,7 +137,7 @@ export const METADATAS = {
       '<span>1</span>',
       '<span><br/></span>',
       '<span>result: </span>',
-      `<span>${generateObjectId()}</span>`
+      `<span>${ObjectUtil.generateObjectId()}</span>`
     ]
   }
 }

@@ -1,9 +1,20 @@
 @import '../variable';
+@import '../mixins/center';
+@import '../mixins/text-ellipsis';
 
 @selectHeight: 30px;
 @selectDropdownItemColor: #999;
+@selectDropdownBorderColor: @common-border;
+@selectDropdownShadowTopColor: rgba(0,0,0,.12);
+@selectDropdownShadowLeftColor: rgba(0,0,0,.04);
+@selectInputColor: #1f2d3d;
+@selectInputBorderColor: @common-border;
+@selectInputDisabledBgColor: #eee;
+@iconCaretBorderColor: #e2e2e2;
 
 .hk-select {
+  display: block;
+
   &.el-select {
     .el-input__icon {
       height: @selectHeight;
@@ -39,6 +50,132 @@
       &:hover {
         color: @white;
         background-color: @darkGreen;
+      }
+    }
+  }
+}
+
+.hk-select-custom {
+  position: relative;
+  font-size: 14px;
+  font-weight: normal;
+
+  .select-input {
+    position: relative;
+    background-color: @white;
+    background-image: none;
+    border-radius: 4px;
+    border: 1px solid @selectInputBorderColor;
+    color: @selectInputColor;
+    display: block;
+    font-size: inherit;
+    height: @selectHeight;
+    line-height: @selectHeight - 2 * 3px;
+    outline: none;
+    padding: 3px 20px 3px 10px;
+    width: 100%;
+    user-select: none;
+    cursor: pointer;
+
+    .select-input-content-text {
+      .text-ellipsis();
+    }
+
+    .el-tooltip {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      color: transparent;
+    }
+
+    .icon-caret {
+      .absolute-vertical-center();
+      right: 5px;
+      width: 0;
+      height: 0;
+      margin-left: 2px;
+      border-top: 4px solid @iconCaretBorderColor;
+      border-right: 4px solid transparent;
+      border-left: 4px solid transparent;
+
+      transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+    }
+  }
+
+  .select-dropdown {
+    position: absolute;
+    top: @selectHeight;
+    left: 0;
+    width: 100%;
+    border: 1px solid @selectDropdownBorderColor;
+    border-radius: 2px;
+    background-color: @white;
+    box-shadow: 0 2px 4px @selectDropdownShadowTopColor, 0 0 6px @selectDropdownShadowLeftColor;
+    z-index: 9999;
+
+    .select-dropdown-list {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      max-height: 274px;
+      overflow-y: auto;
+
+      .select-dropdown-item {
+        height: @selectHeight;
+        line-height: @selectHeight - 2 * 5px;
+        padding: 5px 10px;
+        color: @selectDropdownItemColor;
+        cursor: pointer;
+        position: relative;
+
+        .content-item {
+          width: 100%;
+          .text-ellipsis();
+        }
+
+        .el-tooltip {
+          position: absolute;
+          top: 0;
+          right: 0;
+          left: 0;
+          color: transparent;
+        }
+
+        &.selected {
+          color: @selectDropdownItemColor;
+          background-color: transparent;
+        }
+
+        &:hover {
+          color: @white;
+          background-color: @darkGreen;
+        }
+      }
+    }
+
+    &.direction-up {
+      transform: translate(0, -100%);
+      top: 0;
+    }
+  }
+
+  &.disabled {
+    .select-input {
+      border-color: @selectInputDisabledBgColor;
+      background-color: @selectInputDisabledBgColor;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+
+  &.open-dropdown {
+    .select-input {
+      .icon-caret {
+        border-bottom: 4px solid @iconCaretBorderColor;
+        border-right: 4px solid transparent;
+        border-left: 4px solid transparent;
+        border-top: 0;
       }
     }
   }

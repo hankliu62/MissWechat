@@ -1,1 +1,0 @@
-webpackJsonp([7],{669:function(e,t){},753:function(e,t,n){var r,o;n(669);var c=n(797);o=r=r||{},"object"!=typeof r.default&&"function"!=typeof r.default||(o=r=r.default),"function"==typeof o&&(o=o.options),o.render=c.render,o.staticRenderFns=c.staticRenderFns,e.exports=r},797:function(e,t){e.exports={render:function(){var e=this;return e._c("router-view")},staticRenderFns:[]}}});

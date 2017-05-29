@@ -2,13 +2,14 @@
   <el-dialog :title="title" :custom-class="`hk-dialog hk-modal ${customClass}`" v-model="isOpen" :size="size" @close="onClose">
     <slot name="body"></slot>
     <div slot="footer" class="dialog-footer" v-if="defaultFooter">
-      <el-button class="btn hk-btn btn-cancel" @click="onCancelHandler">取消</el-button>
-      <el-button class="btn hk-btn btn-theme" @click="onOk">确定</el-button>
+      <el-button class="btn hk-btn btn-cancel" @click="onCancelHandler" v-text="cancelText"></el-button>
+      <el-button class="btn hk-btn btn-theme" @click="onOk" v-text="okText"></el-button>
     </div>
   </el-dialog>
 </template>
 
 <script>
+import ElementUtil from '../../utils/ElementUtil'
 export default {
   data () {
     return {
@@ -33,6 +34,14 @@ export default {
     size: {
       type: String,
       default: 'small' // tiny/small/large/full
+    },
+    okText: {
+      type: String,
+      default: '确定'
+    },
+    cancelText: {
+      type: String,
+      default: '取消'
     },
     onClose: {
       type: Function,
@@ -59,9 +68,12 @@ export default {
       if (!val) {
         this.onClose()
       }
+      ElementUtil.changeModalVisibilityChenckBodyOverflow(this.$el, val)
     },
     isShow (val) {
-      this.isOpen = val
+      if (this.isOpen !== val) {
+        this.isOpen = val
+      }
     }
   }
 }

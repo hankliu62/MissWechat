@@ -1,30 +1,30 @@
 import ObjectID from 'bson-objectid'
 
-export function find (list, f) {
+function find (list, f) {
   return list.filter(f)[0]
 }
 
-export function isArray (arr) {
+function isArray (arr) {
   return Object.prototype.toString.call(arr).slice(8, -1) === 'Array'
 }
 
-export function isObject (object) {
+function isObject (object) {
   return Object.prototype.toString.call(object).slice(8, -1) === 'Object'
 }
 
-export function isString (str) {
+function isString (str) {
   return Object.prototype.toString.call(str).slice(8, -1) === 'String'
 }
 
-export function isNumber (i) {
+function isNumber (i) {
   return Object.prototype.toString.call(i).slice(8, -1) === 'Number'
 }
 
-export function isInt (i) {
+function isInt (i) {
   return isNumber(i) && ~~i === i
 }
 
-export function cloneDeep (obj, cache = []) {
+function cloneDeep (obj, cache = []) {
   if (obj === null || typeof obj !== 'object') {
     return obj
   }
@@ -47,7 +47,7 @@ export function cloneDeep (obj, cache = []) {
   return copy
 }
 
-export function generateObjectId (param) {
+function generateObjectId (param) {
   if (param) {
     return ObjectID(param).toString()
   }
@@ -55,7 +55,7 @@ export function generateObjectId (param) {
   return ObjectID().toString()
 }
 
-export function set (obj, value, ...keys) {
+function set (obj, value, ...keys) {
   if (!keys || keys.length <= 0) {
     return value
   }
@@ -108,3 +108,18 @@ export function set (obj, value, ...keys) {
 
   return obj
 }
+
+class ObjectUtil {}
+
+ObjectUtil.find = find
+ObjectUtil.isArray = isArray
+ObjectUtil.isObject = isObject
+ObjectUtil.isString = isString
+ObjectUtil.isNumber = isNumber
+ObjectUtil.isInt = isInt
+ObjectUtil.cloneDeep = cloneDeep
+ObjectUtil.generateObjectId = generateObjectId
+ObjectUtil.set = set
+
+export default ObjectUtil
+

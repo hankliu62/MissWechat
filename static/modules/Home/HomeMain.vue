@@ -43,7 +43,6 @@ import navs from '../../constants/footer-navs'
 import sliderImage1 from './images/slide1.webp'
 import sliderImage2 from './images/slide2.webp'
 import sliderImage3 from './images/slide3.webp'
-import { generateObjectId } from '../../utils/ObjectUtil'
 import { mapActions, mapState } from 'vuex'
 
 export default {

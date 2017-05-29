@@ -12,7 +12,11 @@
       v-show="!isShowEditor"
       @change="onChangeText">
     </textarea>
-    <simditor :content="html" :options="simditorOptions" v-show="isShowEditor" @valuechanged="onChangeHtml"></simditor>
+    <simditor
+      :content="html"
+      :options="simditorOptions"
+      v-show="isShowEditor"
+      @editorblur="onChangeHtml" />
   </div>
 </template>
 

@@ -4,19 +4,16 @@
       <label class="property-item-title">容错：</label>
       <div class="property-item-content">
         <template>
-          <el-select
-            class="hk-select"
+          <selector
+            cclass="hk-select"
             placeholder="请选择"
             popper-class="hk-select-dropdown"
+            label-field="label"
+            value-field="value"
+            :items="faultToleranceLevels"
             v-model="currentLevel"
             @change="onSelectFaultToleranceLevel">
-            <el-option
-              v-for="item in faultToleranceLevels"
-              :label="item.label"
-              :value="item.value">
-              <span v-text="item.label"></span>
-            </el-option>
-          </el-select>
+          </selector>
         </template>
       </div>
     </div>
@@ -39,6 +36,7 @@
 
 <script>
 import { FAULT_TOLERANCE_LEVELS, DEFAULT_FAULT_TOLERANCE_LEVEL } from '../../constants/constants'
+import Selector from '../../../../../../components/Selector/Selector'
 
 export default {
   data () {
@@ -54,8 +52,7 @@ export default {
   },
   methods: {
     onSelectFaultToleranceLevel (level) {
-      this.faultToleranceLevel = level
-      this.$emit('onSetLevel', level)
+      this.$emit('onSetLevel', level.value)
     },
     onChangeSize (size) {
       this.$emit('onSetSize', size)
@@ -68,6 +65,9 @@ export default {
     size (newValue) {
       this.currentSize = newValue
     }
+  },
+  components: {
+    Selector
   }
 }
 </script>

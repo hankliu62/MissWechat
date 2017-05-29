@@ -24,9 +24,11 @@ export default {
     },
     content: String
   },
-  computed: {
+  watch: {
     content (newValue) {
-      this.editor.setValue(newValue)
+      if (this.editor.getValue() !== newValue) {
+        this.editor.setValue(newValue)
+      }
     }
   },
   mounted () {
@@ -37,6 +39,7 @@ export default {
     });
 
     this.editor.on('valuechanged', () => this.$emit('valuechanged', this.editor.getValue()))
+    this.editor.on('blur', () => this.$emit('editorblur', this.editor.getValue()))
   },
   destroyed () {
     if (this.editor) {
