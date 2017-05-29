@@ -21,7 +21,7 @@
 
     .preview-header-title {
       color: @grayLightUndertone;
-      width: 100;
+      width: 100%;
       text-align: center;
       padding-top: 33px;
       font-size: 16px;
@@ -183,6 +183,12 @@
         line-height: 16px;
         padding: 12px 0;
         color: @grayDark;
+      }
+
+      &.vcard-explanation {
+        .vcard-property-value {
+          white-space: pre-wrap;
+        }
       }
     }
   }

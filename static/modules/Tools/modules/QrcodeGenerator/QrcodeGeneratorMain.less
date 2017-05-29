@@ -245,6 +245,7 @@
 
       .vcard-qrcode-wrap {
         .flexbox();
+        padding: 0 80px;
 
         .left-wrap {
           width: 375px;
@@ -276,6 +277,21 @@
         .right-wrap {
           .flex(1);
           margin-left: 50px;
+        }
+      }
+
+      .vcard-qrcode-footer {
+        margin: 0 80px;
+        padding: 20px 0 40px;
+        border-top: 1px solid @common-border;
+        text-align: right;
+
+        .hk-btn {
+          padding: 6px 12px;
+
+          + .hk-btn {
+            margin-left: 15px;
+          }
         }
       }
     }

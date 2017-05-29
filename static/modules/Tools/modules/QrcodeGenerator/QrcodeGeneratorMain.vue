@@ -93,6 +93,16 @@
             </div>
           </template>
           <template v-if="states.params.type === CONSTANTS.PARAM_TYPES.VCARD">
+            <vcard-save-modal
+              :is-show="!!qrcodeUrl && qrcodeContent[CONSTANTS.PARAM_TYPES.VCARD].isShowSaveModal"
+              :url="qrcodeUrl"
+              :onOk="onPreviewVCard"
+              :onClose="onCloseVCardSaveModal" />
+            <vcard-preview-modal
+              :url="qrcodeContent[CONSTANTS.PARAM_TYPES.VCARD].previewUrl"
+              :is-show="qrcodeContent[CONSTANTS.PARAM_TYPES.VCARD].isShowPreviewModal"
+              :onClose="onClosePreviewVCardmodal" />
+
             <div class="vcard-qrcode-wrap">
               <div class="left-wrap">
                 <vcard-module-preview
@@ -114,10 +124,20 @@
                 <vcard-module-setting
                   :vcard-data="qrcodeContent[CONSTANTS.PARAM_TYPES.VCARD].data"
                   :selected-module="qrcodeContent[CONSTANTS.PARAM_TYPES.VCARD].selectedModule"
+                  :selected-module-top="qrcodeContent[CONSTANTS.PARAM_TYPES.VCARD].selectedModuleTop"
                   @onSelecteModule="onSelecteVCardModule"
                   @onUpdateVCard="onUpdateVCard" />
-                <!-- <upload-vcard-avatar-modal></upload-vcard-avatar-modal> -->
               </div>
+            </div>
+            <div class="vcard-qrcode-footer clearfix">
+              <template v-if="!qrcodeUrl">
+                <button class="btn hk-btn btn-theme" v-text="'生成二维码'" @click="onGenerateVCardLiveQrcode"/>
+              </template>
+
+              <template v-if="qrcodeUrl">
+                <button class="btn hk-btn btn-theme" v-text="'新建一个'" @click="resetVCardQrcodeState"/>
+                <button class="btn hk-btn btn-theme" v-text="'保存'" @click="onGenerateVCardLiveQrcode"/>
+              </template>
             </div>
           </template>
         </div>
@@ -140,10 +160,20 @@ import QrcodePreview from './components/QrcodePreview/QrcodePreview'
 import QrcodeTools from './components/QrcodeTools/QrcodeTools'
 import VcardModulePreview from './components/VCardModulePreview/VCardModulePreview'
 import VcardModuleSetting from './components/VCardModuleSetting/VCardModuleSetting'
-import { PARAM_TYPES } from './constants/constants'
+import VcardSaveModal from './components/VCardSaveModal/VCardSaveModal'
+import VcardPreviewModal from './components/VCardPreviewModal/VCardPreviewModal'
+import {
+  PARAM_TYPES,
+  DEFAULT_FAULT_TOLERANCE_LEVEL,
+  DEFAULT_QRCODE_SIZE,
+  DEFAULT_QRCODE_FOREGROUND,
+  DEFAULT_QRCODE_BACKGROUND,
+  VCARD_MODULE
+} from './constants/constants'
 import { LANGUAGES_OPTIONS } from '../../../../constants/languages'
 import DownloadUtil from '../../../../utils/DownloadUtil'
 import RegExpUtil from '../../../../utils/RegExpUtil'
+import ObjectUtil from '../../../../utils/ObjectUtil'
 import { Notification } from '../../../../services'
 
 const validateContent = function (vm) {
@@ -194,6 +224,18 @@ const validateContent = function (vm) {
   return isValided
 }
 
+const getQrcodeDefaultOptions = function () {
+  const options = {
+    render: 'canvas',
+    size: DEFAULT_QRCODE_SIZE,
+    correctLevel: DEFAULT_FAULT_TOLERANCE_LEVEL,
+    background: DEFAULT_QRCODE_BACKGROUND,
+    foreground: DEFAULT_QRCODE_FOREGROUND
+  }
+
+  return options
+}
+
 const getQrcodeOptions = function (vm) {
   const options = {
     render: 'canvas',
@@ -215,7 +257,22 @@ const updateVCardState = function (vm, key, value) {
   const { qrcodeContent } = vm
   const { vcard, othersQrcodeContent } = qrcodeContent
   const vcardQrcodeContent = { ...vcard }
-  vcardQrcodeContent[key] = value
+  if (ObjectUtil.isArray(key)) {
+    for (const [index, item] of key.entries()) {
+      if (ObjectUtil.isArray(value)) {
+        const valueLength = value.length
+        if (index < valueLength) {
+          vcardQrcodeContent[item] = value[index]
+        } else {
+          vcardQrcodeContent[item] = value[valueLength - 1]
+        }
+      } else {
+        vcardQrcodeContent[item] = value
+      }
+    }
+  } else {
+    vcardQrcodeContent[key] = value
+  }
   vm.setState({ qrcodeContent: { ...othersQrcodeContent, vcard: vcardQrcodeContent } })
 }
 
@@ -242,7 +299,9 @@ export default {
       background: (state) => state.qrcodeGeneratorMain.background,
       logoUrl: (state) => state.qrcodeGeneratorMain.logoUrl,
       isShowEditor: (state) => state.qrcodeGeneratorMain.isShowEditor,
-      qrcodeContent: (state) => state.qrcodeGeneratorMain.qrcodeContent
+      qrcodeContent: (state) => state.qrcodeGeneratorMain.qrcodeContent,
+      regions: (state) => state.commonMain.regions,
+      qiniu: (state) => state.commonMain.qiniu
     }),
     generateBtnText () {
       return this.isGenerateLiveQrcode ? '生成活码' : '生成二维码'
@@ -254,7 +313,18 @@ export default {
     }
   },
   mounted () {
-    this.fetchQiniuUptoken()
+    if (!this.regions.local) {
+      this.fetchRegions()
+    }
+
+    if (!this.regions.international) {
+      this.fetchInternationalRegions()
+    }
+
+    if (!this.qiniu || !this.qiniu.uploadToken) {
+      this.fetchQiniuUptoken()
+    }
+
     const ResponsiveNav = require('responsive-nav')
     var navigation = ResponsiveNav('navs', {
       customToggle: '.nav-toggle',
@@ -264,7 +334,14 @@ export default {
   },
   methods: {
     setState: mapActions(['setQrcodeGeneratorState'])['setQrcodeGeneratorState'],
-    ...mapActions(['fetchQiniuUptoken', 'generateTextQrcode', 'generateLiveQrcode']),
+    ...mapActions([
+      'fetchQiniuUptoken',
+      'generateTextQrcode',
+      'generateLiveQrcode',
+      'fetchRegions',
+      'fetchInternationalRegions',
+      'resetVCardQrcodeState'
+    ]),
     onGenerateQrcode () {
       if (!validateContent(this)) {
         return
@@ -301,8 +378,16 @@ export default {
     },
     async onGenerateLiveQrcode () {
       const { type } = this.states.params
-      const options = getQrcodeOptions(this)
+      const options = type === PARAM_TYPES.VCARD ? getQrcodeDefaultOptions() : getQrcodeOptions(this)
       this.generateLiveQrcode({ options, type })
+    },
+    onGenerateVCardLiveQrcode () {
+      if (!this.qrcodeContent[PARAM_TYPES.VCARD].data.name || !this.qrcodeContent[PARAM_TYPES.VCARD].data.name.value) {
+        Notification.service({content: '请输入姓名', type: 'error'})
+        this.onSelecteVCardModule(VCARD_MODULE.Basic)
+        return
+      }
+      this.onGenerateLiveQrcode()
     },
     onChangeContent (qrcodeContent) {
       this.setState({ qrcodeContent })
@@ -345,11 +430,20 @@ export default {
     onChangeVCardLanguage (value) {
       updateVCardState(this, 'language', value)
     },
-    onSelecteVCardModule (value) {
-      updateVCardState(this, 'selectedModule', value)
+    onSelecteVCardModule (value, top = 0) {
+      updateVCardState(this, ['selectedModule', 'selectedModuleTop'], [value, top])
     },
     onUpdateVCard (vcard) {
       updateVCardState(this, 'data', vcard)
+    },
+    onCloseVCardSaveModal () {
+      updateVCardState(this, 'isShowSaveModal', false)
+    },
+    onPreviewVCard () {
+      updateVCardState(this, 'isShowPreviewModal', true)
+    },
+    onClosePreviewVCardmodal () {
+      updateVCardState(this, 'isShowPreviewModal', false)
     }
   },
   components: {
@@ -363,7 +457,9 @@ export default {
     QrcodeTools,
     Radio,
     VcardModulePreview,
-    VcardModuleSetting
+    VcardModuleSetting,
+    VcardPreviewModal,
+    VcardSaveModal
   }
 }
 </script>

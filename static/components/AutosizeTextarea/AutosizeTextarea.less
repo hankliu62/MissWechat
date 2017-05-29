@@ -1,0 +1,25 @@
+@import '../../styles/variable';
+
+.autosize-text-container {
+  position: relative;
+
+  .hk-text {
+    width: 100%;
+
+    &:focus {
+      & + .count-box {
+        display: inline-block;
+      }
+    }
+  }
+
+  .count-box {
+    display: none;
+
+    position: absolute;
+    bottom: 10px;
+    right: 25px;
+    color: @grayDarkLighter;
+    background-color: @white;
+  }
+}

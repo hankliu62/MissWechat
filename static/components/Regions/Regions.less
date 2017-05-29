@@ -1,0 +1,13 @@
+@import '../../styles/variable';
+@import '../../styles/mixins/flexbox';
+
+.hk-regions {
+  .regions-item {
+    display: inline-block;
+    width: 32%;
+
+    + .regions-item {
+      margin-left: 1%;
+    }
+  }
+}
