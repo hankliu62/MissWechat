@@ -60,7 +60,7 @@ function reloadRegions (vm, address) {
   if (address) {
     if ('province' in address) {
       vm.selectProvince = address.province
-      const [province, index] = ArrayUtil.find(vm.regions[vm.type], vm.selectProvince, 'name')
+      const [province] = ArrayUtil.find(vm.regions[vm.type], vm.selectProvince, 'name')
 
       if (province) {
         vm.cityItems = [...(province.c || [])]
@@ -68,7 +68,7 @@ function reloadRegions (vm, address) {
           vm.selectCity = address.city
           vm.countyItems = []
           vm.selectCounty = ''
-          const [city, index] = ArrayUtil.find(vm.cityItems, vm.selectCity, 'name')
+          const [city] = ArrayUtil.find(vm.cityItems, vm.selectCity, 'name')
 
           if (city) {
             vm.countyItems = city.c || []

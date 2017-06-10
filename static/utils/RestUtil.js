@@ -2,10 +2,8 @@ import Vue from 'vue'
 import VueResource from 'vue-resource'
 import StatusCodes from '../constants/status-codes'
 import config from '../config/config'
-import store from '../vuex/store'
 import { showLoading } from '../utils/LoadingUtil'
 import ObjectUtil from '../utils/ObjectUtil'
-import { SHOW_TOAST, HIDE_TOAST } from '../constants/types'
 import { Notification } from '../services'
 
 Vue.use(VueResource)

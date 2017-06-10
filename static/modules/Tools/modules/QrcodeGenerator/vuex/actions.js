@@ -10,7 +10,6 @@ import { TOOLS_QRCODE_GENERATE_SUCCESS, TOOLS_QRCODE_GENERATOR_MAIN_SET, TOOLS_Q
 import { PARAM_TYPES, UPLOAD_FILE_TYPES } from '../constants/constants'
 import Session from '../../../../../libs/Session'
 import RestUtil from '../../../../../utils/RestUtil'
-import StringUtil from '../../../../../utils/StringUtil'
 import QrcodeUtil from '../../../../../utils/QrcodeUtil'
 import qiniuConfig from '../../../../../config/qiniu'
 
@@ -24,7 +23,7 @@ export const resetVCardQrcodeState = function ({ commit }) {
 
 export const generateTextQrcode = async function ({ commit }, options) {
   const base64Data = await QrcodeUtil.generateThenConvert(options)
-  const { domain, uploadToken } = Session.getQiniu()
+  const { uploadToken } = Session.getQiniu()
   const body = {
     content: base64Data,
     uptoken: uploadToken

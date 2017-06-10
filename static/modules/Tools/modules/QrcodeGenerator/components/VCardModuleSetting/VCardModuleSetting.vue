@@ -245,9 +245,7 @@ import {
   VCARD_COVER_IMAGE_TYPE,
   VCARD_COVER_PURE_TYPE,
   VCARD_PREVIEW_LAYOUTS,
-  VCARD_PREVIEW_LAYOUT_LEFT,
-  VCARD_PREVIEW_LAYOUT_MIDDLE,
-  VCARD_PREVIEW_LAYOUT_RIGHT
+  VCARD_PREVIEW_LAYOUT_LEFT
 } from '../../constants/constants'
 import ModuleItemSetting from './ModuleItemSettting'
 import Upload from '../../../../../../components/Upload/Upload'

@@ -85,8 +85,6 @@ import Upload from '../../../../../../components/Upload/Upload'
 import MaskOk from '../../../../../../components/MaskOk/MaskOk'
 import MaskRemove from '../../../../../../components/MaskRemove/MaskRemove'
 import ColorPicker from '../../../../../../components/ColorPicker/ColorPicker'
-import QiniuUtil from '../../../../../../utils/QiniuUtil'
-import QrcodeUtil from '../../../../../../utils/QrcodeUtil'
 import { VCARD_COVER_IMAGE_TYPE, VCARD_COVER_PURE_TYPE } from '../../constants/constants'
 
 function initComponentStatus (vm) {

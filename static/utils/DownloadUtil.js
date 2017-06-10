@@ -1,5 +1,4 @@
 import ObjectUtil from './ObjectUtil'
-import RestUtil from './RestUtil'
 import QueryStringUtil from './QueryStringUtil'
 import { API_FILES_DOWNLOAD } from '../constants/apis'
 import config from '../config/config'

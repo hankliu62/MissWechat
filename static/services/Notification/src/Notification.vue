@@ -21,9 +21,9 @@
 </template>
 
 <script>
-const CONSTANTS = {
-  TYPES: ['success', 'info', 'warning', 'danger']
-}
+// const CONSTANTS = {
+//   TYPES: ['success', 'info', 'warning', 'danger']
+// }
 export default {
   data () {
     return {

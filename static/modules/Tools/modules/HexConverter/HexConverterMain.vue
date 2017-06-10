@@ -126,7 +126,6 @@ import { mapActions, mapState } from 'vuex'
 import { Tabs, TabList, Tab, TabPanel } from '../../../../components/Tabs'
 import HeadroomNav from '../../../../components/HeadroomNav/HeadroomNav'
 import Upload from '../../../../components/Upload/Upload'
-import { HEX_CONVERTER_MAIN_NAVS } from './constants/navs'
 import { PARAM_TYPES } from './constants/constants'
 import config from '../../../../config/config'
 

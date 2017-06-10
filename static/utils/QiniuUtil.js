@@ -112,12 +112,12 @@ class QiniuUtil {
       init: {
         FilesAdded: function (up, files) {
           // 读取文件
-          const reader = new window.FileReader()
-          reader.onload = function (e) {
-            const data = e.target.result
-          }
+          // const reader = new window.FileReader()
+          // reader.onload = function (e) {
+          //   const data = e.target.result
+          // }
           // 以DataURL的形式读取文件:
-          reader.readAsText(files[0].getNative())
+          // reader.readAsText(files[0].getNative())
         },
         BeforeUpload: function (up, file) {},
         UploadProgress: function (up, file) {},

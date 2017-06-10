@@ -24,12 +24,7 @@ var depsFiles = [
 module.exports = {
   commonPath,
   entry: {
-    app: path.join(staticPath, 'index.js'),
-    vender: [
-      'vue',
-      'vue-router',
-      'vue-resource'
-    ]
+    app: path.join(staticPath, 'index.js')
     // deps: depsFiles
   },
   output: {
@@ -50,7 +45,7 @@ module.exports = {
       { test: /\.vue$/, loader: 'vue', exclude: /node_modules/ },
       { test: /\.js$/, loader: 'babel!eslint', exclude: /node_modules/ },
       { test: /\.css$/, loader: 'style!css' },
-      { test: /.(png|jpe?g|gif|svg|webp)/, loader: 'url', exclude: /node_modules/ },
+      { test: /\.(png|jpe?g|gif|svg|webp)/, loader: 'url', exclude: /node_modules/ },
       { test: /\.(eot|woff|svg|ttf|woff2|appcache)(\?|$)/, loader: 'file-loader?name=[name].[ext]', exclude: /^node_modules$/}
     ]
   },

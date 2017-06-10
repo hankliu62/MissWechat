@@ -69,10 +69,10 @@ export default {
         if (ArrayUtil.isArray(this.titles)) {
           filters.mime_types = []
           for (const [index, title] of this.titles.entries()) {
-            filters.mime_types.push({ title: this.title, extensions: this.extensions[index] || '*' })
+            filters.mime_types.push({ title, extensions: this.extensions[index] || '*' })
           }
         } else {
-          filters.mime_types = [{ title: this.title, extensions: this.extensions }]
+          filters.mime_types = [{ title: this.titles, extensions: this.extensions }]
         }
       }
 
