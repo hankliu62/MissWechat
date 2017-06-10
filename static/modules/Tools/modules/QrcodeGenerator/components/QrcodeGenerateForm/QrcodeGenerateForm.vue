@@ -8,10 +8,6 @@
 </template>
 
 <script>
-import autosize from 'autosize';
-import { PARAM_TYPES } from '../../constants/constants';
-import Simditor from '../../../../../../components/Simditor/Simditor'
-
 export default {
   data () {
     return {}

@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
 import { TOOLS_MENUS } from '../../constants/constants'
 
 export default {

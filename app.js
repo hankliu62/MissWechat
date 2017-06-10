@@ -16,7 +16,7 @@ app.use('/deps', express.static('deps'));
 
 if (app.get('env') === 'development') {
   var webpack = require('webpack');
-  var devConfig = require('./static/build/webpack/webpack.dev.config');
+  var devConfig = require('./static/build/webpack/webpack.dev.conf');
   var compiler = webpack(devConfig);
 
   // handle fallback for HTML5 history API
@@ -24,7 +24,7 @@ if (app.get('env') === 'development') {
 
   // serve webpack bundle output
   app.use(require('webpack-dev-middleware')(compiler, {
-    noInfo: true,
+    noInfo: false,
     publicPath: devConfig.output.publicPath,
     stats: {
       colors: true,

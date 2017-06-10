@@ -1,7 +1,7 @@
 var webpack = require('webpack');
 var fs = require('fs');
 var path = require('path');
-var prodConfig = require('./webpack.prod.config');
+var prodConfig = require('./webpack.prod.conf');
 
 webpack(prodConfig, function (error, stats) {
   if (error) {

@@ -5,11 +5,8 @@ import {
   DEFAULT_QRCODE_FOREGROUND,
   DEFAULT_QRCODE_BACKGROUND,
   PARAM_TYPES,
-  VCARD_COVER_IMAGE_TYPE,
-  VCARD_PREVIEW_LAYOUT_LEFT,
   DEFAULT_CARD_QRCODE_CONTENT
 } from '../constants/constants'
-import { LANGUAGES } from '../../../../../constants/languages'
 import ObjectUtil from '../../../../../utils/ObjectUtil'
 
 export default {

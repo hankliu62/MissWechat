@@ -52,7 +52,7 @@ const observerCloseEventHandler = function (subject, subjectIndex, subjectHeight
 const observerCreateEventHandler = function (subject) {
   const observer = this
   observer.observers.push(subject)
-  const observerIndex = observer.index
+  // const observerIndex = observer.index
   const subjectHeight = subject.$el.getBoundingClientRect().height + intervalHeight;
   const observerTop = observer.$el.getBoundingClientRect().top
   observer.$el.style.top = `${observerTop + subjectHeight}px`
@@ -64,6 +64,8 @@ const initStyle = function (instance, options) {
     const nav = document.getElementById(navId)
     if (nav) {
       const navHeight = nav.getBoundingClientRect().height;
+      top = intervalHeight + navHeight
+      // console.log(navHeight)
     }
   }
   instance.$el.style.top = `${top}px`;

@@ -326,7 +326,7 @@ export default {
     }
 
     const ResponsiveNav = require('responsive-nav')
-    var navigation = ResponsiveNav('navs', {
+    ResponsiveNav('navs', {
       customToggle: '.nav-toggle',
       jsClass: 'qrcode-html',
       navActiveClass: 'qrcode-html-navs-toggled'

@@ -92,12 +92,12 @@ export default {
         if (this.$refs && this.$refs.pickerSource && container) {
           const containerSize = ElementUtil.getElementSize(container)
           const position = ElementUtil.getElementRelativePosition(this.$refs.pickerSource)
-          const size = ElementUtil.getElementSize(this.$refs.pickerSource)
-          const parent = this.$refs.pickerSource.offsetParent
-          let parentSize = { ...position }
-          if (parent) {
-            parentSize = ElementUtil.getElementSize(parent)
-          }
+          // const size = ElementUtil.getElementSize(this.$refs.pickerSource)
+          // const parent = this.$refs.pickerSource.offsetParent
+          // let parentSize = { ...position }
+          // if (parent) {
+          //   parentSize = ElementUtil.getElementSize(parent)
+          // }
 
           if (this.$refs && this.$refs.pickerPopup) {
             if (containerSize.height - position.top < 350 + 20) {
